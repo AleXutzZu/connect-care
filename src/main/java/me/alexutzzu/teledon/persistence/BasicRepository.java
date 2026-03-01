@@ -29,14 +29,15 @@ public interface BasicRepository<T> {
 
     /**
      * Updates the record in the database with the new data. The id field must be present so the target record
-     * can be identified
+     * can be identified.
      *
      * @param data the data for the object. The id field is mandatory. Other fields may be null and will be
      *             interpreted as "do not modify the original value in the database"
-     * @return the record with the updated data
+     * @return the record with the updated data. If the record does not exist prior to the update, an empty optional
+     * is returned
      * @throws SQLException if the query fails
      */
-    T update(T data) throws SQLException;
+    Optional<T> update(T data) throws SQLException;
 
     /**
      * Deletes the record by the given id. If the record does not exist, this method has no impact on the database
