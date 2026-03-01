@@ -1,7 +1,6 @@
 package me.alexutzzu.teledon.persistence.impl;
 
 import me.alexutzzu.teledon.model.Volunteer;
-import me.alexutzzu.teledon.persistence.BasicRepository;
 import me.alexutzzu.teledon.persistence.VolunteerRepository;
 import me.alexutzzu.teledon.persistence.database.DatabaseManager;
 
