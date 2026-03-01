@@ -39,6 +39,7 @@ public class DatabaseManager {
                 properties.getProperty("db.password"));
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T getRepositoryInstance(Class<T> repoClass, Class<? extends T> implementationClass) throws IOException {
         try {
             T repository = implementationClass.getConstructor(DatabaseManager.class).newInstance(getInstance());
