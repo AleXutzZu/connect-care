@@ -1,4 +1,4 @@
 package me.alexutzzu.teledon.model;
 
-public record Volunteer(String username, String password) {
+public record Volunteer(Long id, String username, String password) {
 }
