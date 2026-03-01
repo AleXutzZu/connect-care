@@ -25,7 +25,10 @@ public class JdbcCharityRepositoryImpl implements CharityRepository {
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO charity(name) VALUES (?) RETURNING *");
             stmt.setString(1, data.name());
             try (ResultSet rs = stmt.executeQuery()) {
-                return new Charity(rs.getLong("id"), rs.getString("name"));
+                if (rs.next()) {
+                    return new Charity(rs.getLong("id"), rs.getString("name"));
+                }
+                throw new SQLException("Could not create charity, no ID obtained.");
             }
         }
     }

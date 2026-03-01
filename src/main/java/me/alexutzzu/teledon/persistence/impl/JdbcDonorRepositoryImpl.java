@@ -29,7 +29,10 @@ public class JdbcDonorRepositoryImpl implements DonorRepository {
             stmt.setString(3, data.address());
             stmt.setString(4, data.phoneNumber());
             try (ResultSet rs = stmt.executeQuery()) {
-                return new Donor(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("address"), rs.getString("phoneNumber"));
+                if (rs.next()) {
+                    return new Donor(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("address"), rs.getString("phoneNumber"));
+                }
+                throw new SQLException("Could not create donor, no ID obtained.");
             }
         }
     }

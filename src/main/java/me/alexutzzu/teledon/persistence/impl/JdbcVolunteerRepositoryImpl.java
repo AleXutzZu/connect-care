@@ -27,7 +27,10 @@ public class JdbcVolunteerRepositoryImpl implements VolunteerRepository {
             stmt.setString(1, data.username());
             stmt.setString(2, data.password());
             try (ResultSet rs = stmt.executeQuery()) {
-                return new Volunteer(rs.getLong("id"), rs.getString("username"), rs.getString("password"));
+                if (rs.next()) {
+                    return new Volunteer(rs.getLong("id"), rs.getString("username"), rs.getString("password"));
+                }
+                throw new SQLException("Could not create volunteer, no ID obtained.");
             }
         }
     }
