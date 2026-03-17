@@ -7,7 +7,13 @@
         x:Class="teledon_management_ui.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="teledon_management_ui">
+        Title="Teledon Management"
+        Width="800"
+        Height="600"
+        MinWidth="400"
+        MinHeight="300"
+        WindowStartupLocation="CenterScreen"
+        >
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,6 +21,10 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    <TransitioningContentControl Content="{Binding CurrentPage}">
+        <TransitioningContentControl.PageTransition>
+            <CrossFade Duration="0:0:0.25" />
+        </TransitioningContentControl.PageTransition>
+    </TransitioningContentControl>
+    
 </Window>

@@ -2,4 +2,7 @@ using teledon_management_ui.Models;
 
 namespace teledon_management_ui.Persistence;
 
-public interface IVolunteerRepository : IBasicRepository<Volunteer>;
+public interface IVolunteerRepository : IBasicRepository<Volunteer>
+{
+    public Volunteer? FindByUsername(string username);
+}

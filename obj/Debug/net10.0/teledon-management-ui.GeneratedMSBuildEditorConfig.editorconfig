@@ -26,5 +26,11 @@ build_property.EnableCodeStyleSeverity =
 [/home/alexutzzu/RiderProjects/teledon-management-ui/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/alexutzzu/RiderProjects/teledon-management-ui/Views/DashboardView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/alexutzzu/RiderProjects/teledon-management-ui/Views/LoginView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/alexutzzu/RiderProjects/teledon-management-ui/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

@@ -1,16 +1,25 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using System.Security.Authentication.ExtendedProtection;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using teledon_management_ui.Persistence;
+using teledon_management_ui.Services;
 using teledon_management_ui.ViewModels;
 using teledon_management_ui.Views;
+using teledon;
 
 namespace teledon_management_ui;
 
 public partial class App : Application
 {
+    public IServiceProvider? Services { get; private set; }
+
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -18,6 +27,23 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var serviceCollection = new ServiceCollection();
+
+        //Add repositories
+        serviceCollection.AddSingleton<ICharityRepository, InMemoryCharityRepository>();
+        serviceCollection.AddSingleton<IVolunteerRepository, InMemoryVolunteerRepository>();
+        serviceCollection.AddSingleton<IDonationRepository, InMemoryDonationRepository>();
+        serviceCollection.AddSingleton<IDonorRepository, InMemoryDonorRepository>();
+
+        //Add services
+        serviceCollection.AddSingleton<IAuthService, AuthService>();
+
+        serviceCollection.AddTransient<LoginViewModel>();
+        serviceCollection.AddTransient<MainWindowViewModel>();
+        serviceCollection.AddTransient<DashboardViewModel>();
+
+        Services = serviceCollection.BuildServiceProvider();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -25,7 +51,7 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = Services.GetRequiredService<MainWindowViewModel>(),
             };
         }
 

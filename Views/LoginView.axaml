@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:teledon_management_ui.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="teledon_management_ui.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+    
+    <Design.DataContext>
+        <vm:LoginViewModel />
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+          ColumnDefinitions="*, *"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center" RowSpacing="24" Width="320">
+        <TextBlock Grid.ColumnSpan="2" Text="Teledon Management" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Spacing="6">
+            <TextBlock Text="Username" FontWeight="SemiBold" />
+            <TextBox Watermark="Username" Text="{Binding Username}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Spacing="6">
+            <TextBlock Text="Password" FontWeight="SemiBold" />
+            <TextBox Watermark="Password" PasswordChar="&#x2022;" Text="{Binding Password}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Spacing="8">
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="Red"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                       />
+            
+            <Button HorizontalAlignment="Stretch" 
+                    
+                    Command="{Binding AttemptLoginCommand}" IsDefault="True">
+                <TextBlock Text="Log in" HorizontalAlignment="Center" />
+            </Button>
+        </StackPanel>
+        
+
+    </Grid>
+</UserControl>
