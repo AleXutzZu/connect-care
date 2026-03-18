@@ -12,10 +12,10 @@ public partial class LoginViewModel(IAuthService authService) : ViewModelBase
         ErrorMessage = "Invalid username or password. Please try again.";
     }
     
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AttemptLoginCommand))]
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
     private string? _username;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AttemptLoginCommand))]
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
     private string? _password;
 
     [ObservableProperty] private string? _errorMessage;
@@ -23,7 +23,7 @@ public partial class LoginViewModel(IAuthService authService) : ViewModelBase
     private bool CanLogin => !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
 
     [RelayCommand(CanExecute = nameof(CanLogin))]
-    private async Task AttemptLogin()
+    private async Task Login()
     {
         ErrorMessage = string.Empty;
         var result = await authService.Login(Username!, Password!);

@@ -12,6 +12,8 @@ public interface IAuthService
     }
 
     public bool IsLoggedIn { get; }
+    public string? LoggedInUser { get; }
     public Task<LoginResult> Login(string username, string password);
+    public Task Logout();
     public event Action? OnLoginStateChanged;
 }

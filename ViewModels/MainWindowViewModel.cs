@@ -32,5 +32,9 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             CurrentPage = _serviceProvider.GetRequiredService<DashboardViewModel>();
         }
+        else
+        {
+            CurrentPage = _serviceProvider.GetRequiredService<LoginViewModel>();
+        }
     }
 }

@@ -38,7 +38,7 @@
             
             <Button HorizontalAlignment="Stretch" 
                     
-                    Command="{Binding AttemptLoginCommand}" IsDefault="True">
+                    Command="{Binding LoginCommand}" IsDefault="True">
                 <TextBlock Text="Log in" HorizontalAlignment="Center" />
             </Button>
         </StackPanel>
