@@ -37,10 +37,13 @@ public partial class App : Application
 
         //Add services
         serviceCollection.AddSingleton<IAuthService, AuthService>();
+        serviceCollection.AddSingleton<ICharityService, CharityService>();
 
+        //Add ViewModels
         serviceCollection.AddTransient<LoginViewModel>();
         serviceCollection.AddTransient<MainWindowViewModel>();
         serviceCollection.AddTransient<DashboardViewModel>();
+        serviceCollection.AddTransient<CharityDtoViewModel>();
 
         Services = serviceCollection.BuildServiceProvider();
 

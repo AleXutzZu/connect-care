@@ -11,7 +11,7 @@
         <vm:DashboardViewModel />
     </Design.DataContext>
 
-    <DockPanel>
+    <DockPanel Margin="8,0,8,24">
         <Grid DockPanel.Dock="Top" ColumnDefinitions="*, Auto" RowDefinitions="Auto">
 
             <Menu Grid.Column="0">
@@ -28,6 +28,39 @@
                 </MenuItem>
             </Menu>
         </Grid>
-    </DockPanel>
 
+        <ScrollViewer  VerticalAlignment="Top">
+            <ItemsRepeater ItemsSource="{Binding CharityDtos}">
+                <ItemsRepeater.Layout>
+                    <UniformGridLayout MinItemWidth="288"
+                                       MinColumnSpacing="12" MinRowSpacing="12" ItemsStretch="Uniform"/>
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="8" Padding="16"
+                                Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                                BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                                BorderThickness="1">
+                            <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"
+                                               TextTrimming="CharacterEllipsis" />
+                                    
+                                    <Button Grid.Column="1">Add</Button>
+                                </Grid>
+
+                                <TextBlock Grid.Row="2" TextWrapping="Wrap"
+                                           Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}">
+                                    <Run Text="Amount Raised: " FontWeight="Bold" />
+                                    <Run Text="{Binding RaisedSum, StringFormat='${0:N2}'}" Foreground="Green" />
+                                </TextBlock>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
+
+    </DockPanel>
 </UserControl>

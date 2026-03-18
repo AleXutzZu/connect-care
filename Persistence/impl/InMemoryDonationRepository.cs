@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using teledon_management_ui.Models;
 using teledon_management_ui.Persistence;
@@ -40,5 +41,10 @@ public class InMemoryDonationRepository : IDonationRepository
     public void DeleteById(long id)
     {
         _donations.TryRemove(id, out _);
+    }
+
+    public List<Donation> findAllByCharityId(long id)
+    {
+        return _donations.Values.Where(x => x.Charity.Id.Equals(id)).ToList();
     }
 }

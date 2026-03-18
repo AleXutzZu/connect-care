@@ -124,6 +124,22 @@
           }
         }
       },
+      "Avalonia.Controls.ItemsRepeater/11.1.5": {
+        "type": "package",
+        "dependencies": {
+          "Avalonia": "11.1.5"
+        },
+        "compile": {
+          "lib/net8.0/Avalonia.Controls.ItemsRepeater.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Avalonia.Controls.ItemsRepeater.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Avalonia.Desktop/11.3.12": {
         "type": "package",
         "dependencies": {
@@ -840,6 +856,24 @@
         "lib/netstandard2.0/Avalonia.Controls.ColorPicker.xml"
       ]
     },
+    "Avalonia.Controls.ItemsRepeater/11.1.5": {
+      "sha512": "MfsDSvpa/QUvOw8c8BQtDHHu3DUHYYGjkDBpN0uOpjFqng6qCzkuoyJZ7vIXSlDNb685yqW8VluWMjniz5BI4A==",
+      "type": "package",
+      "path": "avalonia.controls.itemsrepeater/11.1.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "avalonia.controls.itemsrepeater.11.1.5.nupkg.sha512",
+        "avalonia.controls.itemsrepeater.nuspec",
+        "lib/net6.0/Avalonia.Controls.ItemsRepeater.dll",
+        "lib/net6.0/Avalonia.Controls.ItemsRepeater.xml",
+        "lib/net8.0/Avalonia.Controls.ItemsRepeater.dll",
+        "lib/net8.0/Avalonia.Controls.ItemsRepeater.xml",
+        "lib/netstandard2.0/Avalonia.Controls.ItemsRepeater.dll",
+        "lib/netstandard2.0/Avalonia.Controls.ItemsRepeater.xml"
+      ]
+    },
     "Avalonia.Desktop/11.3.12": {
       "sha512": "zwtEFNvXB60z7rHD92oISkCQq0PcFyttfAW+cgcfALECegtNkd9P9/UXIuE0GvMVBVUPTRUQeSB6/jhwZKqqRQ==",
       "type": "package",
@@ -1506,6 +1540,7 @@
   "projectFileDependencyGroups": {
     "net10.0": [
       "Avalonia >= 11.3.12",
+      "Avalonia.Controls.ItemsRepeater >= 11.1.5",
       "Avalonia.Desktop >= 11.3.12",
       "Avalonia.Diagnostics >= 11.3.12",
       "Avalonia.Fonts.Inter >= 11.3.12",
@@ -1560,6 +1595,10 @@
           "Avalonia": {
             "target": "Package",
             "version": "[11.3.12, )"
+          },
+          "Avalonia.Controls.ItemsRepeater": {
+            "target": "Package",
+            "version": "[11.1.5, )"
           },
           "Avalonia.Desktop": {
             "target": "Package",

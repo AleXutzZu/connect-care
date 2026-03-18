@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using teledon_management_ui.Models;
 using teledon_management_ui.Persistence;
@@ -8,6 +9,14 @@ namespace teledon;
 
 public class InMemoryCharityRepository : ICharityRepository
 {
+
+    public InMemoryCharityRepository()
+    {
+        Create(new Charity(0, "Salvati Copiii"));
+        Create(new Charity(0, "Societatea Hermes"));
+        Create(new Charity(0, "GDG on Campus UBB"));
+    }
+    
     private readonly ConcurrentDictionary<long, Charity> _charities = new();
 
     private static long _idCount = 0;
@@ -41,5 +50,10 @@ public class InMemoryCharityRepository : ICharityRepository
     public void DeleteById(long id)
     {
         _charities.TryRemove(id, out _);
+    }
+
+    public List<Charity> FindAll()
+    {
+        return _charities.Values.ToList();
     }
 }
