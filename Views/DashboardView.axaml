@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:teledon_management_ui.ViewModels"
+             xmlns:views="clr-namespace:teledon_management_ui.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="teledon_management_ui.Views.DashboardView"
-             x:DataType="vm:DashboardViewModel">
+             x:DataType="vm:DashboardViewModel"
+             x:Name="DashboardControl">
 
     <Design.DataContext>
         <vm:DashboardViewModel />
@@ -16,7 +18,6 @@
 
             <Menu Grid.Column="0">
                 <MenuItem Header="_Add">
-                    <MenuItem Header="_Donation.." />
                     <MenuItem Header="Donor.." />
                     <MenuItem Header="_Charity.." />
                 </MenuItem>
@@ -29,37 +30,20 @@
             </Menu>
         </Grid>
 
-        <ScrollViewer  VerticalAlignment="Top">
-            <ItemsRepeater ItemsSource="{Binding CharityDtos}">
-                <ItemsRepeater.Layout>
-                    <UniformGridLayout MinItemWidth="288"
-                                       MinColumnSpacing="12" MinRowSpacing="12" ItemsStretch="Uniform"/>
-                </ItemsRepeater.Layout>
-                <ItemsRepeater.ItemTemplate>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 40 0 0">
+            <ItemsControl ItemsSource="{Binding CharityDtos}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border CornerRadius="8" Padding="16"
-                                Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
-                                BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
-                                BorderThickness="1">
-                            <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"
-                                               TextTrimming="CharacterEllipsis" />
-                                    
-                                    <Button Grid.Column="1">Add</Button>
-                                </Grid>
-
-                                <TextBlock Grid.Row="2" TextWrapping="Wrap"
-                                           Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}">
-                                    <Run Text="Amount Raised: " FontWeight="Bold" />
-                                    <Run Text="{Binding RaisedSum, StringFormat='${0:N2}'}" Foreground="Green" />
-                                </TextBlock>
-
-                            </Grid>
-                        </Border>
+                        <views:CharityDtoView Margin="0 0 20 20" />
                     </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-            </ItemsRepeater>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
 
     </DockPanel>

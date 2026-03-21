@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using teledon_management_ui.Messages;
 using teledon_management_ui.Models.dto;
 
 namespace teledon_management_ui.ViewModels;
@@ -23,5 +27,11 @@ public partial class CharityDtoViewModel : ViewModelBase
     public CharityDto GetCharityDto()
     {
         return new CharityDto(Id, Name, RaisedSum);
+    }
+
+    [RelayCommand]
+    private void CreateDonation()
+    {
+        WeakReferenceMessenger.Default.Send(new CreateDonationMessage(this));
     }
 }

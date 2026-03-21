@@ -7,21 +7,19 @@ namespace teledon_management_ui.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public MainWindowViewModel() : this(null!, null!)
+    public MainWindowViewModel() : this(null!)
     {
     }
 
     [ObservableProperty] private ObservableObject _currentPage;
 
-    private readonly IServiceProvider _serviceProvider;
     private readonly IAuthService _authService;
 
-    public MainWindowViewModel(IAuthService authService, IServiceProvider serviceProvider)
+    public MainWindowViewModel(IAuthService authService)
     {
         _authService = authService;
-        _serviceProvider = serviceProvider;
 
-        _currentPage = _serviceProvider.GetRequiredService<LoginViewModel>();
+        _currentPage = App.Services!.GetRequiredService<LoginViewModel>();
 
         _authService.OnLoginStateChanged += HandleLoginStateChanged;
     }
@@ -30,11 +28,11 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (_authService.IsLoggedIn)
         {
-            CurrentPage = _serviceProvider.GetRequiredService<DashboardViewModel>();
+            CurrentPage = App.Services!.GetRequiredService<DashboardViewModel>();
         }
         else
         {
-            CurrentPage = _serviceProvider.GetRequiredService<LoginViewModel>();
+            CurrentPage = App.Services!.GetRequiredService<LoginViewModel>();
         }
     }
 }

@@ -1,6 +1,10 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
+using teledon_management_ui.Messages;
+using teledon_management_ui.Services;
+using teledon_management_ui.ViewModels;
+using teledon;
 
 namespace teledon_management_ui.Views;
 
@@ -8,6 +12,34 @@ public partial class DashboardView : UserControl
 {
     public DashboardView()
     {
+        if (Design.IsDesignMode)
+        {
+            Design.SetDataContext(this,
+                new DashboardViewModel(
+                    new CharityService(new InMemoryCharityRepository(), new InMemoryDonationRepository()),
+                    new AuthService(new InMemoryVolunteerRepository())));
+        }
+
         InitializeComponent();
+
+        if (Design.IsDesignMode) return;
+
+        WeakReferenceMessenger.Default.Register<DashboardView, CreateDonationMessage>(this, (w, m) =>
+        {
+            if (App.Services == null) return;
+
+            var dialog = new AddDonationWindow
+            {
+                DataContext =
+                    ActivatorUtilities.CreateInstance<AddDonationWindowViewModel>(App.Services, m.SelectedCharity)
+            };
+
+            var topLevel = TopLevel.GetTopLevel(w);
+
+            if (topLevel is Window ownerWindow)
+            {
+                dialog.ShowDialog<bool>(ownerWindow);
+            }
+        });
     }
 }
