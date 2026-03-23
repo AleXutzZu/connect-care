@@ -26,7 +26,7 @@
 
                 <StackPanel Grid.Row="2" Grid.Column="0" Spacing="6">
                     <TextBlock Text="Donation sum" FontWeight="SemiBold" />
-                    <TextBox Watermark="Donation sum" Text="{Binding DonationSum}" />
+                    <NumericUpDown Watermark="Donation sum" Text="{Binding DonationSum}" ParsingNumberStyle="AllowDecimalPoint" Minimum="0" FormatString="0.00"/>
                 </StackPanel>
             </Grid>
 

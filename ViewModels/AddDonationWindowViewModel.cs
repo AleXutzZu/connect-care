@@ -12,7 +12,8 @@ public partial class AddDonationWindowViewModel : ViewModelBase
 
     private readonly long _charityId;
 
-    [ObservableProperty] private double _donationSum;
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(RegisterDonationCommand))]
+    private double? _donationSum;
 
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(RegisterDonationCommand))]
     private string? _donorFirstName;
@@ -76,7 +77,9 @@ public partial class AddDonationWindowViewModel : ViewModelBase
     }
 
     private bool CanRegisterDonation => !string.IsNullOrEmpty(DonorFirstName) && !string.IsNullOrEmpty(DonorLastName) &&
-                                        !string.IsNullOrEmpty(DonorPhone) && !string.IsNullOrEmpty(DonorAddress);
+                                        !string.IsNullOrEmpty(DonorPhone) && !string.IsNullOrEmpty(DonorAddress) &&
+                                        !string.IsNullOrEmpty(DonationSum.ToString()) &&
+                                        double.TryParse(DonationSum.ToString(), out _);
 
     [RelayCommand(CanExecute = nameof(CanRegisterDonation))]
     private void RegisterDonation()
@@ -84,14 +87,14 @@ public partial class AddDonationWindowViewModel : ViewModelBase
         if (_donorId.HasValue)
         {
             // Donor exists so we just create the donation
-            _donationService.AddDonationToCharity(_charityId, DonationSum, _donorId.Value);
+            _donationService.AddDonationToCharity(_charityId, DonationSum!.Value, _donorId.Value);
         }
         else
         {
             var donor = _donorService.CreateDonor(DonorFirstName!, DonorLastName!, DonorPhone!, DonorAddress!);
-            _donationService.AddDonationToCharity(_charityId, DonationSum, donor.Id);
+            _donationService.AddDonationToCharity(_charityId, DonationSum!.Value, donor.Id);
         }
 
-        WeakReferenceMessenger.Default.Send(new CloseDonationWindowMessage(_charityId, DonationSum));
+        WeakReferenceMessenger.Default.Send(new CloseDonationWindowMessage(_charityId, DonationSum!.Value));
     }
 }
