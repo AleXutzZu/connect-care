@@ -41,5 +41,21 @@ public partial class DashboardView : UserControl
                 dialog.ShowDialog<bool>(ownerWindow);
             }
         });
+        
+        WeakReferenceMessenger.Default.Register<DashboardView, CreateCharityMessage>(this, (w, m) =>
+        {
+            if (App.Services == null) return;
+            var topLevel = TopLevel.GetTopLevel(w);
+
+            var dialog = new AddCharityWindow
+            {
+                DataContext = App.Services.GetRequiredService<AddCharityWindowViewModel>()
+            };
+
+            if (topLevel is Window ownerWindow)
+            {
+                dialog.ShowDialog(ownerWindow);
+            }
+        });
     }
 }

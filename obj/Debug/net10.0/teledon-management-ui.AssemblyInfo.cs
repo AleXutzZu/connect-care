@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("teledon-management-ui")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf46a1f00768c1021dcf06494b338daf07bdabd2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d63994db8d6bbd88efb1f7a58d0cbc8296b6239")]
 [assembly: System.Reflection.AssemblyProductAttribute("teledon-management-ui")]
 [assembly: System.Reflection.AssemblyTitleAttribute("teledon-management-ui")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

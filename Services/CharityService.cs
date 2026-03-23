@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using teledon_management_ui.Models;
 using teledon_management_ui.Models.dto;
 using teledon_management_ui.Persistence;
 
@@ -19,5 +20,10 @@ public class CharityService(ICharityRepository charityRepository, IDonationRepos
             return new CharityDto(c.Id, c.Name, donatedSum);
         });
         return charities;
+    }
+
+    public Charity Create(string name)
+    {
+        return charityRepository.Create(new Charity(0, name));
     }
 }

@@ -13,7 +13,7 @@ public partial class AddDonationWindowViewModel : ViewModelBase
     private readonly long _charityId;
 
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(RegisterDonationCommand))]
-    private double? _donationSum;
+    private decimal _donationAmount;
 
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(RegisterDonationCommand))]
     private string? _donorFirstName;
@@ -78,8 +78,7 @@ public partial class AddDonationWindowViewModel : ViewModelBase
 
     private bool CanRegisterDonation => !string.IsNullOrEmpty(DonorFirstName) && !string.IsNullOrEmpty(DonorLastName) &&
                                         !string.IsNullOrEmpty(DonorPhone) && !string.IsNullOrEmpty(DonorAddress) &&
-                                        !string.IsNullOrEmpty(DonationSum.ToString()) &&
-                                        double.TryParse(DonationSum.ToString(), out _);
+                                        DonationAmount > 0;
 
     [RelayCommand(CanExecute = nameof(CanRegisterDonation))]
     private void RegisterDonation()
@@ -87,14 +86,14 @@ public partial class AddDonationWindowViewModel : ViewModelBase
         if (_donorId.HasValue)
         {
             // Donor exists so we just create the donation
-            _donationService.AddDonationToCharity(_charityId, DonationSum!.Value, _donorId.Value);
+            _donationService.AddDonationToCharity(_charityId, (double)DonationAmount, _donorId.Value);
         }
         else
         {
             var donor = _donorService.CreateDonor(DonorFirstName!, DonorLastName!, DonorPhone!, DonorAddress!);
-            _donationService.AddDonationToCharity(_charityId, DonationSum!.Value, donor.Id);
+            _donationService.AddDonationToCharity(_charityId, (double)DonationAmount, donor.Id);
         }
 
-        WeakReferenceMessenger.Default.Send(new CloseDonationWindowMessage(_charityId, DonationSum!.Value));
+        WeakReferenceMessenger.Default.Send(new CloseDonationWindowMessage(_charityId, (double)DonationAmount));
     }
 }

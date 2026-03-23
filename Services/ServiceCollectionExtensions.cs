@@ -5,7 +5,7 @@ using teledon;
 
 namespace teledon_management_ui.Services;
 
-public static class ServiceCollectionExentions
+public static class ServiceCollectionExtensions
 {
     public static void AddCommonServices(this IServiceCollection serviceCollection)
     {
@@ -20,12 +20,13 @@ public static class ServiceCollectionExentions
         serviceCollection.AddSingleton<ICharityService, CharityService>();
         serviceCollection.AddSingleton<IDonorService, DonorService>();
         serviceCollection.AddSingleton<IDonationService, DonationService>();
-        
+
         //Add ViewModels
         serviceCollection.AddTransient<LoginViewModel>();
         serviceCollection.AddTransient<MainWindowViewModel>();
         serviceCollection.AddTransient<DashboardViewModel>();
         serviceCollection.AddTransient<CharityDtoViewModel>();
         serviceCollection.AddTransient<DonorListViewModel>();
+        serviceCollection.AddTransient<AddCharityWindowViewModel>();
     }
 }

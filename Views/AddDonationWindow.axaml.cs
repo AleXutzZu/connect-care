@@ -9,10 +9,8 @@ public partial class AddDonationWindow : Window
     public AddDonationWindow()
     {
         InitializeComponent();
-        
-        WeakReferenceMessenger.Default.Register<AddDonationWindow, CloseDonationWindowMessage>(this, static (w, m) =>
-        {
-            w.Close();
-        });
+
+        WeakReferenceMessenger.Default.Register<AddDonationWindow, CloseDonationWindowMessage>(this,
+            static (w, m) => { w.Close(); });
     }
 }

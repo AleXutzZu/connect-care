@@ -5,6 +5,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using teledon_management_ui.Messages;
+using teledon_management_ui.Models.dto;
 using teledon_management_ui.Services;
 
 namespace teledon_management_ui.ViewModels;
@@ -33,6 +34,12 @@ public partial class DashboardViewModel : ViewModelBase
                 targetCharity?.RaisedSum += message.DonatedSum;
             });
         });
+
+        WeakReferenceMessenger.Default.Register<CloseCharityWindowMessage>(this,
+            (recipient, message) =>
+            {
+                CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
+            });
     }
 
 
@@ -44,5 +51,11 @@ public partial class DashboardViewModel : ViewModelBase
     private async Task LogOutAsync()
     {
         await _authService.Logout();
+    }
+
+    [RelayCommand]
+    private void CreateCharity()
+    {
+        WeakReferenceMessenger.Default.Send(new CreateCharityMessage());
     }
 }

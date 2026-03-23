@@ -26,7 +26,14 @@
 
                 <StackPanel Grid.Row="2" Grid.Column="0" Spacing="6">
                     <TextBlock Text="Donation sum" FontWeight="SemiBold" />
-                    <NumericUpDown Watermark="Donation sum" Text="{Binding DonationSum}" ParsingNumberStyle="AllowDecimalPoint" Minimum="0" FormatString="0.00"/>
+                    <NumericUpDown Watermark="Donation sum" Minimum="0" ParsingNumberStyle="AllowDecimalPoint" FormatString="0.00">
+                        <NumericUpDown.Value>
+                            <Binding Path="DonationAmount">
+                                <Binding.TargetNullValue><x:Decimal>0</x:Decimal></Binding.TargetNullValue>
+                                <Binding.FallbackValue><x:Decimal>0</x:Decimal></Binding.FallbackValue>
+                            </Binding>
+                        </NumericUpDown.Value>
+                    </NumericUpDown>
                 </StackPanel>
             </Grid>
 
@@ -57,8 +64,9 @@
 
 
         <views:DonorListView Grid.Row="0" Grid.Column="1" DataContext="{Binding DonorListVm}" />
-        
-        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" CornerRadius="4" Command="{Binding RegisterDonationCommand}">
+
+        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" CornerRadius="4"
+                Command="{Binding RegisterDonationCommand}">
             <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold">Add donation</TextBlock>
         </Button>
 

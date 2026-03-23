@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:teledon_management_ui.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="teledon_management_ui.Views.AddCharityWindow"
+        x:DataType="vm:AddCharityWindowViewModel"
+        Title="Register a new charity"
+        WindowStartupLocation="CenterOwner"
+        Width="512"
+        Height="200">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+        <TextBlock Text="Charity name" FontWeight="Bold"/>
+        <TextBox Text="{Binding CharityName}" Watermark="Charity name"/>
+        <Button Command="{Binding CreateCharityCommand}">
+            <TextBlock Text="Add new charity" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+    </StackPanel>
+</Window>
