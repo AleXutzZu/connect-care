@@ -18,7 +18,6 @@
 
             <Menu Grid.Column="0">
                 <MenuItem Header="_Add">
-                    <MenuItem Header="Donor.." />
                     <MenuItem Header="_Charity.." />
                 </MenuItem>
             </Menu>
