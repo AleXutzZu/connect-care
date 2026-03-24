@@ -44,6 +44,7 @@ public partial class AddDonationWindowViewModel : ViewModelBase
         {
             if (args.PropertyName == nameof(DonorListViewModel.SelectedDonor))
             {
+                if (DonorListVm.SelectedDonor == null) return;
                 DonorFirstName = DonorListVm.SelectedDonor.FirstName;
                 DonorLastName = DonorListVm.SelectedDonor.LastName;
                 DonorAddress = DonorListVm.SelectedDonor.Address;
