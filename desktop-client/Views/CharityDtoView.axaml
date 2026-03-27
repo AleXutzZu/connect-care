@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:teledon_management_ui.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="teledon_management_ui.Views.CharityDtoView"
+             x:DataType="vm:CharityDtoViewModel">
+    <Border CornerRadius="8" Padding="16"
+            Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+            BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+            BorderThickness="1">
+        <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*">
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="24">
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"
+                           TextTrimming="CharacterEllipsis" />
+
+                <Grid Grid.Column="1" ColumnDefinitions="Auto, Auto" ColumnSpacing="6">
+                    <Button Grid.Column="0" Command="{Binding CreateDonationCommand}">Add</Button>
+
+                    <Button Grid.Column="1"
+                            Background="Transparent"
+                            Theme="{DynamicResource TransparentButton}">
+                        <PathIcon Data="{StaticResource settings_regular}" />
+
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuItem Header="Delete charity" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+
+                </Grid>
+            </Grid>
+
+            <TextBlock Grid.Row="2" TextWrapping="Wrap"
+                       Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}">
+                <Run Text="Amount Raised: " FontWeight="Bold" />
+                <Run Text="{Binding RaisedSum, StringFormat='${0:N2}'}" Foreground="Green" />
+            </TextBlock>
+
+        </Grid>
+    </Border>
+</UserControl>

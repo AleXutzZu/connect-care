@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="App.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Icons.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/AddCharityWindow.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/AddDonationView.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/AddDonationWindow.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/CharityDtoView.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/Dashboard.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/DashboardView.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/DonorListView.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/Login.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/LoginView.axaml" value="teledon-management-ui.csproj" />
+        <entry key="Views/MainWindow.axaml" value="teledon-management-ui.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
