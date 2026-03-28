@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using teledon_management_ui.Persistence;
+using teledon_management_ui.Protos;
 
 namespace teledon_management_ui.Services;
 
-public class AuthService(IVolunteerRepository volunteerRepository) : IAuthService
+public class AuthService(INetworkService networkService) : IAuthService
 {
     public bool IsLoggedIn { get; private set; }
 
@@ -12,13 +13,16 @@ public class AuthService(IVolunteerRepository volunteerRepository) : IAuthServic
 
     public async Task<IAuthService.LoginResult> Login(string username, string password)
     {
-        //Simulation
-        await Task.Delay(500);
+        var response = await networkService.SendRequestAsync(new MainMessage
+        {
+            AuthReq = new AuthUserRequest
+            {
+                Username = username,
+                Password = password
+            }
+        });
 
-        var account = volunteerRepository.FindByUsername(username);
-
-        if (account == null || !account.Username.Equals(username) || !account.Password.Equals(password))
-            return IAuthService.LoginResult.InvalidCredentials;
+        if (response.Status == AuthStatus.FailedAuth) return IAuthService.LoginResult.InvalidCredentials;
 
         IsLoggedIn = true;
         LoggedInUser = username;
@@ -31,7 +35,7 @@ public class AuthService(IVolunteerRepository volunteerRepository) : IAuthServic
         await Task.Delay(500);
         IsLoggedIn = false;
         LoggedInUser = string.Empty;
-        
+
         OnLoginStateChanged?.Invoke();
     }
 

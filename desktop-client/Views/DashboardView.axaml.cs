@@ -12,14 +12,6 @@ public partial class DashboardView : UserControl
 {
     public DashboardView()
     {
-        if (Design.IsDesignMode)
-        {
-            Design.SetDataContext(this,
-                new DashboardViewModel(
-                    new CharityService(new InMemoryCharityRepository(), new InMemoryDonationRepository()),
-                    new AuthService(new InMemoryVolunteerRepository())));
-        }
-
         InitializeComponent();
 
         if (Design.IsDesignMode) return;

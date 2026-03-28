@@ -16,10 +16,12 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton<IDonorRepository, InMemoryDonorRepository>();
 
         //Add services
+        serviceCollection.AddSingleton<INetworkService, NetworkService>(_ => new NetworkService("localhost", 8080));
         serviceCollection.AddSingleton<IAuthService, AuthService>();
         serviceCollection.AddSingleton<ICharityService, CharityService>();
         serviceCollection.AddSingleton<IDonorService, DonorService>();
         serviceCollection.AddSingleton<IDonationService, DonationService>();
+
 
         //Add ViewModels
         serviceCollection.AddTransient<LoginViewModel>();
