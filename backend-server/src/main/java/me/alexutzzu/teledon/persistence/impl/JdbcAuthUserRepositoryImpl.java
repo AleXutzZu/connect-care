@@ -1,7 +1,7 @@
 package me.alexutzzu.teledon.persistence.impl;
 
-import me.alexutzzu.teledon.model.Volunteer;
-import me.alexutzzu.teledon.persistence.VolunteerRepository;
+import me.alexutzzu.teledon.model.AuthUser;
+import me.alexutzzu.teledon.persistence.AuthUserRepository;
 import me.alexutzzu.teledon.persistence.database.DatabaseManager;
 
 import java.sql.Connection;
@@ -10,24 +10,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class JdbcVolunteerRepositoryImpl implements VolunteerRepository {
+public class JdbcAuthUserRepositoryImpl implements AuthUserRepository {
 
     private final DatabaseManager databaseManager;
 
-    public JdbcVolunteerRepositoryImpl(DatabaseManager databaseManager) {
+    public JdbcAuthUserRepositoryImpl(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
     }
 
     @Override
-    public Volunteer create(Volunteer data) throws SQLException {
+    public AuthUser create(AuthUser data) throws SQLException {
         try (Connection connection = databaseManager.getConnection()) {
 
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO volunteer(username, password) VALUES (?, ?) RETURNING *");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO authuser(username, password) VALUES (?, ?) RETURNING *");
             stmt.setString(1, data.username());
             stmt.setString(2, data.password());
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Volunteer(rs.getLong("id"), rs.getString("username"), rs.getString("password"));
+                    return new AuthUser(rs.getLong("id"), rs.getString("username"), rs.getString("password"));
                 }
                 throw new SQLException("Could not create volunteer, no ID obtained.");
             }
@@ -35,14 +35,14 @@ public class JdbcVolunteerRepositoryImpl implements VolunteerRepository {
     }
 
     @Override
-    public Optional<Volunteer> findById(Long id) throws SQLException {
+    public Optional<AuthUser> findById(Long id) throws SQLException {
         try (Connection connection = databaseManager.getConnection()) {
 
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM volunteer WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM authuser WHERE id = ?");
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(new Volunteer(rs.getLong("id"), rs.getString("username"), rs.getString("password")));
+                    return Optional.of(new AuthUser(rs.getLong("id"), rs.getString("username"), rs.getString("password")));
                 }
                 return Optional.empty();
             }
@@ -50,16 +50,16 @@ public class JdbcVolunteerRepositoryImpl implements VolunteerRepository {
     }
 
     @Override
-    public Optional<Volunteer> update(Volunteer data) throws SQLException {
+    public Optional<AuthUser> update(AuthUser data) throws SQLException {
         try (Connection connection = databaseManager.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("UPDATE volunteer SET username = COALESCE(?, username), password = COALESCE(?, password) WHERE id = ? RETURNING *");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE authuser SET username = COALESCE(?, username), password = COALESCE(?, password) WHERE id = ? RETURNING *");
             stmt.setString(1, data.username());
             stmt.setString(2, data.password());
             stmt.setLong(3, data.id());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(new Volunteer(rs.getLong("id"), rs.getString("username"), rs.getString("password")));
+                    return Optional.of(new AuthUser(rs.getLong("id"), rs.getString("username"), rs.getString("password")));
                 }
                 return Optional.empty();
             }
@@ -69,7 +69,7 @@ public class JdbcVolunteerRepositoryImpl implements VolunteerRepository {
     @Override
     public void deleteById(Long id) throws SQLException {
         try (Connection connection = databaseManager.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM volunteer WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM authuser WHERE id = ?");
             stmt.setLong(1, id);
 
             stmt.executeUpdate();
