@@ -1,36 +1,55 @@
 package me.alexutzzu;
 
-import me.alexutzzu.teledon.model.Volunteer;
+import me.alexutzzu.teledon.controller.AuthController;
+import me.alexutzzu.teledon.lib.ClientManager;
+import me.alexutzzu.teledon.persistence.AuthUserRepository;
 import me.alexutzzu.teledon.persistence.CharityRepository;
 import me.alexutzzu.teledon.persistence.DonationRepository;
 import me.alexutzzu.teledon.persistence.DonorRepository;
-import me.alexutzzu.teledon.persistence.VolunteerRepository;
 import me.alexutzzu.teledon.persistence.database.DatabaseManager;
+import me.alexutzzu.teledon.persistence.impl.JdbcAuthUserRepositoryImpl;
 import me.alexutzzu.teledon.persistence.impl.JdbcCharityRepositoryImpl;
 import me.alexutzzu.teledon.persistence.impl.JdbcDonationRepositoryImpl;
 import me.alexutzzu.teledon.persistence.impl.JdbcDonorRepositoryImpl;
-import me.alexutzzu.teledon.persistence.impl.JdbcVolunteerRepositoryImpl;
+import me.alexutzzu.teledon.service.AuthService;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Main {
     public static void main(String[] args) {
         try {
+            //DI setup
             CharityRepository charityRepository = DatabaseManager.getRepositoryInstance(CharityRepository.class, JdbcCharityRepositoryImpl.class);
             DonationRepository donationRepository = DatabaseManager.getRepositoryInstance(DonationRepository.class, JdbcDonationRepositoryImpl.class);
             DonorRepository donorRepository = DatabaseManager.getRepositoryInstance(DonorRepository.class, JdbcDonorRepositoryImpl.class);
-            VolunteerRepository volunteerRepository = DatabaseManager.getRepositoryInstance(VolunteerRepository.class, JdbcVolunteerRepositoryImpl.class);
+            AuthUserRepository authUserRepository = DatabaseManager.getRepositoryInstance(AuthUserRepository.class, JdbcAuthUserRepositoryImpl.class);
 
-            var result = volunteerRepository.create(new Volunteer(null, "Alex", "password"));
-            System.out.println(result);
+            AuthService authService = new AuthService(authUserRepository);
 
-            result = volunteerRepository.update(new Volunteer(result.id(), "Matei", "password")).orElseThrow();
-            System.out.println(result);
+            AuthController authController = new AuthController(authService);
 
-//        volunteerRepository.deleteById(result.id());
+            ClientManager clientManager = new ClientManager(authController);
 
-            System.out.println(volunteerRepository.findById(result.id()));
+
+            //Server setup
+            int port = 8080;
+            try (ServerSocket serverSocket = new ServerSocket()) {
+                serverSocket.bind(new InetSocketAddress("localhost", port));
+
+                while (!Thread.currentThread().isInterrupted()) {
+                    Socket clientSocket = serverSocket.accept();
+                    clientManager.registerClient(clientSocket);
+                }
+            } catch (IOException e) {
+                System.err.println("Exception occurred: " + e.getMessage());
+            } finally {
+                clientManager.shutdown();
+            }
         } catch (Exception e) {
-            System.err.println("Exception occurred whilst running main.");
+            System.err.println("Exception occurred during run of the application");
         }
-
     }
 }

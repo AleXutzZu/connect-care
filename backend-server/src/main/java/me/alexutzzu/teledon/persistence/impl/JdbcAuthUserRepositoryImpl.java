@@ -75,4 +75,19 @@ public class JdbcAuthUserRepositoryImpl implements AuthUserRepository {
             stmt.executeUpdate();
         }
     }
+
+    @Override
+    public Optional<AuthUser> findByUsername(String username) throws SQLException {
+        try (Connection connection = databaseManager.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM authuser WHERE username = ?");
+            stmt.setString(1, username);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(new AuthUser(rs.getLong("id"), rs.getString("username"), rs.getString("password")));
+                }
+                return Optional.empty();
+            }
+        }
+    }
 }
