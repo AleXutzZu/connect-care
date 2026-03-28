@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package teledon_management;
+
+option java_multiple_files = false;
+option java_package = "me.alexutzzu.teledon.protos";
+option java_outer_classname = "MainMessageProtos";
+option csharp_namespace = "teledon_management_ui.Protos";
+
+import "auth_user.proto";
+
+message MainMessage {
+	oneof payload {
+		AuthUserRequest authReq = 1;
+		AuthUserResponse authRes = 2;
+	}
+}
