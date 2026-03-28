@@ -7,7 +7,7 @@ option java_package = "me.alexutzzu.teledon.protos";
 option java_outer_classname = "MainMessageProtos";
 option csharp_namespace = "teledon_management_ui.Protos";
 
-import "auth_user.proto";
+import "protos/auth_user.proto";
 
 message MainMessage {
 	oneof payload {
