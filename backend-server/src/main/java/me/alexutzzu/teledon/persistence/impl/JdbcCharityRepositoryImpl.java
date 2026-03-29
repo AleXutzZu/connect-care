@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class JdbcCharityRepositoryImpl implements CharityRepository {
@@ -71,6 +73,21 @@ public class JdbcCharityRepositoryImpl implements CharityRepository {
             stmt.setLong(1, id);
 
             stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public List<Charity> findAll() throws SQLException {
+        try (Connection connection = databaseManager.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM charity");
+
+            List<Charity> charities = new ArrayList<>();
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    charities.add(new Charity(rs.getLong("id"), rs.getString("name")));
+                }
+            }
+            return charities;
         }
     }
 }

@@ -12,7 +12,7 @@ public partial class AddCharityWindow : Window
     {
         InitializeComponent();
         
-        WeakReferenceMessenger.Default.Register<AddCharityWindow, CloseCharityWindowMessage>(this, static (w, m) =>
+        WeakReferenceMessenger.Default.Register<AddCharityWindow, UpdateCharityMessage>(this, static (w, m) =>
         {
             w.Close();
         });

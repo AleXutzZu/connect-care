@@ -22,7 +22,7 @@ public class AuthService(INetworkService networkService) : IAuthService
             }
         });
 
-        if (response.Status == AuthStatus.FailedAuth) return IAuthService.LoginResult.InvalidCredentials;
+        if (response.AuthRes.Status == ResponseStatus.Failed) return IAuthService.LoginResult.InvalidCredentials;
 
         IsLoggedIn = true;
         LoggedInUser = username;

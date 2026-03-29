@@ -1,29 +1,68 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using teledon_management_ui.Messages;
 using teledon_management_ui.Models;
-using teledon_management_ui.Models.dto;
-using teledon_management_ui.Persistence;
+using teledon_management_ui.Protos;
+using CharityDto = teledon_management_ui.Models.dto.CharityDto;
 
 namespace teledon_management_ui.Services;
 
-public class CharityService(ICharityRepository charityRepository, IDonationRepository donationRepository)
-    : ICharityService
+public class CharityService : ICharityService
 {
-    public List<CharityDto> AllCharitiesWithRaisedSums()
+    private readonly INetworkService _networkService;
+
+    public CharityService(INetworkService networkService)
     {
-        var charities = charityRepository.FindAll().ConvertAll(c =>
-        {
-            var donations = donationRepository.findAllByCharityId(c.Id);
-
-            var donatedSum = donations.Sum(donation => donation.Amount);
-
-            return new CharityDto(c.Id, c.Name, donatedSum);
-        });
-        return charities;
+        _networkService = networkService;
+        _networkService.OnUpdateReceived += HandleUpdate;
     }
 
-    public Charity Create(string name)
+    private void HandleUpdate(MainMessage message)
     {
-        return charityRepository.Create(new Charity(0, name));
+        if (message.PayloadCase == MainMessage.PayloadOneofCase.CharityRes &&
+            message.CharityRes.BodyCase == CharityDtoResponse.BodyOneofCase.CreateBody)
+        {
+            var dto = message.CharityRes.CreateBody.Charity;
+            WeakReferenceMessenger.Default.Send(
+                new UpdateCharityMessage(new Charity(dto.Id, dto.Name)));
+        }
+    }
+
+    public async Task<List<CharityDto>> AllCharitiesWithRaisedSums()
+    {
+        var response = await _networkService.SendRequestAsync(new MainMessage
+        {
+            CharityReq = new CharityDtoRequest
+            {
+                GetBody = new GetCharityRequestBody()
+            }
+        });
+
+        if (response.CharityRes.Status == ResponseStatus.Failed) return [];
+
+        return response.CharityRes.GetBody.Charities.ToList()
+            .ConvertAll(p => new CharityDto(p.Id, p.Name, p.RaisedSum));
+    }
+
+    public async Task<Charity?> Create(string name)
+    {
+        var response = await _networkService.SendRequestAsync(new MainMessage
+        {
+            CharityReq = new CharityDtoRequest
+            {
+                CreateBody = new CreateCharityRequestBody
+                {
+                    Name = name
+                }
+            }
+        });
+
+        if (response.CharityRes.Status == ResponseStatus.Failed) return null;
+
+        var dto = response.CharityRes.CreateBody.Charity;
+
+        return new Charity(dto.Id, dto.Name);
     }
 }

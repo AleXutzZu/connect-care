@@ -15,114 +15,6 @@ public final class AuthUserProtos {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  /**
-   * Protobuf enum {@code teledon_management.AuthStatus}
-   */
-  public enum AuthStatus
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>CREDENTIALS_OK = 0;</code>
-     */
-    CREDENTIALS_OK(0),
-    /**
-     * <code>FAILED_AUTH = 1;</code>
-     */
-    FAILED_AUTH(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>CREDENTIALS_OK = 0;</code>
-     */
-    public static final int CREDENTIALS_OK_VALUE = 0;
-    /**
-     * <code>FAILED_AUTH = 1;</code>
-     */
-    public static final int FAILED_AUTH_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static AuthStatus valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static AuthStatus forNumber(int value) {
-      switch (value) {
-        case 0: return CREDENTIALS_OK;
-        case 1: return FAILED_AUTH;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<AuthStatus>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        AuthStatus> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<AuthStatus>() {
-            public AuthStatus findValueByNumber(int number) {
-              return AuthStatus.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
-      }
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return me.alexutzzu.teledon.protos.AuthUserProtos.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final AuthStatus[] VALUES = values();
-
-    public static AuthStatus valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private AuthStatus(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:teledon_management.AuthStatus)
-  }
-
   public interface AuthUserRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:teledon_management.AuthUserRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -883,20 +775,20 @@ public final class AuthUserProtos {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .teledon_management.AuthStatus status = 1;</code>
+     * <code>optional .teledon_management.ResponseStatus status = 1;</code>
      * @return Whether the status field is set.
      */
     boolean hasStatus();
     /**
-     * <code>optional .teledon_management.AuthStatus status = 1;</code>
+     * <code>optional .teledon_management.ResponseStatus status = 1;</code>
      * @return The enum numeric value on the wire for status.
      */
     int getStatusValue();
     /**
-     * <code>optional .teledon_management.AuthStatus status = 1;</code>
+     * <code>optional .teledon_management.ResponseStatus status = 1;</code>
      * @return The status.
      */
-    me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus getStatus();
+    me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus getStatus();
 
     /**
      * <code>optional string message = 2;</code>
@@ -956,26 +848,26 @@ public final class AuthUserProtos {
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_ = 0;
     /**
-     * <code>optional .teledon_management.AuthStatus status = 1;</code>
+     * <code>optional .teledon_management.ResponseStatus status = 1;</code>
      * @return Whether the status field is set.
      */
     @java.lang.Override public boolean hasStatus() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>optional .teledon_management.AuthStatus status = 1;</code>
+     * <code>optional .teledon_management.ResponseStatus status = 1;</code>
      * @return The enum numeric value on the wire for status.
      */
     @java.lang.Override public int getStatusValue() {
       return status_;
     }
     /**
-     * <code>optional .teledon_management.AuthStatus status = 1;</code>
+     * <code>optional .teledon_management.ResponseStatus status = 1;</code>
      * @return The status.
      */
-    @java.lang.Override public me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus getStatus() {
-      me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus result = me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus.forNumber(status_);
-      return result == null ? me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus.UNRECOGNIZED : result;
+    @java.lang.Override public me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus getStatus() {
+      me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus result = me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus.forNumber(status_);
+      return result == null ? me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus.UNRECOGNIZED : result;
     }
 
     public static final int MESSAGE_FIELD_NUMBER = 2;
@@ -1389,21 +1281,21 @@ public final class AuthUserProtos {
 
       private int status_ = 0;
       /**
-       * <code>optional .teledon_management.AuthStatus status = 1;</code>
+       * <code>optional .teledon_management.ResponseStatus status = 1;</code>
        * @return Whether the status field is set.
        */
       @java.lang.Override public boolean hasStatus() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
-       * <code>optional .teledon_management.AuthStatus status = 1;</code>
+       * <code>optional .teledon_management.ResponseStatus status = 1;</code>
        * @return The enum numeric value on the wire for status.
        */
       @java.lang.Override public int getStatusValue() {
         return status_;
       }
       /**
-       * <code>optional .teledon_management.AuthStatus status = 1;</code>
+       * <code>optional .teledon_management.ResponseStatus status = 1;</code>
        * @param value The enum numeric value on the wire for status to set.
        * @return This builder for chaining.
        */
@@ -1414,20 +1306,20 @@ public final class AuthUserProtos {
         return this;
       }
       /**
-       * <code>optional .teledon_management.AuthStatus status = 1;</code>
+       * <code>optional .teledon_management.ResponseStatus status = 1;</code>
        * @return The status.
        */
       @java.lang.Override
-      public me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus getStatus() {
-        me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus result = me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus.forNumber(status_);
-        return result == null ? me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus.UNRECOGNIZED : result;
+      public me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus getStatus() {
+        me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus result = me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus.forNumber(status_);
+        return result == null ? me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus.UNRECOGNIZED : result;
       }
       /**
-       * <code>optional .teledon_management.AuthStatus status = 1;</code>
+       * <code>optional .teledon_management.ResponseStatus status = 1;</code>
        * @param value The status to set.
        * @return This builder for chaining.
        */
-      public Builder setStatus(me.alexutzzu.teledon.protos.AuthUserProtos.AuthStatus value) {
+      public Builder setStatus(me.alexutzzu.teledon.protos.ResponseStatusProtos.ResponseStatus value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -1437,7 +1329,7 @@ public final class AuthUserProtos {
         return this;
       }
       /**
-       * <code>optional .teledon_management.AuthStatus status = 1;</code>
+       * <code>optional .teledon_management.ResponseStatus status = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearStatus() {
@@ -1608,19 +1500,21 @@ public final class AuthUserProtos {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017auth_user.proto\022\022teledon_management\"Y\n" +
-      "\017AuthUserRequest\022\025\n\010username\030\001 \001(\tH\000\210\001\001\022" +
-      "\025\n\010password\030\002 \001(\tH\001\210\001\001B\013\n\t_usernameB\013\n\t_" +
-      "password\"t\n\020AuthUserResponse\0223\n\006status\030\001" +
-      " \001(\0162\036.teledon_management.AuthStatusH\000\210\001" +
-      "\001\022\024\n\007message\030\002 \001(\tH\001\210\001\001B\t\n\007_statusB\n\n\010_m" +
-      "essage*1\n\nAuthStatus\022\022\n\016CREDENTIALS_OK\020\000" +
-      "\022\017\n\013FAILED_AUTH\020\001B/\n\033me.alexutzzu.teledo" +
-      "n.protosB\016AuthUserProtosP\000b\006proto3"
+      "\n\017auth_user.proto\022\022teledon_management\032\025r" +
+      "esponse_status.proto\"Y\n\017AuthUserRequest\022" +
+      "\025\n\010username\030\001 \001(\tH\000\210\001\001\022\025\n\010password\030\002 \001(\t" +
+      "H\001\210\001\001B\013\n\t_usernameB\013\n\t_password\"x\n\020AuthU" +
+      "serResponse\0227\n\006status\030\001 \001(\0162\".teledon_ma" +
+      "nagement.ResponseStatusH\000\210\001\001\022\024\n\007message\030" +
+      "\002 \001(\tH\001\210\001\001B\t\n\007_statusB\n\n\010_messageBN\n\033me." +
+      "alexutzzu.teledon.protosB\016AuthUserProtos" +
+      "P\000\252\002\034teledon_management_ui.Protosb\006proto" +
+      "3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          me.alexutzzu.teledon.protos.ResponseStatusProtos.getDescriptor(),
         });
     internal_static_teledon_management_AuthUserRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -1634,6 +1528,7 @@ public final class AuthUserProtos {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_teledon_management_AuthUserResponse_descriptor,
         new java.lang.String[] { "Status", "Message", });
+    me.alexutzzu.teledon.protos.ResponseStatusProtos.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

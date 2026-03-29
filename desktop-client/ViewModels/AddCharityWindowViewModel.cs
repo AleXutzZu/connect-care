@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,10 +15,10 @@ public partial class AddCharityWindowViewModel(ICharityService charityService) :
     private bool CanCreateCharity => !string.IsNullOrEmpty(CharityName);
 
     [RelayCommand(CanExecute = nameof(CanCreateCharity))]
-    private void CreateCharity()
+    private async Task CreateCharityAsync()
     {
-        var charity = charityService.Create(CharityName!);
+        var charity = await charityService.Create(CharityName!);
 
-        WeakReferenceMessenger.Default.Send(new CloseCharityWindowMessage(charity));
+        WeakReferenceMessenger.Default.Send(new UpdateCharityMessage(charity));
     }
 }

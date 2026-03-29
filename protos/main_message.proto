@@ -7,11 +7,15 @@ option java_package = "me.alexutzzu.teledon.protos";
 option java_outer_classname = "MainMessageProtos";
 option csharp_namespace = "teledon_management_ui.Protos";
 
-import "protos/auth_user.proto";
+import "charity.proto";
+import "auth_user.proto";
 
 message MainMessage {
-	oneof payload {
-		AuthUserRequest authReq = 1;
-		AuthUserResponse authRes = 2;
-	}
+  oneof payload {
+    AuthUserRequest authReq = 1;
+    AuthUserResponse authRes = 2;
+    CharityDtoRequest charityReq = 3;
+    CharityDtoResponse charityRes = 4;
+  }
+  optional bool isUpdatePayload = 5;
 }

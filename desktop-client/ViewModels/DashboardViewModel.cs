@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using teledon_management_ui.Messages;
@@ -12,7 +13,7 @@ namespace teledon_management_ui.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase
 {
-    public ObservableCollection<CharityDtoViewModel> CharityDtos { get; }
+    [ObservableProperty] private ObservableCollection<CharityDtoViewModel> _charityDtos = new();
     private readonly IAuthService _authService;
     private readonly ICharityService _charityService;
 
@@ -21,8 +22,7 @@ public partial class DashboardViewModel : ViewModelBase
         _charityService = charityService;
         _authService = authService;
 
-        CharityDtos = new(_charityService.AllCharitiesWithRaisedSums()
-            .ConvertAll(c => new CharityDtoViewModel(c)));
+        _ = InitializeAsync();
 
         WeakReferenceMessenger.Default.Register<CloseDonationWindowMessage>(this, (recipient, message) =>
         {
@@ -35,9 +35,10 @@ public partial class DashboardViewModel : ViewModelBase
             });
         });
 
-        WeakReferenceMessenger.Default.Register<CloseCharityWindowMessage>(this,
+        WeakReferenceMessenger.Default.Register<UpdateCharityMessage>(this,
             (recipient, message) =>
             {
+                if (message.Charity == null) return;
                 CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
             });
     }
@@ -56,6 +57,14 @@ public partial class DashboardViewModel : ViewModelBase
     [RelayCommand]
     private void CreateCharity()
     {
-        WeakReferenceMessenger.Default.Send(new CreateCharityMessage());
+        WeakReferenceMessenger.Default.Send(new OpenCharityCreationWindowMessage());
+    }
+
+    private async Task InitializeAsync()
+    {
+        var charities = await _charityService.AllCharitiesWithRaisedSums();
+
+        CharityDtos = new ObservableCollection<CharityDtoViewModel>(
+            charities.ConvertAll(c => new CharityDtoViewModel(c)));
     }
 }

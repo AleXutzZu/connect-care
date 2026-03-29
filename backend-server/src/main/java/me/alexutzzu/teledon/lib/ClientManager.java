@@ -1,6 +1,8 @@
 package me.alexutzzu.teledon.lib;
 
 import me.alexutzzu.teledon.controller.AuthController;
+import me.alexutzzu.teledon.controller.CharityController;
+import me.alexutzzu.teledon.controller.RequestHandler;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
 import me.alexutzzu.teledon.service.AuthService;
 
@@ -10,6 +12,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,17 +23,40 @@ public class ClientManager {
     private static final Logger logger = Logger.getLogger("me.alexutzzu.teledon.lib.ClientManager");
     private final Set<Client> clients = Collections.synchronizedSet(new HashSet<>());
 
-    private final AuthController authController;
+    private final List<RequestHandler> controllers;
 
-    public ClientManager(AuthController authController) {
-        this.authController = authController;
+    public ClientManager(List<RequestHandler> controllers) {
+        this.controllers = Collections.unmodifiableList(controllers);
     }
 
-    private class Client implements Runnable {
+    private class Client implements Runnable, ClientConnection {
         private final Socket socket;
+        private OutputStream out;
 
         private Client(Socket socket) {
             this.socket = socket;
+        }
+
+        @Override
+        public synchronized void send(MainMessageProtos.MainMessage message) {
+            if (out != null) {
+                try {
+                    message.writeDelimitedTo(out);
+                } catch (IOException e) {
+                    logger.warning("Failed to send message: " + e.getMessage());
+                }
+            }
+        }
+
+        @Override
+        public void broadcast(MainMessageProtos.MainMessage message) {
+            synchronized (clients) {
+                for (Client otherClient : clients) {
+                    if (otherClient != this) {
+                        otherClient.send(message);
+                    }
+                }
+            }
         }
 
         @Override
@@ -38,29 +64,21 @@ public class ClientManager {
             try (socket) {
                 try (InputStream in = socket.getInputStream();
                      OutputStream out = socket.getOutputStream()) {
+                    synchronized (this) {
+                        this.out = out;
+                    }
                     while (true) {
                         MainMessageProtos.MainMessage incoming = MainMessageProtos.MainMessage.parseDelimitedFrom(in);
                         if (incoming == null) break;
 
-                        switch (incoming.getPayloadCase()) {
-                            case AUTHREQ:
-                                var response = authController.handleAuth(incoming.getAuthReq());
+                        var correctHandler = controllers.stream().filter(c -> c.getHandlerType() == incoming.getPayloadCase()).findFirst();
 
-                                var outgoing = MainMessageProtos.MainMessage.newBuilder()
-                                        .setAuthRes(response)
-                                        .build();
-
-                                outgoing.writeDelimitedTo(out);
-
-                                break;
-
-                            case PAYLOAD_NOT_SET:
-                                logger.warning("Received empty payload, ignoring");
-                                break;
-                            default:
-                                logger.warning("Unknown payload case: " + incoming.getPayloadCase());
-                                break;
+                        if (correctHandler.isEmpty()) {
+                            logger.warning("Cannot handle payload " + incoming.getPayloadCase());
+                            continue;
                         }
+
+                        correctHandler.get().handleRequest(incoming, this);
                     }
                 } catch (IOException e) {
                     logger.severe("Connection error: " + e.getMessage());
@@ -68,6 +86,8 @@ public class ClientManager {
 
             } catch (IOException e) {
                 logger.severe("Exception occurred: " + e.getMessage());
+            } finally {
+                clients.remove(this);
             }
         }
     }

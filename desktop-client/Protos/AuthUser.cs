@@ -24,18 +24,18 @@ namespace teledon_management_ui.Protos {
     static AuthUserReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9hdXRoX3VzZXIucHJvdG8SEnRlbGVkb25fbWFuYWdlbWVudCJZCg9BdXRo",
-            "VXNlclJlcXVlc3QSFQoIdXNlcm5hbWUYASABKAlIAIgBARIVCghwYXNzd29y",
-            "ZBgCIAEoCUgBiAEBQgsKCV91c2VybmFtZUILCglfcGFzc3dvcmQidAoQQXV0",
-            "aFVzZXJSZXNwb25zZRIzCgZzdGF0dXMYASABKA4yHi50ZWxlZG9uX21hbmFn",
-            "ZW1lbnQuQXV0aFN0YXR1c0gAiAEBEhQKB21lc3NhZ2UYAiABKAlIAYgBAUIJ",
-            "Cgdfc3RhdHVzQgoKCF9tZXNzYWdlKjEKCkF1dGhTdGF0dXMSEgoOQ1JFREVO",
-            "VElBTFNfT0sQABIPCgtGQUlMRURfQVVUSBABQk4KG21lLmFsZXh1dHp6dS50",
-            "ZWxlZG9uLnByb3Rvc0IOQXV0aFVzZXJQcm90b3NQAKoCHHRlbGVkb25fbWFu",
-            "YWdlbWVudF91aS5Qcm90b3NiBnByb3RvMw=="));
+            "Cg9hdXRoX3VzZXIucHJvdG8SEnRlbGVkb25fbWFuYWdlbWVudBoVcmVzcG9u",
+            "c2Vfc3RhdHVzLnByb3RvIlkKD0F1dGhVc2VyUmVxdWVzdBIVCgh1c2VybmFt",
+            "ZRgBIAEoCUgAiAEBEhUKCHBhc3N3b3JkGAIgASgJSAGIAQFCCwoJX3VzZXJu",
+            "YW1lQgsKCV9wYXNzd29yZCJ4ChBBdXRoVXNlclJlc3BvbnNlEjcKBnN0YXR1",
+            "cxgBIAEoDjIiLnRlbGVkb25fbWFuYWdlbWVudC5SZXNwb25zZVN0YXR1c0gA",
+            "iAEBEhQKB21lc3NhZ2UYAiABKAlIAYgBAUIJCgdfc3RhdHVzQgoKCF9tZXNz",
+            "YWdlQk4KG21lLmFsZXh1dHp6dS50ZWxlZG9uLnByb3Rvc0IOQXV0aFVzZXJQ",
+            "cm90b3NQAKoCHHRlbGVkb25fbWFuYWdlbWVudF91aS5Qcm90b3NiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::teledon_management_ui.Protos.AuthStatus), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::FileDescriptor[] { global::teledon_management_ui.Protos.ResponseStatusReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.AuthUserRequest), global::teledon_management_ui.Protos.AuthUserRequest.Parser, new[]{ "Username", "Password" }, new[]{ "Username", "Password" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.AuthUserResponse), global::teledon_management_ui.Protos.AuthUserResponse.Parser, new[]{ "Status", "Message" }, new[]{ "Status", "Message" }, null, null, null)
           }));
@@ -43,14 +43,6 @@ namespace teledon_management_ui.Protos {
     #endregion
 
   }
-  #region Enums
-  public enum AuthStatus {
-    [pbr::OriginalName("CREDENTIALS_OK")] CredentialsOk = 0,
-    [pbr::OriginalName("FAILED_AUTH")] FailedAuth = 1,
-  }
-
-  #endregion
-
   #region Messages
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AuthUserRequest : pb::IMessage<AuthUserRequest>
@@ -357,12 +349,12 @@ namespace teledon_management_ui.Protos {
 
     /// <summary>Field number for the "status" field.</summary>
     public const int StatusFieldNumber = 1;
-    private readonly static global::teledon_management_ui.Protos.AuthStatus StatusDefaultValue = global::teledon_management_ui.Protos.AuthStatus.CredentialsOk;
+    private readonly static global::teledon_management_ui.Protos.ResponseStatus StatusDefaultValue = global::teledon_management_ui.Protos.ResponseStatus.Ok;
 
-    private global::teledon_management_ui.Protos.AuthStatus status_;
+    private global::teledon_management_ui.Protos.ResponseStatus status_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::teledon_management_ui.Protos.AuthStatus Status {
+    public global::teledon_management_ui.Protos.ResponseStatus Status {
       get { if ((_hasBits0 & 1) != 0) { return status_; } else { return StatusDefaultValue; } }
       set {
         _hasBits0 |= 1;
@@ -528,7 +520,7 @@ namespace teledon_management_ui.Protos {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Status = (global::teledon_management_ui.Protos.AuthStatus) input.ReadEnum();
+            Status = (global::teledon_management_ui.Protos.ResponseStatus) input.ReadEnum();
             break;
           }
           case 18: {
@@ -551,7 +543,7 @@ namespace teledon_management_ui.Protos {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Status = (global::teledon_management_ui.Protos.AuthStatus) input.ReadEnum();
+            Status = (global::teledon_management_ui.Protos.ResponseStatus) input.ReadEnum();
             break;
           }
           case 18: {

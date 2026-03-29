@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package teledon_management;
+
+option java_multiple_files = false;
+option java_package = "me.alexutzzu.teledon.protos";
+option java_outer_classname = "CharityProtos";
+option csharp_namespace = "teledon_management_ui.Protos";
+
+import "response_status.proto";
+
+message CharityDto {
+  optional string name = 1;
+  optional int64 id = 2;
+  optional double raisedSum = 3;
+}
+
+message CreateCharityRequestBody {
+  optional string name = 1;
+}
+
+message GetCharityRequestBody {
+  optional int64 id = 1;
+}
+
+message CharityDtoRequest {
+  oneof body {
+    CreateCharityRequestBody createBody = 1;
+    GetCharityRequestBody getBody = 2;
+  }
+}
+
+message CreateCharityResponseBody {
+  optional CharityDto charity = 1;
+}
+
+message GetCharityResponseBody {
+  repeated CharityDto charities = 1;
+}
+
+
+message CharityDtoResponse {
+  optional ResponseStatus status = 1;
+  oneof body {
+    CreateCharityResponseBody createBody = 2;
+    GetCharityResponseBody getBody = 3;
+  }
+}

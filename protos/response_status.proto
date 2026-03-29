@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package teledon_management;
+
+option java_multiple_files = false;
+option java_package = "me.alexutzzu.teledon.protos";
+option java_outer_classname = "ResponseStatusProtos";
+option csharp_namespace = "teledon_management_ui.Protos";
+
+enum ResponseStatus {
+  OK = 0;
+  FAILED = 1;
+}

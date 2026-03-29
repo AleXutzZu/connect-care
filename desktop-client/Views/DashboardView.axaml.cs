@@ -34,7 +34,7 @@ public partial class DashboardView : UserControl
             }
         });
         
-        WeakReferenceMessenger.Default.Register<DashboardView, CreateCharityMessage>(this, (w, m) =>
+        WeakReferenceMessenger.Default.Register<DashboardView, OpenCharityCreationWindowMessage>(this, (w, m) =>
         {
             if (App.Services == null) return;
             var topLevel = TopLevel.GetTopLevel(w);

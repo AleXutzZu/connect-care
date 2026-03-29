@@ -1,6 +1,6 @@
 namespace teledon_management_ui.Messages;
 
-public class CreateCharityMessage
+public class OpenCharityCreationWindowMessage
 {
     
 }

@@ -49,6 +49,47 @@ public final class MainMessageProtos {
      */
     me.alexutzzu.teledon.protos.AuthUserProtos.AuthUserResponseOrBuilder getAuthResOrBuilder();
 
+    /**
+     * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+     * @return Whether the charityReq field is set.
+     */
+    boolean hasCharityReq();
+    /**
+     * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+     * @return The charityReq.
+     */
+    me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest getCharityReq();
+    /**
+     * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+     */
+    me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequestOrBuilder getCharityReqOrBuilder();
+
+    /**
+     * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+     * @return Whether the charityRes field is set.
+     */
+    boolean hasCharityRes();
+    /**
+     * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+     * @return The charityRes.
+     */
+    me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse getCharityRes();
+    /**
+     * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+     */
+    me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponseOrBuilder getCharityResOrBuilder();
+
+    /**
+     * <code>optional bool isUpdatePayload = 5;</code>
+     * @return Whether the isUpdatePayload field is set.
+     */
+    boolean hasIsUpdatePayload();
+    /**
+     * <code>optional bool isUpdatePayload = 5;</code>
+     * @return The isUpdatePayload.
+     */
+    boolean getIsUpdatePayload();
+
     me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage.PayloadCase getPayloadCase();
   }
   /**
@@ -86,6 +127,7 @@ public final class MainMessageProtos {
               me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage.class, me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage.Builder.class);
     }
 
+    private int bitField0_;
     private int payloadCase_ = 0;
     @SuppressWarnings("serial")
     private java.lang.Object payload_;
@@ -94,6 +136,8 @@ public final class MainMessageProtos {
             com.google.protobuf.AbstractMessage.InternalOneOfEnum {
       AUTHREQ(1),
       AUTHRES(2),
+      CHARITYREQ(3),
+      CHARITYRES(4),
       PAYLOAD_NOT_SET(0);
       private final int value;
       private PayloadCase(int value) {
@@ -113,6 +157,8 @@ public final class MainMessageProtos {
         switch (value) {
           case 1: return AUTHREQ;
           case 2: return AUTHRES;
+          case 3: return CHARITYREQ;
+          case 4: return CHARITYRES;
           case 0: return PAYLOAD_NOT_SET;
           default: return null;
         }
@@ -190,6 +236,87 @@ public final class MainMessageProtos {
       return me.alexutzzu.teledon.protos.AuthUserProtos.AuthUserResponse.getDefaultInstance();
     }
 
+    public static final int CHARITYREQ_FIELD_NUMBER = 3;
+    /**
+     * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+     * @return Whether the charityReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasCharityReq() {
+      return payloadCase_ == 3;
+    }
+    /**
+     * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+     * @return The charityReq.
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest getCharityReq() {
+      if (payloadCase_ == 3) {
+         return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_;
+      }
+      return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance();
+    }
+    /**
+     * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequestOrBuilder getCharityReqOrBuilder() {
+      if (payloadCase_ == 3) {
+         return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_;
+      }
+      return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance();
+    }
+
+    public static final int CHARITYRES_FIELD_NUMBER = 4;
+    /**
+     * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+     * @return Whether the charityRes field is set.
+     */
+    @java.lang.Override
+    public boolean hasCharityRes() {
+      return payloadCase_ == 4;
+    }
+    /**
+     * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+     * @return The charityRes.
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse getCharityRes() {
+      if (payloadCase_ == 4) {
+         return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_;
+      }
+      return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance();
+    }
+    /**
+     * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponseOrBuilder getCharityResOrBuilder() {
+      if (payloadCase_ == 4) {
+         return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_;
+      }
+      return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance();
+    }
+
+    public static final int ISUPDATEPAYLOAD_FIELD_NUMBER = 5;
+    private boolean isUpdatePayload_ = false;
+    /**
+     * <code>optional bool isUpdatePayload = 5;</code>
+     * @return Whether the isUpdatePayload field is set.
+     */
+    @java.lang.Override
+    public boolean hasIsUpdatePayload() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>optional bool isUpdatePayload = 5;</code>
+     * @return The isUpdatePayload.
+     */
+    @java.lang.Override
+    public boolean getIsUpdatePayload() {
+      return isUpdatePayload_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -210,6 +337,15 @@ public final class MainMessageProtos {
       if (payloadCase_ == 2) {
         output.writeMessage(2, (me.alexutzzu.teledon.protos.AuthUserProtos.AuthUserResponse) payload_);
       }
+      if (payloadCase_ == 3) {
+        output.writeMessage(3, (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_);
+      }
+      if (payloadCase_ == 4) {
+        output.writeMessage(4, (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_);
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeBool(5, isUpdatePayload_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -227,6 +363,18 @@ public final class MainMessageProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, (me.alexutzzu.teledon.protos.AuthUserProtos.AuthUserResponse) payload_);
       }
+      if (payloadCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_);
+      }
+      if (payloadCase_ == 4) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_);
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, isUpdatePayload_);
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
@@ -242,6 +390,11 @@ public final class MainMessageProtos {
       }
       me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage other = (me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage) obj;
 
+      if (hasIsUpdatePayload() != other.hasIsUpdatePayload()) return false;
+      if (hasIsUpdatePayload()) {
+        if (getIsUpdatePayload()
+            != other.getIsUpdatePayload()) return false;
+      }
       if (!getPayloadCase().equals(other.getPayloadCase())) return false;
       switch (payloadCase_) {
         case 1:
@@ -251,6 +404,14 @@ public final class MainMessageProtos {
         case 2:
           if (!getAuthRes()
               .equals(other.getAuthRes())) return false;
+          break;
+        case 3:
+          if (!getCharityReq()
+              .equals(other.getCharityReq())) return false;
+          break;
+        case 4:
+          if (!getCharityRes()
+              .equals(other.getCharityRes())) return false;
           break;
         case 0:
         default:
@@ -266,6 +427,11 @@ public final class MainMessageProtos {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasIsUpdatePayload()) {
+        hash = (37 * hash) + ISUPDATEPAYLOAD_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getIsUpdatePayload());
+      }
       switch (payloadCase_) {
         case 1:
           hash = (37 * hash) + AUTHREQ_FIELD_NUMBER;
@@ -274,6 +440,14 @@ public final class MainMessageProtos {
         case 2:
           hash = (37 * hash) + AUTHRES_FIELD_NUMBER;
           hash = (53 * hash) + getAuthRes().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + CHARITYREQ_FIELD_NUMBER;
+          hash = (53 * hash) + getCharityReq().hashCode();
+          break;
+        case 4:
+          hash = (37 * hash) + CHARITYRES_FIELD_NUMBER;
+          hash = (53 * hash) + getCharityRes().hashCode();
           break;
         case 0:
         default:
@@ -415,6 +589,13 @@ public final class MainMessageProtos {
         if (authResBuilder_ != null) {
           authResBuilder_.clear();
         }
+        if (charityReqBuilder_ != null) {
+          charityReqBuilder_.clear();
+        }
+        if (charityResBuilder_ != null) {
+          charityResBuilder_.clear();
+        }
+        isUpdatePayload_ = false;
         payloadCase_ = 0;
         payload_ = null;
         return this;
@@ -451,6 +632,12 @@ public final class MainMessageProtos {
 
       private void buildPartial0(me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage result) {
         int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.isUpdatePayload_ = isUpdatePayload_;
+          to_bitField0_ |= 0x00000001;
+        }
+        result.bitField0_ |= to_bitField0_;
       }
 
       private void buildPartialOneofs(me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage result) {
@@ -463,6 +650,14 @@ public final class MainMessageProtos {
         if (payloadCase_ == 2 &&
             authResBuilder_ != null) {
           result.payload_ = authResBuilder_.build();
+        }
+        if (payloadCase_ == 3 &&
+            charityReqBuilder_ != null) {
+          result.payload_ = charityReqBuilder_.build();
+        }
+        if (payloadCase_ == 4 &&
+            charityResBuilder_ != null) {
+          result.payload_ = charityResBuilder_.build();
         }
       }
 
@@ -510,6 +705,9 @@ public final class MainMessageProtos {
 
       public Builder mergeFrom(me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage other) {
         if (other == me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage.getDefaultInstance()) return this;
+        if (other.hasIsUpdatePayload()) {
+          setIsUpdatePayload(other.getIsUpdatePayload());
+        }
         switch (other.getPayloadCase()) {
           case AUTHREQ: {
             mergeAuthReq(other.getAuthReq());
@@ -517,6 +715,14 @@ public final class MainMessageProtos {
           }
           case AUTHRES: {
             mergeAuthRes(other.getAuthRes());
+            break;
+          }
+          case CHARITYREQ: {
+            mergeCharityReq(other.getCharityReq());
+            break;
+          }
+          case CHARITYRES: {
+            mergeCharityRes(other.getCharityRes());
             break;
           }
           case PAYLOAD_NOT_SET: {
@@ -563,6 +769,25 @@ public final class MainMessageProtos {
                 payloadCase_ = 2;
                 break;
               } // case 18
+              case 26: {
+                input.readMessage(
+                    getCharityReqFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                payloadCase_ = 3;
+                break;
+              } // case 26
+              case 34: {
+                input.readMessage(
+                    getCharityResFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                payloadCase_ = 4;
+                break;
+              } // case 34
+              case 40: {
+                isUpdatePayload_ = input.readBool();
+                bitField0_ |= 0x00000010;
+                break;
+              } // case 40
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -878,6 +1103,330 @@ public final class MainMessageProtos {
         onChanged();
         return authResBuilder_;
       }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.Builder, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequestOrBuilder> charityReqBuilder_;
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       * @return Whether the charityReq field is set.
+       */
+      @java.lang.Override
+      public boolean hasCharityReq() {
+        return payloadCase_ == 3;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       * @return The charityReq.
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest getCharityReq() {
+        if (charityReqBuilder_ == null) {
+          if (payloadCase_ == 3) {
+            return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_;
+          }
+          return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance();
+        } else {
+          if (payloadCase_ == 3) {
+            return charityReqBuilder_.getMessage();
+          }
+          return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      public Builder setCharityReq(me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest value) {
+        if (charityReqBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          payload_ = value;
+          onChanged();
+        } else {
+          charityReqBuilder_.setMessage(value);
+        }
+        payloadCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      public Builder setCharityReq(
+          me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.Builder builderForValue) {
+        if (charityReqBuilder_ == null) {
+          payload_ = builderForValue.build();
+          onChanged();
+        } else {
+          charityReqBuilder_.setMessage(builderForValue.build());
+        }
+        payloadCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      public Builder mergeCharityReq(me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest value) {
+        if (charityReqBuilder_ == null) {
+          if (payloadCase_ == 3 &&
+              payload_ != me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance()) {
+            payload_ = me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.newBuilder((me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            payload_ = value;
+          }
+          onChanged();
+        } else {
+          if (payloadCase_ == 3) {
+            charityReqBuilder_.mergeFrom(value);
+          } else {
+            charityReqBuilder_.setMessage(value);
+          }
+        }
+        payloadCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      public Builder clearCharityReq() {
+        if (charityReqBuilder_ == null) {
+          if (payloadCase_ == 3) {
+            payloadCase_ = 0;
+            payload_ = null;
+            onChanged();
+          }
+        } else {
+          if (payloadCase_ == 3) {
+            payloadCase_ = 0;
+            payload_ = null;
+          }
+          charityReqBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.Builder getCharityReqBuilder() {
+        return getCharityReqFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequestOrBuilder getCharityReqOrBuilder() {
+        if ((payloadCase_ == 3) && (charityReqBuilder_ != null)) {
+          return charityReqBuilder_.getMessageOrBuilder();
+        } else {
+          if (payloadCase_ == 3) {
+            return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_;
+          }
+          return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.CharityDtoRequest charityReq = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.Builder, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequestOrBuilder> 
+          getCharityReqFieldBuilder() {
+        if (charityReqBuilder_ == null) {
+          if (!(payloadCase_ == 3)) {
+            payload_ = me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.getDefaultInstance();
+          }
+          charityReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest.Builder, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequestOrBuilder>(
+                  (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoRequest) payload_,
+                  getParentForChildren(),
+                  isClean());
+          payload_ = null;
+        }
+        payloadCase_ = 3;
+        onChanged();
+        return charityReqBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.Builder, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponseOrBuilder> charityResBuilder_;
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       * @return Whether the charityRes field is set.
+       */
+      @java.lang.Override
+      public boolean hasCharityRes() {
+        return payloadCase_ == 4;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       * @return The charityRes.
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse getCharityRes() {
+        if (charityResBuilder_ == null) {
+          if (payloadCase_ == 4) {
+            return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_;
+          }
+          return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance();
+        } else {
+          if (payloadCase_ == 4) {
+            return charityResBuilder_.getMessage();
+          }
+          return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      public Builder setCharityRes(me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse value) {
+        if (charityResBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          payload_ = value;
+          onChanged();
+        } else {
+          charityResBuilder_.setMessage(value);
+        }
+        payloadCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      public Builder setCharityRes(
+          me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.Builder builderForValue) {
+        if (charityResBuilder_ == null) {
+          payload_ = builderForValue.build();
+          onChanged();
+        } else {
+          charityResBuilder_.setMessage(builderForValue.build());
+        }
+        payloadCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      public Builder mergeCharityRes(me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse value) {
+        if (charityResBuilder_ == null) {
+          if (payloadCase_ == 4 &&
+              payload_ != me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance()) {
+            payload_ = me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.newBuilder((me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            payload_ = value;
+          }
+          onChanged();
+        } else {
+          if (payloadCase_ == 4) {
+            charityResBuilder_.mergeFrom(value);
+          } else {
+            charityResBuilder_.setMessage(value);
+          }
+        }
+        payloadCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      public Builder clearCharityRes() {
+        if (charityResBuilder_ == null) {
+          if (payloadCase_ == 4) {
+            payloadCase_ = 0;
+            payload_ = null;
+            onChanged();
+          }
+        } else {
+          if (payloadCase_ == 4) {
+            payloadCase_ = 0;
+            payload_ = null;
+          }
+          charityResBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.Builder getCharityResBuilder() {
+        return getCharityResFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponseOrBuilder getCharityResOrBuilder() {
+        if ((payloadCase_ == 4) && (charityResBuilder_ != null)) {
+          return charityResBuilder_.getMessageOrBuilder();
+        } else {
+          if (payloadCase_ == 4) {
+            return (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_;
+          }
+          return me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.CharityDtoResponse charityRes = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.Builder, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponseOrBuilder> 
+          getCharityResFieldBuilder() {
+        if (charityResBuilder_ == null) {
+          if (!(payloadCase_ == 4)) {
+            payload_ = me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.getDefaultInstance();
+          }
+          charityResBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse.Builder, me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponseOrBuilder>(
+                  (me.alexutzzu.teledon.protos.CharityProtos.CharityDtoResponse) payload_,
+                  getParentForChildren(),
+                  isClean());
+          payload_ = null;
+        }
+        payloadCase_ = 4;
+        onChanged();
+        return charityResBuilder_;
+      }
+
+      private boolean isUpdatePayload_ ;
+      /**
+       * <code>optional bool isUpdatePayload = 5;</code>
+       * @return Whether the isUpdatePayload field is set.
+       */
+      @java.lang.Override
+      public boolean hasIsUpdatePayload() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <code>optional bool isUpdatePayload = 5;</code>
+       * @return The isUpdatePayload.
+       */
+      @java.lang.Override
+      public boolean getIsUpdatePayload() {
+        return isUpdatePayload_;
+      }
+      /**
+       * <code>optional bool isUpdatePayload = 5;</code>
+       * @param value The isUpdatePayload to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsUpdatePayload(boolean value) {
+
+        isUpdatePayload_ = value;
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool isUpdatePayload = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsUpdatePayload() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        isUpdatePayload_ = false;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -957,16 +1506,22 @@ public final class MainMessageProtos {
   static {
     java.lang.String[] descriptorData = {
       "\n\022main_message.proto\022\022teledon_management" +
-      "\032\017auth_user.proto\"\211\001\n\013MainMessage\0226\n\007aut" +
-      "hReq\030\001 \001(\0132#.teledon_management.AuthUser" +
-      "RequestH\000\0227\n\007authRes\030\002 \001(\0132$.teledon_man" +
-      "agement.AuthUserResponseH\000B\t\n\007payloadB2\n" +
-      "\033me.alexutzzu.teledon.protosB\021MainMessag" +
-      "eProtosP\000b\006proto3"
+      "\032\rcharity.proto\032\017auth_user.proto\"\266\002\n\013Mai" +
+      "nMessage\0226\n\007authReq\030\001 \001(\0132#.teledon_mana" +
+      "gement.AuthUserRequestH\000\0227\n\007authRes\030\002 \001(" +
+      "\0132$.teledon_management.AuthUserResponseH" +
+      "\000\022;\n\ncharityReq\030\003 \001(\0132%.teledon_manageme" +
+      "nt.CharityDtoRequestH\000\022<\n\ncharityRes\030\004 \001" +
+      "(\0132&.teledon_management.CharityDtoRespon" +
+      "seH\000\022\034\n\017isUpdatePayload\030\005 \001(\010H\001\210\001\001B\t\n\007pa" +
+      "yloadB\022\n\020_isUpdatePayloadBQ\n\033me.alexutzz" +
+      "u.teledon.protosB\021MainMessageProtosP\000\252\002\034" +
+      "teledon_management_ui.Protosb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          me.alexutzzu.teledon.protos.CharityProtos.getDescriptor(),
           me.alexutzzu.teledon.protos.AuthUserProtos.getDescriptor(),
         });
     internal_static_teledon_management_MainMessage_descriptor =
@@ -974,7 +1529,8 @@ public final class MainMessageProtos {
     internal_static_teledon_management_MainMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_teledon_management_MainMessage_descriptor,
-        new java.lang.String[] { "AuthReq", "AuthRes", "Payload", });
+        new java.lang.String[] { "AuthReq", "AuthRes", "CharityReq", "CharityRes", "IsUpdatePayload", "Payload", });
+    me.alexutzzu.teledon.protos.CharityProtos.getDescriptor();
     me.alexutzzu.teledon.protos.AuthUserProtos.getDescriptor();
   }
 

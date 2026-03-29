@@ -7,17 +7,14 @@ option java_package = "me.alexutzzu.teledon.protos";
 option java_outer_classname = "AuthUserProtos";
 option csharp_namespace = "teledon_management_ui.Protos";
 
-message AuthUserRequest {
-	optional string username = 1;
-	optional string password = 2;
-}
+import "response_status.proto";
 
-enum AuthStatus {
-	CREDENTIALS_OK = 0;
-	FAILED_AUTH = 1;
+message AuthUserRequest {
+  optional string username = 1;
+  optional string password = 2;
 }
 
 message AuthUserResponse {
-	optional AuthStatus status = 1;
-	optional string message = 2;
+  optional ResponseStatus status = 1;
+  optional string message = 2;
 }

@@ -10,8 +10,8 @@ namespace teledon_management_ui.Services;
 
 public interface INetworkService
 {
-    Task<AuthUserResponse> SendRequestAsync(MainMessage request);
-    // event Action<IMessage> OnMessageReceived;
+    Task<MainMessage> SendRequestAsync(MainMessage request);
+    event Action<MainMessage>? OnUpdateReceived;
 }
 
 public class NetworkService : INetworkService
@@ -23,6 +23,7 @@ public class NetworkService : INetworkService
 
     private readonly SemaphoreSlim _sendLock = new(1, 1);
 
+    public event Action<MainMessage>? OnUpdateReceived;
 
     public NetworkService(string host, int port)
     {
@@ -32,7 +33,7 @@ public class NetworkService : INetworkService
     }
 
 
-    public async Task<AuthUserResponse> SendRequestAsync(MainMessage request)
+    public async Task<MainMessage> SendRequestAsync(MainMessage request)
         
     {
         var tcs = new TaskCompletionSource<MainMessage>();
@@ -55,7 +56,7 @@ public class NetworkService : INetworkService
 
         var responseEnvelope = await tcs.Task;
 
-        return responseEnvelope.AuthRes;
+        return responseEnvelope;
     }
 
     private async Task ListenLoop()
@@ -65,6 +66,12 @@ public class NetworkService : INetworkService
             var incoming = MainMessage.Parser.ParseDelimitedFrom(_stream);
 
             if (incoming == null) continue;
+
+            if (incoming.IsUpdatePayload)
+            {
+                OnUpdateReceived?.Invoke(incoming);
+                continue;
+            }
 
             TaskCompletionSource<MainMessage>? tcs;
             lock (_responseQueue)
