@@ -11,7 +11,6 @@ public static class ServiceCollectionExtensions
     {
         //Add repositories
         serviceCollection.AddSingleton<ICharityRepository, InMemoryCharityRepository>();
-        serviceCollection.AddSingleton<IVolunteerRepository, InMemoryVolunteerRepository>();
         serviceCollection.AddSingleton<IDonationRepository, InMemoryDonationRepository>();
         serviceCollection.AddSingleton<IDonorRepository, InMemoryDonorRepository>();
 
