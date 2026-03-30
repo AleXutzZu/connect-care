@@ -35,10 +35,15 @@ public partial class DashboardViewModel : ViewModelBase
             });
         });
 
-        WeakReferenceMessenger.Default.Register<UpdateCharityMessage>(this,
+        WeakReferenceMessenger.Default.Register<CreateCharityMessage>(this,
             (recipient, message) =>
             {
-                if (message.Charity == null) return;
+                CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
+            });
+        
+        WeakReferenceMessenger.Default.Register<BroadcastedCreateCharityMessage>(this,
+            (recipient, message) =>
+            {
                 CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
             });
     }

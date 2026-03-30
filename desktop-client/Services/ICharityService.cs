@@ -10,5 +10,5 @@ public interface ICharityService
 {
     public Task<List<CharityDto>> AllCharitiesWithRaisedSums();
 
-    public Task<Charity?> Create(string name);
+    public Task<Charity> Create(string name);
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
+using teledon_management_ui.Exceptions;
 using teledon_management_ui.Messages;
 using teledon_management_ui.Models;
 using teledon_management_ui.Protos;
@@ -26,7 +28,7 @@ public class CharityService : ICharityService
         {
             var dto = message.CharityRes.CreateBody.Charity;
             WeakReferenceMessenger.Default.Send(
-                new UpdateCharityMessage(new Charity(dto.Id, dto.Name)));
+                new BroadcastedCreateCharityMessage(new Charity(dto.Id, dto.Name)));
         }
     }
 
@@ -46,7 +48,7 @@ public class CharityService : ICharityService
             .ConvertAll(p => new CharityDto(p.Id, p.Name, p.RaisedSum));
     }
 
-    public async Task<Charity?> Create(string name)
+    public async Task<Charity> Create(string name)
     {
         var response = await _networkService.SendRequestAsync(new MainMessage
         {
@@ -59,7 +61,10 @@ public class CharityService : ICharityService
             }
         });
 
-        if (response.CharityRes.Status == ResponseStatus.Failed) return null;
+        if (response.CharityRes.Status == ResponseStatus.Failed)
+        {
+            throw new ServiceException("Failed to create charity");
+        }
 
         var dto = response.CharityRes.CreateBody.Charity;
 

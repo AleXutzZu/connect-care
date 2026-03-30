@@ -1,6 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using teledon_management_ui.Messages;
 
@@ -12,9 +11,9 @@ public partial class AddCharityWindow : Window
     {
         InitializeComponent();
         
-        WeakReferenceMessenger.Default.Register<AddCharityWindow, UpdateCharityMessage>(this, static (w, m) =>
+        WeakReferenceMessenger.Default.Register<AddCharityWindow, CreateCharityMessage>(this, static (w, m) =>
         {
-            w.Close();
+            Dispatcher.UIThread.Post(w.Close);
         });
     }
 }
