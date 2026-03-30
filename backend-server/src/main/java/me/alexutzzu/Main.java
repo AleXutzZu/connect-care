@@ -2,6 +2,7 @@ package me.alexutzzu;
 
 import me.alexutzzu.teledon.controller.AuthController;
 import me.alexutzzu.teledon.controller.CharityController;
+import me.alexutzzu.teledon.controller.DonorController;
 import me.alexutzzu.teledon.lib.ClientManager;
 import me.alexutzzu.teledon.persistence.AuthUserRepository;
 import me.alexutzzu.teledon.persistence.CharityRepository;
@@ -14,7 +15,9 @@ import me.alexutzzu.teledon.persistence.impl.JdbcDonationRepositoryImpl;
 import me.alexutzzu.teledon.persistence.impl.JdbcDonorRepositoryImpl;
 import me.alexutzzu.teledon.service.AuthService;
 import me.alexutzzu.teledon.service.CharityService;
+import me.alexutzzu.teledon.service.DonorService;
 import me.alexutzzu.teledon.service.mapper.CharityDtoEntityMapper;
+import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -27,6 +30,8 @@ public class Main {
         try {
             //Entity Mappers
             CharityDtoEntityMapper charityDtoEntityMapper = new CharityDtoEntityMapper();
+            DonorDtoEntityMapper donorDtoEntityMapper = new DonorDtoEntityMapper();
+
 
             //DI setup
             CharityRepository charityRepository = DatabaseManager.getRepositoryInstance(CharityRepository.class, JdbcCharityRepositoryImpl.class);
@@ -36,12 +41,13 @@ public class Main {
 
             AuthService authService = new AuthService(authUserRepository);
             CharityService charityService = new CharityService(charityRepository, donationRepository, charityDtoEntityMapper);
+            DonorService donorService = new DonorService(donorRepository, donorDtoEntityMapper);
 
             AuthController authController = new AuthController(authService);
             CharityController charityController = new CharityController(charityService);
+            DonorController donorController = new DonorController(donorService);
 
-
-            ClientManager clientManager = new ClientManager(List.of(authController, charityController));
+            ClientManager clientManager = new ClientManager(List.of(authController, charityController, donorController));
             //Server setup
             int port = 8080;
             try (ServerSocket serverSocket = new ServerSocket()) {
