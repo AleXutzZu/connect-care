@@ -9,13 +9,17 @@ option csharp_namespace = "teledon_management_ui.Protos";
 
 import "charity.proto";
 import "auth_user.proto";
+import "donor.proto";
 
 message MainMessage {
+  optional bool isUpdatePayload = 1;
+
   oneof payload {
-    AuthUserRequest authReq = 1;
-    AuthUserResponse authRes = 2;
-    CharityDtoRequest charityReq = 3;
-    CharityDtoResponse charityRes = 4;
+    AuthUserRequest authReq = 2;
+    AuthUserResponse authRes = 3;
+    CharityDtoRequest charityReq = 4;
+    CharityDtoResponse charityRes = 5;
+    DonorDtoRequest donorReq = 6;
+    DonorDtoResponse donorRes = 7;
   }
-  optional bool isUpdatePayload = 5;
 }

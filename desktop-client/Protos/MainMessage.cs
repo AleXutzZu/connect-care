@@ -25,20 +25,23 @@ namespace teledon_management_ui.Protos {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChJtYWluX21lc3NhZ2UucHJvdG8SEnRlbGVkb25fbWFuYWdlbWVudBoNY2hh",
-            "cml0eS5wcm90bxoPYXV0aF91c2VyLnByb3RvIrYCCgtNYWluTWVzc2FnZRI2",
-            "CgdhdXRoUmVxGAEgASgLMiMudGVsZWRvbl9tYW5hZ2VtZW50LkF1dGhVc2Vy",
-            "UmVxdWVzdEgAEjcKB2F1dGhSZXMYAiABKAsyJC50ZWxlZG9uX21hbmFnZW1l",
-            "bnQuQXV0aFVzZXJSZXNwb25zZUgAEjsKCmNoYXJpdHlSZXEYAyABKAsyJS50",
-            "ZWxlZG9uX21hbmFnZW1lbnQuQ2hhcml0eUR0b1JlcXVlc3RIABI8CgpjaGFy",
-            "aXR5UmVzGAQgASgLMiYudGVsZWRvbl9tYW5hZ2VtZW50LkNoYXJpdHlEdG9S",
-            "ZXNwb25zZUgAEhwKD2lzVXBkYXRlUGF5bG9hZBgFIAEoCEgBiAEBQgkKB3Bh",
-            "eWxvYWRCEgoQX2lzVXBkYXRlUGF5bG9hZEJRChttZS5hbGV4dXR6enUudGVs",
-            "ZWRvbi5wcm90b3NCEU1haW5NZXNzYWdlUHJvdG9zUACqAhx0ZWxlZG9uX21h",
-            "bmFnZW1lbnRfdWkuUHJvdG9zYgZwcm90bzM="));
+            "cml0eS5wcm90bxoPYXV0aF91c2VyLnByb3RvGgtkb25vci5wcm90byKpAwoL",
+            "TWFpbk1lc3NhZ2USHAoPaXNVcGRhdGVQYXlsb2FkGAEgASgISAGIAQESNgoH",
+            "YXV0aFJlcRgCIAEoCzIjLnRlbGVkb25fbWFuYWdlbWVudC5BdXRoVXNlclJl",
+            "cXVlc3RIABI3CgdhdXRoUmVzGAMgASgLMiQudGVsZWRvbl9tYW5hZ2VtZW50",
+            "LkF1dGhVc2VyUmVzcG9uc2VIABI7CgpjaGFyaXR5UmVxGAQgASgLMiUudGVs",
+            "ZWRvbl9tYW5hZ2VtZW50LkNoYXJpdHlEdG9SZXF1ZXN0SAASPAoKY2hhcml0",
+            "eVJlcxgFIAEoCzImLnRlbGVkb25fbWFuYWdlbWVudC5DaGFyaXR5RHRvUmVz",
+            "cG9uc2VIABI3Cghkb25vclJlcRgGIAEoCzIjLnRlbGVkb25fbWFuYWdlbWVu",
+            "dC5Eb25vckR0b1JlcXVlc3RIABI4Cghkb25vclJlcxgHIAEoCzIkLnRlbGVk",
+            "b25fbWFuYWdlbWVudC5Eb25vckR0b1Jlc3BvbnNlSABCCQoHcGF5bG9hZEIS",
+            "ChBfaXNVcGRhdGVQYXlsb2FkQlEKG21lLmFsZXh1dHp6dS50ZWxlZG9uLnBy",
+            "b3Rvc0IRTWFpbk1lc3NhZ2VQcm90b3NQAKoCHHRlbGVkb25fbWFuYWdlbWVu",
+            "dF91aS5Qcm90b3NiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::teledon_management_ui.Protos.CharityReflection.Descriptor, global::teledon_management_ui.Protos.AuthUserReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::teledon_management_ui.Protos.CharityReflection.Descriptor, global::teledon_management_ui.Protos.AuthUserReflection.Descriptor, global::teledon_management_ui.Protos.DonorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.MainMessage), global::teledon_management_ui.Protos.MainMessage.Parser, new[]{ "AuthReq", "AuthRes", "CharityReq", "CharityRes", "IsUpdatePayload" }, new[]{ "Payload", "IsUpdatePayload" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.MainMessage), global::teledon_management_ui.Protos.MainMessage.Parser, new[]{ "IsUpdatePayload", "AuthReq", "AuthRes", "CharityReq", "CharityRes", "DonorReq", "DonorRes" }, new[]{ "Payload", "IsUpdatePayload" }, null, null, null)
           }));
     }
     #endregion
@@ -96,6 +99,12 @@ namespace teledon_management_ui.Protos {
         case PayloadOneofCase.CharityRes:
           CharityRes = other.CharityRes.Clone();
           break;
+        case PayloadOneofCase.DonorReq:
+          DonorReq = other.DonorReq.Clone();
+          break;
+        case PayloadOneofCase.DonorRes:
+          DonorRes = other.DonorRes.Clone();
+          break;
       }
 
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -107,56 +116,8 @@ namespace teledon_management_ui.Protos {
       return new MainMessage(this);
     }
 
-    /// <summary>Field number for the "authReq" field.</summary>
-    public const int AuthReqFieldNumber = 1;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::teledon_management_ui.Protos.AuthUserRequest AuthReq {
-      get { return payloadCase_ == PayloadOneofCase.AuthReq ? (global::teledon_management_ui.Protos.AuthUserRequest) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.AuthReq;
-      }
-    }
-
-    /// <summary>Field number for the "authRes" field.</summary>
-    public const int AuthResFieldNumber = 2;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::teledon_management_ui.Protos.AuthUserResponse AuthRes {
-      get { return payloadCase_ == PayloadOneofCase.AuthRes ? (global::teledon_management_ui.Protos.AuthUserResponse) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.AuthRes;
-      }
-    }
-
-    /// <summary>Field number for the "charityReq" field.</summary>
-    public const int CharityReqFieldNumber = 3;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::teledon_management_ui.Protos.CharityDtoRequest CharityReq {
-      get { return payloadCase_ == PayloadOneofCase.CharityReq ? (global::teledon_management_ui.Protos.CharityDtoRequest) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.CharityReq;
-      }
-    }
-
-    /// <summary>Field number for the "charityRes" field.</summary>
-    public const int CharityResFieldNumber = 4;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::teledon_management_ui.Protos.CharityDtoResponse CharityRes {
-      get { return payloadCase_ == PayloadOneofCase.CharityRes ? (global::teledon_management_ui.Protos.CharityDtoResponse) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.CharityRes;
-      }
-    }
-
     /// <summary>Field number for the "isUpdatePayload" field.</summary>
-    public const int IsUpdatePayloadFieldNumber = 5;
+    public const int IsUpdatePayloadFieldNumber = 1;
     private readonly static bool IsUpdatePayloadDefaultValue = false;
 
     private bool isUpdatePayload_;
@@ -182,14 +143,88 @@ namespace teledon_management_ui.Protos {
       _hasBits0 &= ~1;
     }
 
+    /// <summary>Field number for the "authReq" field.</summary>
+    public const int AuthReqFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.AuthUserRequest AuthReq {
+      get { return payloadCase_ == PayloadOneofCase.AuthReq ? (global::teledon_management_ui.Protos.AuthUserRequest) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.AuthReq;
+      }
+    }
+
+    /// <summary>Field number for the "authRes" field.</summary>
+    public const int AuthResFieldNumber = 3;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.AuthUserResponse AuthRes {
+      get { return payloadCase_ == PayloadOneofCase.AuthRes ? (global::teledon_management_ui.Protos.AuthUserResponse) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.AuthRes;
+      }
+    }
+
+    /// <summary>Field number for the "charityReq" field.</summary>
+    public const int CharityReqFieldNumber = 4;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.CharityDtoRequest CharityReq {
+      get { return payloadCase_ == PayloadOneofCase.CharityReq ? (global::teledon_management_ui.Protos.CharityDtoRequest) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.CharityReq;
+      }
+    }
+
+    /// <summary>Field number for the "charityRes" field.</summary>
+    public const int CharityResFieldNumber = 5;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.CharityDtoResponse CharityRes {
+      get { return payloadCase_ == PayloadOneofCase.CharityRes ? (global::teledon_management_ui.Protos.CharityDtoResponse) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.CharityRes;
+      }
+    }
+
+    /// <summary>Field number for the "donorReq" field.</summary>
+    public const int DonorReqFieldNumber = 6;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.DonorDtoRequest DonorReq {
+      get { return payloadCase_ == PayloadOneofCase.DonorReq ? (global::teledon_management_ui.Protos.DonorDtoRequest) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DonorReq;
+      }
+    }
+
+    /// <summary>Field number for the "donorRes" field.</summary>
+    public const int DonorResFieldNumber = 7;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.DonorDtoResponse DonorRes {
+      get { return payloadCase_ == PayloadOneofCase.DonorRes ? (global::teledon_management_ui.Protos.DonorDtoResponse) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DonorRes;
+      }
+    }
+
     private object payload_;
     /// <summary>Enum of possible cases for the "payload" oneof.</summary>
     public enum PayloadOneofCase {
       None = 0,
-      AuthReq = 1,
-      AuthRes = 2,
-      CharityReq = 3,
-      CharityRes = 4,
+      AuthReq = 2,
+      AuthRes = 3,
+      CharityReq = 4,
+      CharityRes = 5,
+      DonorReq = 6,
+      DonorRes = 7,
     }
     private PayloadOneofCase payloadCase_ = PayloadOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -220,11 +255,13 @@ namespace teledon_management_ui.Protos {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (IsUpdatePayload != other.IsUpdatePayload) return false;
       if (!object.Equals(AuthReq, other.AuthReq)) return false;
       if (!object.Equals(AuthRes, other.AuthRes)) return false;
       if (!object.Equals(CharityReq, other.CharityReq)) return false;
       if (!object.Equals(CharityRes, other.CharityRes)) return false;
-      if (IsUpdatePayload != other.IsUpdatePayload) return false;
+      if (!object.Equals(DonorReq, other.DonorReq)) return false;
+      if (!object.Equals(DonorRes, other.DonorRes)) return false;
       if (PayloadCase != other.PayloadCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -233,11 +270,13 @@ namespace teledon_management_ui.Protos {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (HasIsUpdatePayload) hash ^= IsUpdatePayload.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.AuthReq) hash ^= AuthReq.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.AuthRes) hash ^= AuthRes.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.CharityReq) hash ^= CharityReq.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.CharityRes) hash ^= CharityRes.GetHashCode();
-      if (HasIsUpdatePayload) hash ^= IsUpdatePayload.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.DonorReq) hash ^= DonorReq.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.DonorRes) hash ^= DonorRes.GetHashCode();
       hash ^= (int) payloadCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -257,25 +296,33 @@ namespace teledon_management_ui.Protos {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (HasIsUpdatePayload) {
+        output.WriteRawTag(8);
+        output.WriteBool(IsUpdatePayload);
+      }
       if (payloadCase_ == PayloadOneofCase.AuthReq) {
-        output.WriteRawTag(10);
+        output.WriteRawTag(18);
         output.WriteMessage(AuthReq);
       }
       if (payloadCase_ == PayloadOneofCase.AuthRes) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(AuthRes);
       }
       if (payloadCase_ == PayloadOneofCase.CharityReq) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(CharityReq);
       }
       if (payloadCase_ == PayloadOneofCase.CharityRes) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteMessage(CharityRes);
       }
-      if (HasIsUpdatePayload) {
-        output.WriteRawTag(40);
-        output.WriteBool(IsUpdatePayload);
+      if (payloadCase_ == PayloadOneofCase.DonorReq) {
+        output.WriteRawTag(50);
+        output.WriteMessage(DonorReq);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonorRes) {
+        output.WriteRawTag(58);
+        output.WriteMessage(DonorRes);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -287,25 +334,33 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (HasIsUpdatePayload) {
+        output.WriteRawTag(8);
+        output.WriteBool(IsUpdatePayload);
+      }
       if (payloadCase_ == PayloadOneofCase.AuthReq) {
-        output.WriteRawTag(10);
+        output.WriteRawTag(18);
         output.WriteMessage(AuthReq);
       }
       if (payloadCase_ == PayloadOneofCase.AuthRes) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(AuthRes);
       }
       if (payloadCase_ == PayloadOneofCase.CharityReq) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(CharityReq);
       }
       if (payloadCase_ == PayloadOneofCase.CharityRes) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteMessage(CharityRes);
       }
-      if (HasIsUpdatePayload) {
-        output.WriteRawTag(40);
-        output.WriteBool(IsUpdatePayload);
+      if (payloadCase_ == PayloadOneofCase.DonorReq) {
+        output.WriteRawTag(50);
+        output.WriteMessage(DonorReq);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonorRes) {
+        output.WriteRawTag(58);
+        output.WriteMessage(DonorRes);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -317,6 +372,9 @@ namespace teledon_management_ui.Protos {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (HasIsUpdatePayload) {
+        size += 1 + 1;
+      }
       if (payloadCase_ == PayloadOneofCase.AuthReq) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(AuthReq);
       }
@@ -329,8 +387,11 @@ namespace teledon_management_ui.Protos {
       if (payloadCase_ == PayloadOneofCase.CharityRes) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(CharityRes);
       }
-      if (HasIsUpdatePayload) {
-        size += 1 + 1;
+      if (payloadCase_ == PayloadOneofCase.DonorReq) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DonorReq);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonorRes) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DonorRes);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -372,6 +433,18 @@ namespace teledon_management_ui.Protos {
           }
           CharityRes.MergeFrom(other.CharityRes);
           break;
+        case PayloadOneofCase.DonorReq:
+          if (DonorReq == null) {
+            DonorReq = new global::teledon_management_ui.Protos.DonorDtoRequest();
+          }
+          DonorReq.MergeFrom(other.DonorReq);
+          break;
+        case PayloadOneofCase.DonorRes:
+          if (DonorRes == null) {
+            DonorRes = new global::teledon_management_ui.Protos.DonorDtoResponse();
+          }
+          DonorRes.MergeFrom(other.DonorRes);
+          break;
       }
 
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -389,7 +462,11 @@ namespace teledon_management_ui.Protos {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
+          case 8: {
+            IsUpdatePayload = input.ReadBool();
+            break;
+          }
+          case 18: {
             global::teledon_management_ui.Protos.AuthUserRequest subBuilder = new global::teledon_management_ui.Protos.AuthUserRequest();
             if (payloadCase_ == PayloadOneofCase.AuthReq) {
               subBuilder.MergeFrom(AuthReq);
@@ -398,7 +475,7 @@ namespace teledon_management_ui.Protos {
             AuthReq = subBuilder;
             break;
           }
-          case 18: {
+          case 26: {
             global::teledon_management_ui.Protos.AuthUserResponse subBuilder = new global::teledon_management_ui.Protos.AuthUserResponse();
             if (payloadCase_ == PayloadOneofCase.AuthRes) {
               subBuilder.MergeFrom(AuthRes);
@@ -407,7 +484,7 @@ namespace teledon_management_ui.Protos {
             AuthRes = subBuilder;
             break;
           }
-          case 26: {
+          case 34: {
             global::teledon_management_ui.Protos.CharityDtoRequest subBuilder = new global::teledon_management_ui.Protos.CharityDtoRequest();
             if (payloadCase_ == PayloadOneofCase.CharityReq) {
               subBuilder.MergeFrom(CharityReq);
@@ -416,7 +493,7 @@ namespace teledon_management_ui.Protos {
             CharityReq = subBuilder;
             break;
           }
-          case 34: {
+          case 42: {
             global::teledon_management_ui.Protos.CharityDtoResponse subBuilder = new global::teledon_management_ui.Protos.CharityDtoResponse();
             if (payloadCase_ == PayloadOneofCase.CharityRes) {
               subBuilder.MergeFrom(CharityRes);
@@ -425,8 +502,22 @@ namespace teledon_management_ui.Protos {
             CharityRes = subBuilder;
             break;
           }
-          case 40: {
-            IsUpdatePayload = input.ReadBool();
+          case 50: {
+            global::teledon_management_ui.Protos.DonorDtoRequest subBuilder = new global::teledon_management_ui.Protos.DonorDtoRequest();
+            if (payloadCase_ == PayloadOneofCase.DonorReq) {
+              subBuilder.MergeFrom(DonorReq);
+            }
+            input.ReadMessage(subBuilder);
+            DonorReq = subBuilder;
+            break;
+          }
+          case 58: {
+            global::teledon_management_ui.Protos.DonorDtoResponse subBuilder = new global::teledon_management_ui.Protos.DonorDtoResponse();
+            if (payloadCase_ == PayloadOneofCase.DonorRes) {
+              subBuilder.MergeFrom(DonorRes);
+            }
+            input.ReadMessage(subBuilder);
+            DonorRes = subBuilder;
             break;
           }
         }
@@ -444,7 +535,11 @@ namespace teledon_management_ui.Protos {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
+          case 8: {
+            IsUpdatePayload = input.ReadBool();
+            break;
+          }
+          case 18: {
             global::teledon_management_ui.Protos.AuthUserRequest subBuilder = new global::teledon_management_ui.Protos.AuthUserRequest();
             if (payloadCase_ == PayloadOneofCase.AuthReq) {
               subBuilder.MergeFrom(AuthReq);
@@ -453,7 +548,7 @@ namespace teledon_management_ui.Protos {
             AuthReq = subBuilder;
             break;
           }
-          case 18: {
+          case 26: {
             global::teledon_management_ui.Protos.AuthUserResponse subBuilder = new global::teledon_management_ui.Protos.AuthUserResponse();
             if (payloadCase_ == PayloadOneofCase.AuthRes) {
               subBuilder.MergeFrom(AuthRes);
@@ -462,7 +557,7 @@ namespace teledon_management_ui.Protos {
             AuthRes = subBuilder;
             break;
           }
-          case 26: {
+          case 34: {
             global::teledon_management_ui.Protos.CharityDtoRequest subBuilder = new global::teledon_management_ui.Protos.CharityDtoRequest();
             if (payloadCase_ == PayloadOneofCase.CharityReq) {
               subBuilder.MergeFrom(CharityReq);
@@ -471,7 +566,7 @@ namespace teledon_management_ui.Protos {
             CharityReq = subBuilder;
             break;
           }
-          case 34: {
+          case 42: {
             global::teledon_management_ui.Protos.CharityDtoResponse subBuilder = new global::teledon_management_ui.Protos.CharityDtoResponse();
             if (payloadCase_ == PayloadOneofCase.CharityRes) {
               subBuilder.MergeFrom(CharityRes);
@@ -480,8 +575,22 @@ namespace teledon_management_ui.Protos {
             CharityRes = subBuilder;
             break;
           }
-          case 40: {
-            IsUpdatePayload = input.ReadBool();
+          case 50: {
+            global::teledon_management_ui.Protos.DonorDtoRequest subBuilder = new global::teledon_management_ui.Protos.DonorDtoRequest();
+            if (payloadCase_ == PayloadOneofCase.DonorReq) {
+              subBuilder.MergeFrom(DonorReq);
+            }
+            input.ReadMessage(subBuilder);
+            DonorReq = subBuilder;
+            break;
+          }
+          case 58: {
+            global::teledon_management_ui.Protos.DonorDtoResponse subBuilder = new global::teledon_management_ui.Protos.DonorDtoResponse();
+            if (payloadCase_ == PayloadOneofCase.DonorRes) {
+              subBuilder.MergeFrom(DonorRes);
+            }
+            input.ReadMessage(subBuilder);
+            DonorRes = subBuilder;
             break;
           }
         }
