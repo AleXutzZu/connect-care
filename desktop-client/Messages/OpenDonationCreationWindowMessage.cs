@@ -7,7 +7,7 @@ namespace teledon_management_ui.Messages;
 /**
  * Request message to initiate creation of a new donation.
  */
-public class CreateDonationMessage(CharityDtoViewModel selectedCharity)
+public class OpenDonationCreationWindowMessage(CharityDtoViewModel selectedCharity)
 {
     public CharityDtoViewModel SelectedCharity { get; } = selectedCharity;
 }

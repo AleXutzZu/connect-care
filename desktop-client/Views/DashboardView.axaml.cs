@@ -16,7 +16,7 @@ public partial class DashboardView : UserControl
 
         if (Design.IsDesignMode) return;
 
-        WeakReferenceMessenger.Default.Register<DashboardView, CreateDonationMessage>(this, (w, m) =>
+        WeakReferenceMessenger.Default.Register<DashboardView, OpenDonationCreationWindowMessage>(this, (w, m) =>
         {
             if (App.Services == null) return;
 

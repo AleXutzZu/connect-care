@@ -32,6 +32,6 @@ public partial class CharityDtoViewModel : ViewModelBase
     [RelayCommand]
     private void CreateDonation()
     {
-        WeakReferenceMessenger.Default.Send(new CreateDonationMessage(this));
+        WeakReferenceMessenger.Default.Send(new OpenDonationCreationWindowMessage(this));
     }
 }
