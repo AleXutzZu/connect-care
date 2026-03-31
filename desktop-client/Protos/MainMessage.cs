@@ -25,23 +25,26 @@ namespace teledon_management_ui.Protos {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChJtYWluX21lc3NhZ2UucHJvdG8SEnRlbGVkb25fbWFuYWdlbWVudBoNY2hh",
-            "cml0eS5wcm90bxoPYXV0aF91c2VyLnByb3RvGgtkb25vci5wcm90byKpAwoL",
-            "TWFpbk1lc3NhZ2USHAoPaXNVcGRhdGVQYXlsb2FkGAEgASgISAGIAQESNgoH",
-            "YXV0aFJlcRgCIAEoCzIjLnRlbGVkb25fbWFuYWdlbWVudC5BdXRoVXNlclJl",
-            "cXVlc3RIABI3CgdhdXRoUmVzGAMgASgLMiQudGVsZWRvbl9tYW5hZ2VtZW50",
-            "LkF1dGhVc2VyUmVzcG9uc2VIABI7CgpjaGFyaXR5UmVxGAQgASgLMiUudGVs",
-            "ZWRvbl9tYW5hZ2VtZW50LkNoYXJpdHlEdG9SZXF1ZXN0SAASPAoKY2hhcml0",
-            "eVJlcxgFIAEoCzImLnRlbGVkb25fbWFuYWdlbWVudC5DaGFyaXR5RHRvUmVz",
-            "cG9uc2VIABI3Cghkb25vclJlcRgGIAEoCzIjLnRlbGVkb25fbWFuYWdlbWVu",
-            "dC5Eb25vckR0b1JlcXVlc3RIABI4Cghkb25vclJlcxgHIAEoCzIkLnRlbGVk",
-            "b25fbWFuYWdlbWVudC5Eb25vckR0b1Jlc3BvbnNlSABCCQoHcGF5bG9hZEIS",
-            "ChBfaXNVcGRhdGVQYXlsb2FkQlEKG21lLmFsZXh1dHp6dS50ZWxlZG9uLnBy",
-            "b3Rvc0IRTWFpbk1lc3NhZ2VQcm90b3NQAKoCHHRlbGVkb25fbWFuYWdlbWVu",
-            "dF91aS5Qcm90b3NiBnByb3RvMw=="));
+            "cml0eS5wcm90bxoPYXV0aF91c2VyLnByb3RvGgtkb25vci5wcm90bxoOZG9u",
+            "YXRpb24ucHJvdG8iogQKC01haW5NZXNzYWdlEhwKD2lzVXBkYXRlUGF5bG9h",
+            "ZBgBIAEoCEgBiAEBEjYKB2F1dGhSZXEYAiABKAsyIy50ZWxlZG9uX21hbmFn",
+            "ZW1lbnQuQXV0aFVzZXJSZXF1ZXN0SAASNwoHYXV0aFJlcxgDIAEoCzIkLnRl",
+            "bGVkb25fbWFuYWdlbWVudC5BdXRoVXNlclJlc3BvbnNlSAASOwoKY2hhcml0",
+            "eVJlcRgEIAEoCzIlLnRlbGVkb25fbWFuYWdlbWVudC5DaGFyaXR5RHRvUmVx",
+            "dWVzdEgAEjwKCmNoYXJpdHlSZXMYBSABKAsyJi50ZWxlZG9uX21hbmFnZW1l",
+            "bnQuQ2hhcml0eUR0b1Jlc3BvbnNlSAASNwoIZG9ub3JSZXEYBiABKAsyIy50",
+            "ZWxlZG9uX21hbmFnZW1lbnQuRG9ub3JEdG9SZXF1ZXN0SAASOAoIZG9ub3JS",
+            "ZXMYByABKAsyJC50ZWxlZG9uX21hbmFnZW1lbnQuRG9ub3JEdG9SZXNwb25z",
+            "ZUgAEjoKC2RvbmF0aW9uUmVxGAggASgLMiMudGVsZWRvbl9tYW5hZ2VtZW50",
+            "LkRvbmF0aW9uUmVxdWVzdEgAEjsKC2RvbmF0aW9uUmVzGAkgASgLMiQudGVs",
+            "ZWRvbl9tYW5hZ2VtZW50LkRvbmF0aW9uUmVzcG9uc2VIAEIJCgdwYXlsb2Fk",
+            "QhIKEF9pc1VwZGF0ZVBheWxvYWRCUQobbWUuYWxleHV0enp1LnRlbGVkb24u",
+            "cHJvdG9zQhFNYWluTWVzc2FnZVByb3Rvc1AAqgIcdGVsZWRvbl9tYW5hZ2Vt",
+            "ZW50X3VpLlByb3Rvc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::teledon_management_ui.Protos.CharityReflection.Descriptor, global::teledon_management_ui.Protos.AuthUserReflection.Descriptor, global::teledon_management_ui.Protos.DonorReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::teledon_management_ui.Protos.CharityReflection.Descriptor, global::teledon_management_ui.Protos.AuthUserReflection.Descriptor, global::teledon_management_ui.Protos.DonorReflection.Descriptor, global::teledon_management_ui.Protos.DonationReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.MainMessage), global::teledon_management_ui.Protos.MainMessage.Parser, new[]{ "IsUpdatePayload", "AuthReq", "AuthRes", "CharityReq", "CharityRes", "DonorReq", "DonorRes" }, new[]{ "Payload", "IsUpdatePayload" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.MainMessage), global::teledon_management_ui.Protos.MainMessage.Parser, new[]{ "IsUpdatePayload", "AuthReq", "AuthRes", "CharityReq", "CharityRes", "DonorReq", "DonorRes", "DonationReq", "DonationRes" }, new[]{ "Payload", "IsUpdatePayload" }, null, null, null)
           }));
     }
     #endregion
@@ -104,6 +107,12 @@ namespace teledon_management_ui.Protos {
           break;
         case PayloadOneofCase.DonorRes:
           DonorRes = other.DonorRes.Clone();
+          break;
+        case PayloadOneofCase.DonationReq:
+          DonationReq = other.DonationReq.Clone();
+          break;
+        case PayloadOneofCase.DonationRes:
+          DonationRes = other.DonationRes.Clone();
           break;
       }
 
@@ -215,6 +224,30 @@ namespace teledon_management_ui.Protos {
       }
     }
 
+    /// <summary>Field number for the "donationReq" field.</summary>
+    public const int DonationReqFieldNumber = 8;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.DonationRequest DonationReq {
+      get { return payloadCase_ == PayloadOneofCase.DonationReq ? (global::teledon_management_ui.Protos.DonationRequest) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DonationReq;
+      }
+    }
+
+    /// <summary>Field number for the "donationRes" field.</summary>
+    public const int DonationResFieldNumber = 9;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::teledon_management_ui.Protos.DonationResponse DonationRes {
+      get { return payloadCase_ == PayloadOneofCase.DonationRes ? (global::teledon_management_ui.Protos.DonationResponse) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DonationRes;
+      }
+    }
+
     private object payload_;
     /// <summary>Enum of possible cases for the "payload" oneof.</summary>
     public enum PayloadOneofCase {
@@ -225,6 +258,8 @@ namespace teledon_management_ui.Protos {
       CharityRes = 5,
       DonorReq = 6,
       DonorRes = 7,
+      DonationReq = 8,
+      DonationRes = 9,
     }
     private PayloadOneofCase payloadCase_ = PayloadOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -262,6 +297,8 @@ namespace teledon_management_ui.Protos {
       if (!object.Equals(CharityRes, other.CharityRes)) return false;
       if (!object.Equals(DonorReq, other.DonorReq)) return false;
       if (!object.Equals(DonorRes, other.DonorRes)) return false;
+      if (!object.Equals(DonationReq, other.DonationReq)) return false;
+      if (!object.Equals(DonationRes, other.DonationRes)) return false;
       if (PayloadCase != other.PayloadCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -277,6 +314,8 @@ namespace teledon_management_ui.Protos {
       if (payloadCase_ == PayloadOneofCase.CharityRes) hash ^= CharityRes.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.DonorReq) hash ^= DonorReq.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.DonorRes) hash ^= DonorRes.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.DonationReq) hash ^= DonationReq.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.DonationRes) hash ^= DonationRes.GetHashCode();
       hash ^= (int) payloadCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -324,6 +363,14 @@ namespace teledon_management_ui.Protos {
         output.WriteRawTag(58);
         output.WriteMessage(DonorRes);
       }
+      if (payloadCase_ == PayloadOneofCase.DonationReq) {
+        output.WriteRawTag(66);
+        output.WriteMessage(DonationReq);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonationRes) {
+        output.WriteRawTag(74);
+        output.WriteMessage(DonationRes);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -362,6 +409,14 @@ namespace teledon_management_ui.Protos {
         output.WriteRawTag(58);
         output.WriteMessage(DonorRes);
       }
+      if (payloadCase_ == PayloadOneofCase.DonationReq) {
+        output.WriteRawTag(66);
+        output.WriteMessage(DonationReq);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonationRes) {
+        output.WriteRawTag(74);
+        output.WriteMessage(DonationRes);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -392,6 +447,12 @@ namespace teledon_management_ui.Protos {
       }
       if (payloadCase_ == PayloadOneofCase.DonorRes) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(DonorRes);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonationReq) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DonationReq);
+      }
+      if (payloadCase_ == PayloadOneofCase.DonationRes) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DonationRes);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -444,6 +505,18 @@ namespace teledon_management_ui.Protos {
             DonorRes = new global::teledon_management_ui.Protos.DonorDtoResponse();
           }
           DonorRes.MergeFrom(other.DonorRes);
+          break;
+        case PayloadOneofCase.DonationReq:
+          if (DonationReq == null) {
+            DonationReq = new global::teledon_management_ui.Protos.DonationRequest();
+          }
+          DonationReq.MergeFrom(other.DonationReq);
+          break;
+        case PayloadOneofCase.DonationRes:
+          if (DonationRes == null) {
+            DonationRes = new global::teledon_management_ui.Protos.DonationResponse();
+          }
+          DonationRes.MergeFrom(other.DonationRes);
           break;
       }
 
@@ -520,6 +593,24 @@ namespace teledon_management_ui.Protos {
             DonorRes = subBuilder;
             break;
           }
+          case 66: {
+            global::teledon_management_ui.Protos.DonationRequest subBuilder = new global::teledon_management_ui.Protos.DonationRequest();
+            if (payloadCase_ == PayloadOneofCase.DonationReq) {
+              subBuilder.MergeFrom(DonationReq);
+            }
+            input.ReadMessage(subBuilder);
+            DonationReq = subBuilder;
+            break;
+          }
+          case 74: {
+            global::teledon_management_ui.Protos.DonationResponse subBuilder = new global::teledon_management_ui.Protos.DonationResponse();
+            if (payloadCase_ == PayloadOneofCase.DonationRes) {
+              subBuilder.MergeFrom(DonationRes);
+            }
+            input.ReadMessage(subBuilder);
+            DonationRes = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -591,6 +682,24 @@ namespace teledon_management_ui.Protos {
             }
             input.ReadMessage(subBuilder);
             DonorRes = subBuilder;
+            break;
+          }
+          case 66: {
+            global::teledon_management_ui.Protos.DonationRequest subBuilder = new global::teledon_management_ui.Protos.DonationRequest();
+            if (payloadCase_ == PayloadOneofCase.DonationReq) {
+              subBuilder.MergeFrom(DonationReq);
+            }
+            input.ReadMessage(subBuilder);
+            DonationReq = subBuilder;
+            break;
+          }
+          case 74: {
+            global::teledon_management_ui.Protos.DonationResponse subBuilder = new global::teledon_management_ui.Protos.DonationResponse();
+            if (payloadCase_ == PayloadOneofCase.DonationRes) {
+              subBuilder.MergeFrom(DonationRes);
+            }
+            input.ReadMessage(subBuilder);
+            DonationRes = subBuilder;
             break;
           }
         }

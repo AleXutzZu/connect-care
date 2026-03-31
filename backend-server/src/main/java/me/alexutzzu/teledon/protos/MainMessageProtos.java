@@ -120,6 +120,36 @@ public final class MainMessageProtos {
      */
     me.alexutzzu.teledon.protos.DonorProtos.DonorDtoResponseOrBuilder getDonorResOrBuilder();
 
+    /**
+     * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+     * @return Whether the donationReq field is set.
+     */
+    boolean hasDonationReq();
+    /**
+     * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+     * @return The donationReq.
+     */
+    me.alexutzzu.teledon.protos.DonationProtos.DonationRequest getDonationReq();
+    /**
+     * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+     */
+    me.alexutzzu.teledon.protos.DonationProtos.DonationRequestOrBuilder getDonationReqOrBuilder();
+
+    /**
+     * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+     * @return Whether the donationRes field is set.
+     */
+    boolean hasDonationRes();
+    /**
+     * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+     * @return The donationRes.
+     */
+    me.alexutzzu.teledon.protos.DonationProtos.DonationResponse getDonationRes();
+    /**
+     * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+     */
+    me.alexutzzu.teledon.protos.DonationProtos.DonationResponseOrBuilder getDonationResOrBuilder();
+
     me.alexutzzu.teledon.protos.MainMessageProtos.MainMessage.PayloadCase getPayloadCase();
   }
   /**
@@ -170,6 +200,8 @@ public final class MainMessageProtos {
       CHARITYRES(5),
       DONORREQ(6),
       DONORRES(7),
+      DONATIONREQ(8),
+      DONATIONRES(9),
       PAYLOAD_NOT_SET(0);
       private final int value;
       private PayloadCase(int value) {
@@ -193,6 +225,8 @@ public final class MainMessageProtos {
           case 5: return CHARITYRES;
           case 6: return DONORREQ;
           case 7: return DONORRES;
+          case 8: return DONATIONREQ;
+          case 9: return DONATIONRES;
           case 0: return PAYLOAD_NOT_SET;
           default: return null;
         }
@@ -413,6 +447,68 @@ public final class MainMessageProtos {
       return me.alexutzzu.teledon.protos.DonorProtos.DonorDtoResponse.getDefaultInstance();
     }
 
+    public static final int DONATIONREQ_FIELD_NUMBER = 8;
+    /**
+     * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+     * @return Whether the donationReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasDonationReq() {
+      return payloadCase_ == 8;
+    }
+    /**
+     * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+     * @return The donationReq.
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.DonationProtos.DonationRequest getDonationReq() {
+      if (payloadCase_ == 8) {
+         return (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_;
+      }
+      return me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance();
+    }
+    /**
+     * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.DonationProtos.DonationRequestOrBuilder getDonationReqOrBuilder() {
+      if (payloadCase_ == 8) {
+         return (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_;
+      }
+      return me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance();
+    }
+
+    public static final int DONATIONRES_FIELD_NUMBER = 9;
+    /**
+     * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+     * @return Whether the donationRes field is set.
+     */
+    @java.lang.Override
+    public boolean hasDonationRes() {
+      return payloadCase_ == 9;
+    }
+    /**
+     * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+     * @return The donationRes.
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.DonationProtos.DonationResponse getDonationRes() {
+      if (payloadCase_ == 9) {
+         return (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_;
+      }
+      return me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance();
+    }
+    /**
+     * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+     */
+    @java.lang.Override
+    public me.alexutzzu.teledon.protos.DonationProtos.DonationResponseOrBuilder getDonationResOrBuilder() {
+      if (payloadCase_ == 9) {
+         return (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_;
+      }
+      return me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -447,6 +543,12 @@ public final class MainMessageProtos {
       }
       if (payloadCase_ == 7) {
         output.writeMessage(7, (me.alexutzzu.teledon.protos.DonorProtos.DonorDtoResponse) payload_);
+      }
+      if (payloadCase_ == 8) {
+        output.writeMessage(8, (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_);
+      }
+      if (payloadCase_ == 9) {
+        output.writeMessage(9, (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -484,6 +586,14 @@ public final class MainMessageProtos {
       if (payloadCase_ == 7) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, (me.alexutzzu.teledon.protos.DonorProtos.DonorDtoResponse) payload_);
+      }
+      if (payloadCase_ == 8) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_);
+      }
+      if (payloadCase_ == 9) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -531,6 +641,14 @@ public final class MainMessageProtos {
           if (!getDonorRes()
               .equals(other.getDonorRes())) return false;
           break;
+        case 8:
+          if (!getDonationReq()
+              .equals(other.getDonationReq())) return false;
+          break;
+        case 9:
+          if (!getDonationRes()
+              .equals(other.getDonationRes())) return false;
+          break;
         case 0:
         default:
       }
@@ -574,6 +692,14 @@ public final class MainMessageProtos {
         case 7:
           hash = (37 * hash) + DONORRES_FIELD_NUMBER;
           hash = (53 * hash) + getDonorRes().hashCode();
+          break;
+        case 8:
+          hash = (37 * hash) + DONATIONREQ_FIELD_NUMBER;
+          hash = (53 * hash) + getDonationReq().hashCode();
+          break;
+        case 9:
+          hash = (37 * hash) + DONATIONRES_FIELD_NUMBER;
+          hash = (53 * hash) + getDonationRes().hashCode();
           break;
         case 0:
         default:
@@ -728,6 +854,12 @@ public final class MainMessageProtos {
         if (donorResBuilder_ != null) {
           donorResBuilder_.clear();
         }
+        if (donationReqBuilder_ != null) {
+          donationReqBuilder_.clear();
+        }
+        if (donationResBuilder_ != null) {
+          donationResBuilder_.clear();
+        }
         payloadCase_ = 0;
         payload_ = null;
         return this;
@@ -798,6 +930,14 @@ public final class MainMessageProtos {
         if (payloadCase_ == 7 &&
             donorResBuilder_ != null) {
           result.payload_ = donorResBuilder_.build();
+        }
+        if (payloadCase_ == 8 &&
+            donationReqBuilder_ != null) {
+          result.payload_ = donationReqBuilder_.build();
+        }
+        if (payloadCase_ == 9 &&
+            donationResBuilder_ != null) {
+          result.payload_ = donationResBuilder_.build();
         }
       }
 
@@ -871,6 +1011,14 @@ public final class MainMessageProtos {
           }
           case DONORRES: {
             mergeDonorRes(other.getDonorRes());
+            break;
+          }
+          case DONATIONREQ: {
+            mergeDonationReq(other.getDonationReq());
+            break;
+          }
+          case DONATIONRES: {
+            mergeDonationRes(other.getDonationRes());
             break;
           }
           case PAYLOAD_NOT_SET: {
@@ -950,6 +1098,20 @@ public final class MainMessageProtos {
                 payloadCase_ = 7;
                 break;
               } // case 58
+              case 66: {
+                input.readMessage(
+                    getDonationReqFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                payloadCase_ = 8;
+                break;
+              } // case 66
+              case 74: {
+                input.readMessage(
+                    getDonationResFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                payloadCase_ = 9;
+                break;
+              } // case 74
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1873,6 +2035,290 @@ public final class MainMessageProtos {
         onChanged();
         return donorResBuilder_;
       }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.DonationProtos.DonationRequest, me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.Builder, me.alexutzzu.teledon.protos.DonationProtos.DonationRequestOrBuilder> donationReqBuilder_;
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       * @return Whether the donationReq field is set.
+       */
+      @java.lang.Override
+      public boolean hasDonationReq() {
+        return payloadCase_ == 8;
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       * @return The donationReq.
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.DonationProtos.DonationRequest getDonationReq() {
+        if (donationReqBuilder_ == null) {
+          if (payloadCase_ == 8) {
+            return (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_;
+          }
+          return me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance();
+        } else {
+          if (payloadCase_ == 8) {
+            return donationReqBuilder_.getMessage();
+          }
+          return me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      public Builder setDonationReq(me.alexutzzu.teledon.protos.DonationProtos.DonationRequest value) {
+        if (donationReqBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          payload_ = value;
+          onChanged();
+        } else {
+          donationReqBuilder_.setMessage(value);
+        }
+        payloadCase_ = 8;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      public Builder setDonationReq(
+          me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.Builder builderForValue) {
+        if (donationReqBuilder_ == null) {
+          payload_ = builderForValue.build();
+          onChanged();
+        } else {
+          donationReqBuilder_.setMessage(builderForValue.build());
+        }
+        payloadCase_ = 8;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      public Builder mergeDonationReq(me.alexutzzu.teledon.protos.DonationProtos.DonationRequest value) {
+        if (donationReqBuilder_ == null) {
+          if (payloadCase_ == 8 &&
+              payload_ != me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance()) {
+            payload_ = me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.newBuilder((me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            payload_ = value;
+          }
+          onChanged();
+        } else {
+          if (payloadCase_ == 8) {
+            donationReqBuilder_.mergeFrom(value);
+          } else {
+            donationReqBuilder_.setMessage(value);
+          }
+        }
+        payloadCase_ = 8;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      public Builder clearDonationReq() {
+        if (donationReqBuilder_ == null) {
+          if (payloadCase_ == 8) {
+            payloadCase_ = 0;
+            payload_ = null;
+            onChanged();
+          }
+        } else {
+          if (payloadCase_ == 8) {
+            payloadCase_ = 0;
+            payload_ = null;
+          }
+          donationReqBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      public me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.Builder getDonationReqBuilder() {
+        return getDonationReqFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.DonationProtos.DonationRequestOrBuilder getDonationReqOrBuilder() {
+        if ((payloadCase_ == 8) && (donationReqBuilder_ != null)) {
+          return donationReqBuilder_.getMessageOrBuilder();
+        } else {
+          if (payloadCase_ == 8) {
+            return (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_;
+          }
+          return me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.DonationRequest donationReq = 8;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.DonationProtos.DonationRequest, me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.Builder, me.alexutzzu.teledon.protos.DonationProtos.DonationRequestOrBuilder> 
+          getDonationReqFieldBuilder() {
+        if (donationReqBuilder_ == null) {
+          if (!(payloadCase_ == 8)) {
+            payload_ = me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.getDefaultInstance();
+          }
+          donationReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              me.alexutzzu.teledon.protos.DonationProtos.DonationRequest, me.alexutzzu.teledon.protos.DonationProtos.DonationRequest.Builder, me.alexutzzu.teledon.protos.DonationProtos.DonationRequestOrBuilder>(
+                  (me.alexutzzu.teledon.protos.DonationProtos.DonationRequest) payload_,
+                  getParentForChildren(),
+                  isClean());
+          payload_ = null;
+        }
+        payloadCase_ = 8;
+        onChanged();
+        return donationReqBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.DonationProtos.DonationResponse, me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.Builder, me.alexutzzu.teledon.protos.DonationProtos.DonationResponseOrBuilder> donationResBuilder_;
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       * @return Whether the donationRes field is set.
+       */
+      @java.lang.Override
+      public boolean hasDonationRes() {
+        return payloadCase_ == 9;
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       * @return The donationRes.
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.DonationProtos.DonationResponse getDonationRes() {
+        if (donationResBuilder_ == null) {
+          if (payloadCase_ == 9) {
+            return (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_;
+          }
+          return me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance();
+        } else {
+          if (payloadCase_ == 9) {
+            return donationResBuilder_.getMessage();
+          }
+          return me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      public Builder setDonationRes(me.alexutzzu.teledon.protos.DonationProtos.DonationResponse value) {
+        if (donationResBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          payload_ = value;
+          onChanged();
+        } else {
+          donationResBuilder_.setMessage(value);
+        }
+        payloadCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      public Builder setDonationRes(
+          me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.Builder builderForValue) {
+        if (donationResBuilder_ == null) {
+          payload_ = builderForValue.build();
+          onChanged();
+        } else {
+          donationResBuilder_.setMessage(builderForValue.build());
+        }
+        payloadCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      public Builder mergeDonationRes(me.alexutzzu.teledon.protos.DonationProtos.DonationResponse value) {
+        if (donationResBuilder_ == null) {
+          if (payloadCase_ == 9 &&
+              payload_ != me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance()) {
+            payload_ = me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.newBuilder((me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            payload_ = value;
+          }
+          onChanged();
+        } else {
+          if (payloadCase_ == 9) {
+            donationResBuilder_.mergeFrom(value);
+          } else {
+            donationResBuilder_.setMessage(value);
+          }
+        }
+        payloadCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      public Builder clearDonationRes() {
+        if (donationResBuilder_ == null) {
+          if (payloadCase_ == 9) {
+            payloadCase_ = 0;
+            payload_ = null;
+            onChanged();
+          }
+        } else {
+          if (payloadCase_ == 9) {
+            payloadCase_ = 0;
+            payload_ = null;
+          }
+          donationResBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      public me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.Builder getDonationResBuilder() {
+        return getDonationResFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      @java.lang.Override
+      public me.alexutzzu.teledon.protos.DonationProtos.DonationResponseOrBuilder getDonationResOrBuilder() {
+        if ((payloadCase_ == 9) && (donationResBuilder_ != null)) {
+          return donationResBuilder_.getMessageOrBuilder();
+        } else {
+          if (payloadCase_ == 9) {
+            return (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_;
+          }
+          return me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.teledon_management.DonationResponse donationRes = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          me.alexutzzu.teledon.protos.DonationProtos.DonationResponse, me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.Builder, me.alexutzzu.teledon.protos.DonationProtos.DonationResponseOrBuilder> 
+          getDonationResFieldBuilder() {
+        if (donationResBuilder_ == null) {
+          if (!(payloadCase_ == 9)) {
+            payload_ = me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.getDefaultInstance();
+          }
+          donationResBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              me.alexutzzu.teledon.protos.DonationProtos.DonationResponse, me.alexutzzu.teledon.protos.DonationProtos.DonationResponse.Builder, me.alexutzzu.teledon.protos.DonationProtos.DonationResponseOrBuilder>(
+                  (me.alexutzzu.teledon.protos.DonationProtos.DonationResponse) payload_,
+                  getParentForChildren(),
+                  isClean());
+          payload_ = null;
+        }
+        payloadCase_ = 9;
+        onChanged();
+        return donationResBuilder_;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1953,20 +2399,23 @@ public final class MainMessageProtos {
     java.lang.String[] descriptorData = {
       "\n\022main_message.proto\022\022teledon_management" +
       "\032\rcharity.proto\032\017auth_user.proto\032\013donor." +
-      "proto\"\251\003\n\013MainMessage\022\034\n\017isUpdatePayload" +
-      "\030\001 \001(\010H\001\210\001\001\0226\n\007authReq\030\002 \001(\0132#.teledon_m" +
-      "anagement.AuthUserRequestH\000\0227\n\007authRes\030\003" +
-      " \001(\0132$.teledon_management.AuthUserRespon" +
-      "seH\000\022;\n\ncharityReq\030\004 \001(\0132%.teledon_manag" +
-      "ement.CharityDtoRequestH\000\022<\n\ncharityRes\030" +
-      "\005 \001(\0132&.teledon_management.CharityDtoRes" +
-      "ponseH\000\0227\n\010donorReq\030\006 \001(\0132#.teledon_mana" +
-      "gement.DonorDtoRequestH\000\0228\n\010donorRes\030\007 \001" +
-      "(\0132$.teledon_management.DonorDtoResponse" +
-      "H\000B\t\n\007payloadB\022\n\020_isUpdatePayloadBQ\n\033me." +
-      "alexutzzu.teledon.protosB\021MainMessagePro" +
-      "tosP\000\252\002\034teledon_management_ui.Protosb\006pr" +
-      "oto3"
+      "proto\032\016donation.proto\"\242\004\n\013MainMessage\022\034\n" +
+      "\017isUpdatePayload\030\001 \001(\010H\001\210\001\001\0226\n\007authReq\030\002" +
+      " \001(\0132#.teledon_management.AuthUserReques" +
+      "tH\000\0227\n\007authRes\030\003 \001(\0132$.teledon_managemen" +
+      "t.AuthUserResponseH\000\022;\n\ncharityReq\030\004 \001(\013" +
+      "2%.teledon_management.CharityDtoRequestH" +
+      "\000\022<\n\ncharityRes\030\005 \001(\0132&.teledon_manageme" +
+      "nt.CharityDtoResponseH\000\0227\n\010donorReq\030\006 \001(" +
+      "\0132#.teledon_management.DonorDtoRequestH\000" +
+      "\0228\n\010donorRes\030\007 \001(\0132$.teledon_management." +
+      "DonorDtoResponseH\000\022:\n\013donationReq\030\010 \001(\0132" +
+      "#.teledon_management.DonationRequestH\000\022;" +
+      "\n\013donationRes\030\t \001(\0132$.teledon_management" +
+      ".DonationResponseH\000B\t\n\007payloadB\022\n\020_isUpd" +
+      "atePayloadBQ\n\033me.alexutzzu.teledon.proto" +
+      "sB\021MainMessageProtosP\000\252\002\034teledon_managem" +
+      "ent_ui.Protosb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1974,16 +2423,18 @@ public final class MainMessageProtos {
           me.alexutzzu.teledon.protos.CharityProtos.getDescriptor(),
           me.alexutzzu.teledon.protos.AuthUserProtos.getDescriptor(),
           me.alexutzzu.teledon.protos.DonorProtos.getDescriptor(),
+          me.alexutzzu.teledon.protos.DonationProtos.getDescriptor(),
         });
     internal_static_teledon_management_MainMessage_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_teledon_management_MainMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_teledon_management_MainMessage_descriptor,
-        new java.lang.String[] { "IsUpdatePayload", "AuthReq", "AuthRes", "CharityReq", "CharityRes", "DonorReq", "DonorRes", "Payload", });
+        new java.lang.String[] { "IsUpdatePayload", "AuthReq", "AuthRes", "CharityReq", "CharityRes", "DonorReq", "DonorRes", "DonationReq", "DonationRes", "Payload", });
     me.alexutzzu.teledon.protos.CharityProtos.getDescriptor();
     me.alexutzzu.teledon.protos.AuthUserProtos.getDescriptor();
     me.alexutzzu.teledon.protos.DonorProtos.getDescriptor();
+    me.alexutzzu.teledon.protos.DonationProtos.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

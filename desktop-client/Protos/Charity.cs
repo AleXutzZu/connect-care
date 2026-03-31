@@ -25,29 +25,31 @@ namespace teledon_management_ui.Protos {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg1jaGFyaXR5LnByb3RvEhJ0ZWxlZG9uX21hbmFnZW1lbnQaFXJlc3BvbnNl",
-            "X3N0YXR1cy5wcm90byJmCgpDaGFyaXR5RHRvEhEKBG5hbWUYASABKAlIAIgB",
-            "ARIPCgJpZBgCIAEoA0gBiAEBEhYKCXJhaXNlZFN1bRgDIAEoAUgCiAEBQgcK",
-            "BV9uYW1lQgUKA19pZEIMCgpfcmFpc2VkU3VtIjYKGENyZWF0ZUNoYXJpdHlS",
-            "ZXF1ZXN0Qm9keRIRCgRuYW1lGAEgASgJSACIAQFCBwoFX25hbWUiLwoVR2V0",
-            "Q2hhcml0eVJlcXVlc3RCb2R5Eg8KAmlkGAEgASgDSACIAQFCBQoDX2lkIp0B",
-            "ChFDaGFyaXR5RHRvUmVxdWVzdBJCCgpjcmVhdGVCb2R5GAEgASgLMiwudGVs",
-            "ZWRvbl9tYW5hZ2VtZW50LkNyZWF0ZUNoYXJpdHlSZXF1ZXN0Qm9keUgAEjwK",
-            "B2dldEJvZHkYAiABKAsyKS50ZWxlZG9uX21hbmFnZW1lbnQuR2V0Q2hhcml0",
-            "eVJlcXVlc3RCb2R5SABCBgoEYm9keSJdChlDcmVhdGVDaGFyaXR5UmVzcG9u",
-            "c2VCb2R5EjQKB2NoYXJpdHkYASABKAsyHi50ZWxlZG9uX21hbmFnZW1lbnQu",
-            "Q2hhcml0eUR0b0gAiAEBQgoKCF9jaGFyaXR5IksKFkdldENoYXJpdHlSZXNw",
-            "b25zZUJvZHkSMQoJY2hhcml0aWVzGAEgAygLMh4udGVsZWRvbl9tYW5hZ2Vt",
-            "ZW50LkNoYXJpdHlEdG8i5AEKEkNoYXJpdHlEdG9SZXNwb25zZRI3CgZzdGF0",
-            "dXMYASABKA4yIi50ZWxlZG9uX21hbmFnZW1lbnQuUmVzcG9uc2VTdGF0dXNI",
-            "AYgBARJDCgpjcmVhdGVCb2R5GAIgASgLMi0udGVsZWRvbl9tYW5hZ2VtZW50",
-            "LkNyZWF0ZUNoYXJpdHlSZXNwb25zZUJvZHlIABI9CgdnZXRCb2R5GAMgASgL",
-            "MioudGVsZWRvbl9tYW5hZ2VtZW50LkdldENoYXJpdHlSZXNwb25zZUJvZHlI",
-            "AEIGCgRib2R5QgkKB19zdGF0dXNCTQobbWUuYWxleHV0enp1LnRlbGVkb24u",
-            "cHJvdG9zQg1DaGFyaXR5UHJvdG9zUACqAhx0ZWxlZG9uX21hbmFnZW1lbnRf",
-            "dWkuUHJvdG9zYgZwcm90bzM="));
+            "X3N0YXR1cy5wcm90byI9CgdDaGFyaXR5EhEKBG5hbWUYASABKAlIAIgBARIP",
+            "CgJpZBgCIAEoA0gBiAEBQgcKBV9uYW1lQgUKA19pZCJmCgpDaGFyaXR5RHRv",
+            "EhEKBG5hbWUYASABKAlIAIgBARIPCgJpZBgCIAEoA0gBiAEBEhYKCXJhaXNl",
+            "ZFN1bRgDIAEoAUgCiAEBQgcKBV9uYW1lQgUKA19pZEIMCgpfcmFpc2VkU3Vt",
+            "IjYKGENyZWF0ZUNoYXJpdHlSZXF1ZXN0Qm9keRIRCgRuYW1lGAEgASgJSACI",
+            "AQFCBwoFX25hbWUiLwoVR2V0Q2hhcml0eVJlcXVlc3RCb2R5Eg8KAmlkGAEg",
+            "ASgDSACIAQFCBQoDX2lkIp0BChFDaGFyaXR5RHRvUmVxdWVzdBJCCgpjcmVh",
+            "dGVCb2R5GAEgASgLMiwudGVsZWRvbl9tYW5hZ2VtZW50LkNyZWF0ZUNoYXJp",
+            "dHlSZXF1ZXN0Qm9keUgAEjwKB2dldEJvZHkYAiABKAsyKS50ZWxlZG9uX21h",
+            "bmFnZW1lbnQuR2V0Q2hhcml0eVJlcXVlc3RCb2R5SABCBgoEYm9keSJdChlD",
+            "cmVhdGVDaGFyaXR5UmVzcG9uc2VCb2R5EjQKB2NoYXJpdHkYASABKAsyHi50",
+            "ZWxlZG9uX21hbmFnZW1lbnQuQ2hhcml0eUR0b0gAiAEBQgoKCF9jaGFyaXR5",
+            "IksKFkdldENoYXJpdHlSZXNwb25zZUJvZHkSMQoJY2hhcml0aWVzGAEgAygL",
+            "Mh4udGVsZWRvbl9tYW5hZ2VtZW50LkNoYXJpdHlEdG8i5AEKEkNoYXJpdHlE",
+            "dG9SZXNwb25zZRI3CgZzdGF0dXMYASABKA4yIi50ZWxlZG9uX21hbmFnZW1l",
+            "bnQuUmVzcG9uc2VTdGF0dXNIAYgBARJDCgpjcmVhdGVCb2R5GAIgASgLMi0u",
+            "dGVsZWRvbl9tYW5hZ2VtZW50LkNyZWF0ZUNoYXJpdHlSZXNwb25zZUJvZHlI",
+            "ABI9CgdnZXRCb2R5GAMgASgLMioudGVsZWRvbl9tYW5hZ2VtZW50LkdldENo",
+            "YXJpdHlSZXNwb25zZUJvZHlIAEIGCgRib2R5QgkKB19zdGF0dXNCTQobbWUu",
+            "YWxleHV0enp1LnRlbGVkb24ucHJvdG9zQg1DaGFyaXR5UHJvdG9zUACqAhx0",
+            "ZWxlZG9uX21hbmFnZW1lbnRfdWkuUHJvdG9zYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::teledon_management_ui.Protos.ResponseStatusReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.Charity), global::teledon_management_ui.Protos.Charity.Parser, new[]{ "Name", "Id" }, new[]{ "Name", "Id" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.CharityDto), global::teledon_management_ui.Protos.CharityDto.Parser, new[]{ "Name", "Id", "RaisedSum" }, new[]{ "Name", "Id", "RaisedSum" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.CreateCharityRequestBody), global::teledon_management_ui.Protos.CreateCharityRequestBody.Parser, new[]{ "Name" }, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::teledon_management_ui.Protos.GetCharityRequestBody), global::teledon_management_ui.Protos.GetCharityRequestBody.Parser, new[]{ "Id" }, new[]{ "Id" }, null, null, null),
@@ -61,6 +63,264 @@ namespace teledon_management_ui.Protos {
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class Charity : pb::IMessage<Charity>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<Charity> _parser = new pb::MessageParser<Charity>(() => new Charity());
+    private pb::UnknownFieldSet _unknownFields;
+    private int _hasBits0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<Charity> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public Charity() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public Charity(Charity other) : this() {
+      _hasBits0 = other._hasBits0;
+      name_ = other.name_;
+      id_ = other.id_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public Charity Clone() {
+      return new Charity(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private readonly static string NameDefaultValue = "";
+
+    private string name_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Name {
+      get { return name_ ?? NameDefaultValue; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "name" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasName {
+      get { return name_ != null; }
+    }
+    /// <summary>Clears the value of the "name" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearName() {
+      name_ = null;
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 2;
+    private readonly static long IdDefaultValue = 0L;
+
+    private long id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long Id {
+      get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+      set {
+        _hasBits0 |= 1;
+        id_ = value;
+      }
+    }
+    /// <summary>Gets whether the "id" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasId {
+      get { return (_hasBits0 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "id" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearId() {
+      _hasBits0 &= ~1;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as Charity);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(Charity other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if (Id != other.Id) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (HasName) hash ^= Name.GetHashCode();
+      if (HasId) hash ^= Id.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (HasName) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (HasId) {
+        output.WriteRawTag(16);
+        output.WriteInt64(Id);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (HasName) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (HasId) {
+        output.WriteRawTag(16);
+        output.WriteInt64(Id);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (HasName) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (HasId) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(Charity other) {
+      if (other == null) {
+        return;
+      }
+      if (other.HasName) {
+        Name = other.Name;
+      }
+      if (other.HasId) {
+        Id = other.Id;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 16: {
+            Id = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 16: {
+            Id = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CharityDto : pb::IMessage<CharityDto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -77,7 +337,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[0]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -386,7 +646,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[1]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -591,7 +851,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[2]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -797,7 +1057,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[3]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1083,7 +1343,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[4]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1282,7 +1542,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[5]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1462,7 +1722,7 @@ namespace teledon_management_ui.Protos {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[6]; }
+      get { return global::teledon_management_ui.Protos.CharityReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -64,7 +64,7 @@ public class DonorService : IDonorService
 
         if (response.DonorRes.Status == ResponseStatus.Failed)
         {
-            throw new ServiceException("Failed to create charity");
+            throw new ServiceException("Failed to create donor");
         }
 
         var dto = response.DonorRes.CreateBody.Donor;

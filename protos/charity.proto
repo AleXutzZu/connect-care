@@ -9,6 +9,11 @@ option csharp_namespace = "teledon_management_ui.Protos";
 
 import "response_status.proto";
 
+message Charity {
+  optional string name = 1;
+  optional int64 id = 2;
+}
+
 message CharityDto {
   optional string name = 1;
   optional int64 id = 2;
