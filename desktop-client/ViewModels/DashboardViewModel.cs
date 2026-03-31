@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ public partial class DashboardViewModel : ViewModelBase
 
         _ = InitializeAsync();
 
-        WeakReferenceMessenger.Default.Register<CloseDonationWindowMessage>(this, (recipient, message) =>
+        WeakReferenceMessenger.Default.Register<CreateDonationMessage>(this, (recipient, message) =>
         {
             Dispatcher.UIThread.Post(() =>
             {
@@ -35,12 +36,21 @@ public partial class DashboardViewModel : ViewModelBase
             });
         });
 
+        WeakReferenceMessenger.Default.Register<BroadcastedCreateDonationMessage>(this, (recipient, message) =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                var targetCharity = CharityDtos.FirstOrDefault(c => c.Id == message.Donation.Charity.Id);
+                targetCharity?.RaisedSum += message.Donation.Amount;
+            });
+        });
+
         WeakReferenceMessenger.Default.Register<CreateCharityMessage>(this,
             (recipient, message) =>
             {
                 CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
             });
-        
+
         WeakReferenceMessenger.Default.Register<BroadcastedCreateCharityMessage>(this,
             (recipient, message) =>
             {

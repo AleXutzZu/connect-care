@@ -1,6 +1,9 @@
+using System.Threading.Tasks;
+using Avalonia.Controls.Notifications;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using teledon_management_ui.Exceptions;
 using teledon_management_ui.Messages;
 using teledon_management_ui.Services;
 
@@ -82,19 +85,35 @@ public partial class AddDonationWindowViewModel : ViewModelBase
                                         DonationAmount > 0;
 
     [RelayCommand(CanExecute = nameof(CanRegisterDonation))]
-    private void RegisterDonation()
+    private async Task RegisterDonationAsync()
     {
         if (_donorId.HasValue)
         {
-            // Donor exists so we just create the donation
-            _donationService.AddDonationToCharity(_charityId, (double)DonationAmount, _donorId.Value);
+            try
+            {
+                await _donationService.AddDonationToCharity(_charityId, (double)DonationAmount, _donorId.Value);
+            }
+            catch (ServiceException e)
+            {
+                WeakReferenceMessenger.Default.Send(new NotificationMessage($"Failed to add donation: {e.Message}",
+                    NotificationType.Error));
+            }
         }
         else
         {
-            var donor = _donorService.CreateDonor(DonorFirstName!, DonorLastName!, DonorPhone!, DonorAddress!);
-            _donationService.AddDonationToCharity(_charityId, (double)DonationAmount, donor.Id);
+            try
+            {
+                var donor = await _donorService.CreateDonor(DonorFirstName!, DonorLastName!, DonorPhone!,
+                    DonorAddress!);
+                await _donationService.AddDonationToCharity(_charityId, (double)DonationAmount, donor.Id);
+            }
+            catch (ServiceException e)
+            {
+                WeakReferenceMessenger.Default.Send(new NotificationMessage($"Failed to register donation: {e.Message}",
+                    NotificationType.Error));
+            }
         }
 
-        WeakReferenceMessenger.Default.Send(new CloseDonationWindowMessage(_charityId, (double)DonationAmount));
+        WeakReferenceMessenger.Default.Send(new CreateDonationMessage(_charityId, (double)DonationAmount));
     }
 }

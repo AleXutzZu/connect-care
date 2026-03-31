@@ -2,9 +2,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using teledon_management_ui.Messages;
-using teledon_management_ui.Services;
 using teledon_management_ui.ViewModels;
-using teledon;
 
 namespace teledon_management_ui.Views;
 

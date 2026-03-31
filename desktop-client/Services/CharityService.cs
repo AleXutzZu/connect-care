@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using teledon_management_ui.Exceptions;
 using teledon_management_ui.Messages;
-using teledon_management_ui.Models;
 using teledon_management_ui.Protos;
+using Charity = teledon_management_ui.Models.Charity;
 using CharityDto = teledon_management_ui.Models.dto.CharityDto;
 
 namespace teledon_management_ui.Services;

@@ -27,6 +27,12 @@ public partial class App : Application
         serviceCollection.AddCommonServices();
 
         Services = serviceCollection.BuildServiceProvider();
+        
+        // Eagerly initialize background services
+        Services.GetRequiredService<IDonationService>();
+        Services.GetRequiredService<ICharityService>();
+        Services.GetRequiredService<IDonorService>();
+        
         var vm = Services.GetRequiredService<MainWindowViewModel>();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

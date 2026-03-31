@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using teledon_management_ui.Persistence;
 using teledon_management_ui.Protos;
 
 namespace teledon_management_ui.Services;
