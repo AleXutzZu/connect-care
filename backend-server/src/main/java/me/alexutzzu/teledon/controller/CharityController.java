@@ -14,7 +14,24 @@ public class CharityController implements RequestHandler {
         this.charityService = charityService;
     }
 
-    private CharityProtos.CharityDtoResponse getAllCharities() {
+    private CharityProtos.CharityDtoResponse handleGetCharity(CharityProtos.GetCharityRequestBody requestBody) {
+        if (requestBody.hasId()) {
+            long id = requestBody.getId();
+            try {
+                var charity = charityService.getCharity(id);
+                
+                return CharityProtos.CharityDtoResponse.newBuilder()
+                        .setGetBody(CharityProtos.GetCharityResponseBody.newBuilder().addAllCharities(charity.stream().toList()).build())
+                        .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                        .build();
+            } catch (DatabaseException e) {
+                return CharityProtos.CharityDtoResponse.newBuilder()
+                        .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
+                        .build();
+            }
+
+        }
+
         try {
             var charities = charityService.getAllCharities();
 
@@ -29,7 +46,7 @@ public class CharityController implements RequestHandler {
         }
     }
 
-    private CharityProtos.CharityDtoResponse createCharity(CharityProtos.CreateCharityRequestBody requestBody) {
+    private CharityProtos.CharityDtoResponse handleCreateCharity(CharityProtos.CreateCharityRequestBody requestBody) {
         try {
             var charity = charityService.createCharity(requestBody.getName());
 
@@ -57,10 +74,10 @@ public class CharityController implements RequestHandler {
 
         CharityProtos.CharityDtoResponse response;
         if (request.getCharityReq().hasGetBody()) {
-            response = getAllCharities();
+            response = handleGetCharity(request.getCharityReq().getGetBody());
             connection.send(MainMessageProtos.MainMessage.newBuilder().setCharityRes(response).build());
         } else {
-            response = createCharity(request.getCharityReq().getCreateBody());
+            response = handleCreateCharity(request.getCharityReq().getCreateBody());
             var message = MainMessageProtos.MainMessage.newBuilder().setCharityRes(response).build();
 
             connection.send(message);

@@ -7,38 +7,38 @@ import me.alexutzzu.teledon.protos.CharityProtos;
 import me.alexutzzu.teledon.protos.DonationProtos;
 import me.alexutzzu.teledon.protos.DonorProtos;
 
-public class DonationEntityMapper implements EntityMapper<DonationProtos.Donation, Donation> {
+public class DonationEntityMapper implements EntityMapper<Donation, DonationProtos.Donation> {
 
     @Override
-    public DonationProtos.Donation toDomain(Donation entity) {
+    public DonationProtos.Donation toEntity(Donation domain) {
         return DonationProtos.Donation.newBuilder()
                 .setCharity(
                         CharityProtos.Charity.newBuilder()
-                                .setId(entity.charity().id())
-                                .setName(entity.charity().name())
+                                .setId(domain.charity().id())
+                                .setName(domain.charity().name())
                                 .build()
                 )
-                .setAmount(entity.amount())
+                .setAmount(domain.amount())
                 .setDonor(
                         DonorProtos.DonorDto.newBuilder()
-                                .setId(entity.donor().id())
-                                .setFirstName(entity.donor().firstName())
-                                .setAddress(entity.donor().address())
-                                .setLastName(entity.donor().lastName())
-                                .setPhoneNumber(entity.donor().phoneNumber())
+                                .setId(domain.donor().id())
+                                .setFirstName(domain.donor().firstName())
+                                .setAddress(domain.donor().address())
+                                .setLastName(domain.donor().lastName())
+                                .setPhoneNumber(domain.donor().phoneNumber())
                                 .build()
                 )
-                .setId(entity.id())
+                .setId(domain.id())
                 .build();
     }
 
     @Override
-    public Donation toEntity(DonationProtos.Donation domain) {
+    public Donation toDomain(DonationProtos.Donation entity) {
         return new Donation(
-                domain.getId(),
-                new Charity(domain.getCharity().getId(), domain.getCharity().getName()),
-                new Donor(domain.getDonor().getId(), domain.getDonor().getFirstName(), domain.getDonor().getLastName(), domain.getDonor().getAddress(), domain.getDonor().getPhoneNumber()),
-                domain.getAmount()
+                entity.getId(),
+                new Charity(entity.getCharity().getId(), entity.getCharity().getName()),
+                new Donor(entity.getDonor().getId(), entity.getDonor().getFirstName(), entity.getDonor().getLastName(), entity.getDonor().getAddress(), entity.getDonor().getPhoneNumber()),
+                entity.getAmount()
         );
     }
 }

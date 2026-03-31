@@ -39,7 +39,7 @@ public class DonationService {
             }
 
             var donation = donationRepository.create(new Donation(0L, charity.get(), donor.get(), amount));
-            return donationDtoEntityMapper.toDomain(donation);
+            return donationDtoEntityMapper.toEntity(donation);
 
         } catch (SQLException e) {
             throw new DatabaseException("Database error occurred.");

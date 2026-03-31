@@ -15,7 +15,22 @@ public class DonorController implements RequestHandler {
         this.donorService = donorService;
     }
 
-    private DonorProtos.DonorDtoResponse getAllDonors() {
+    private DonorProtos.DonorDtoResponse handleGet(DonorProtos.GetDonorRequestBody requestBody) {
+        if (requestBody.hasId()) {
+            long id = requestBody.getId();
+
+            try {
+                var donor = donorService.getDonor(id);
+                DonorProtos.DonorDtoResponse.newBuilder()
+                        .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                        .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donor.stream().toList()).build())
+                        .build();
+            } catch (DatabaseException e) {
+                return DonorProtos.DonorDtoResponse.newBuilder()
+                        .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
+                        .build();
+            }
+        }
         try {
             var donors = donorService.getAllDonors();
 
@@ -31,7 +46,7 @@ public class DonorController implements RequestHandler {
         }
     }
 
-    private DonorProtos.DonorDtoResponse createDonor(DonorProtos.CreateDonorRequestBody requestBody) {
+    private DonorProtos.DonorDtoResponse handleCreate(DonorProtos.CreateDonorRequestBody requestBody) {
         try {
             var donor = donorService.createDonor(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getAddress(), requestBody.getPhoneNumber());
 
@@ -61,10 +76,10 @@ public class DonorController implements RequestHandler {
         DonorProtos.DonorDtoResponse response;
 
         if (request.getDonorReq().hasGetBody()) {
-            response = getAllDonors();
+            response = handleGet(request.getDonorReq().getGetBody());
             connection.send(MainMessageProtos.MainMessage.newBuilder().setDonorRes(response).build());
         } else {
-            response = createDonor(request.getDonorReq().getCreateBody());
+            response = handleCreate(request.getDonorReq().getCreateBody());
 
             var message = MainMessageProtos.MainMessage.newBuilder()
                     .setDonorRes(response)

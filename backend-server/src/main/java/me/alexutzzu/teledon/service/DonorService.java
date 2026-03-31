@@ -8,6 +8,7 @@ import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class DonorService {
     private final DonorRepository donorRepository;
@@ -23,7 +24,17 @@ public class DonorService {
         try {
             var donors = donorRepository.findAll();
 
-            return donors.stream().map(donorDtoEntityMapper::toDomain).toList();
+            return donors.stream().map(donorDtoEntityMapper::toEntity).toList();
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error occurred.");
+        }
+    }
+
+    public Optional<DonorProtos.DonorDto> getDonor(long id) throws DatabaseException {
+        try {
+            var donor = donorRepository.findById(id);
+
+            return donor.map(donorDtoEntityMapper::toEntity);
         } catch (SQLException e) {
             throw new DatabaseException("Database error occurred.");
         }
@@ -32,7 +43,7 @@ public class DonorService {
     public DonorProtos.DonorDto createDonor(String firstName, String lastName, String address, String phoneNumber) throws DatabaseException {
         try {
             var donor = donorRepository.create(new Donor(0L, firstName, lastName, address, phoneNumber));
-            return donorDtoEntityMapper.toDomain(donor);
+            return donorDtoEntityMapper.toEntity(donor);
         } catch (SQLException e) {
             throw new DatabaseException("Failed to create donor with name " + firstName + " " + lastName);
         }

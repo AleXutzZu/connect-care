@@ -10,6 +10,7 @@ import me.alexutzzu.teledon.service.mapper.CharityDtoEntityMapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class CharityService {
 
@@ -38,6 +39,21 @@ public class CharityService {
             }).map(charityDtoEntityMapper::toEntity).toList();
 
         } catch (SQLException | RuntimeException e) {
+            throw new DatabaseException("Database error occurred.");
+        }
+    }
+
+    public Optional<CharityProtos.CharityDto> getCharity(long id) throws DatabaseException {
+        try {
+            var charity = charityRepository.findById(id);
+
+            if (charity.isEmpty()) return Optional.empty();
+
+            var raisedSum = donationRepository.findRaisedSum(id);
+
+            return Optional.of(charityDtoEntityMapper.toEntity(new CharityDto(charity.get().id(), charity.get().name(), raisedSum)));
+
+        } catch (SQLException e) {
             throw new DatabaseException("Database error occurred.");
         }
     }
