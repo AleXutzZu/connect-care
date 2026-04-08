@@ -1,5 +1,6 @@
 package me.alexutzzu.teledon.persistence.impl;
 
+import me.alexutzzu.teledon.model.Charity;
 import me.alexutzzu.teledon.model.Donor;
 import me.alexutzzu.teledon.persistence.DonorRepository;
 import me.alexutzzu.teledon.persistence.database.DatabaseManager;
@@ -8,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class JdbcDonorRepositoryImpl implements DonorRepository {
@@ -77,6 +80,21 @@ public class JdbcDonorRepositoryImpl implements DonorRepository {
             stmt.setLong(1, id);
 
             stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public List<Donor> findAll() throws SQLException {
+        try (Connection connection = databaseManager.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM donor");
+
+            List<Donor> donors = new ArrayList<>();
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    donors.add(new Donor(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("address"), rs.getString("phoneNumber")));
+                }
+            }
+            return donors;
         }
     }
 }

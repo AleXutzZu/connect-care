@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using teledon_management_ui.Messages;
 using teledon_management_ui.Models;
 using teledon_management_ui.Services;
 
@@ -12,19 +15,33 @@ public partial class DonorListViewModel : ViewModelBase
     public DonorListViewModel(IDonorService donorService)
     {
         _donorService = donorService;
-        _donorList = donorService.AllDonors();
-        FilteredDonors = new ObservableCollection<Donor>(_donorList);
+
+        _ = InitializeAsync();
+
+        WeakReferenceMessenger.Default.Register<BroadcastedCreateDonorMessage>(this, (recipient, message) =>
+        {
+            DonorList.Add(message.Donor);
+            UpdateFilter();
+        });
     }
 
     private readonly IDonorService _donorService;
 
     [ObservableProperty] private Donor? _selectedDonor;
 
-    private readonly List<Donor> _donorList;
+    [ObservableProperty] private ObservableCollection<Donor> _donorList = [];
 
-    [ObservableProperty] private ObservableCollection<Donor> _filteredDonors;
+    [ObservableProperty] private ObservableCollection<Donor> _filteredDonors = [];
 
     [ObservableProperty] private string? _searchText;
+
+    private async Task InitializeAsync()
+    {
+        var donors = await _donorService.AllDonors();
+
+        DonorList = new ObservableCollection<Donor>(donors);
+        FilteredDonors = new ObservableCollection<Donor>(DonorList);
+    }
 
     partial void OnSearchTextChanged(string? value)
     {
@@ -37,7 +54,7 @@ public partial class DonorListViewModel : ViewModelBase
 
         var search = SearchText ?? "";
 
-        var result = _donorList.Where(d =>
+        var result = DonorList.Where(d =>
             string.IsNullOrEmpty(search) ||
             d.FirstName.Contains(search, System.StringComparison.CurrentCultureIgnoreCase) ||
             d.LastName.Contains(search, System.StringComparison.CurrentCultureIgnoreCase));

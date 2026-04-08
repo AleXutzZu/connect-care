@@ -20,10 +20,13 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <TransitioningContentControl Content="{Binding CurrentPage}">
-        <TransitioningContentControl.PageTransition>
-            <PageSlide Duration="0:0:0.25" Orientation="Horizontal" />
-        </TransitioningContentControl.PageTransition>
-    </TransitioningContentControl>
+    <Panel>
+        <TransitioningContentControl Content="{Binding CurrentPage}">
+            <TransitioningContentControl.PageTransition>
+                <PageSlide Duration="0:0:0.25" Orientation="Horizontal" />
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
 
+        <WindowNotificationManager x:Name="NotificationManager" Position="TopRight" />
+    </Panel>
 </Window>

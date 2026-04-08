@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package teledon_management;
+
+option java_multiple_files = false;
+option java_package = "me.alexutzzu.teledon.protos";
+option java_outer_classname = "DonorProtos";
+option csharp_namespace = "teledon_management_ui.Protos";
+
+import "response_status.proto";
+
+message DonorDto {
+  optional int64  id = 1;
+  optional string firstName = 2;
+  optional string lastName = 3;
+  optional string address = 4;
+  optional string phoneNumber = 5;
+}
+
+message CreateDonorRequestBody {
+  optional string firstName = 1;
+  optional string lastName = 2;
+  optional string address = 3;
+  optional string phoneNumber = 4;
+}
+
+message GetDonorRequestBody {
+  optional int64 id = 1;
+}
+
+message DonorDtoRequest {
+  oneof body {
+    CreateDonorRequestBody createBody = 1;
+    GetDonorRequestBody getBody = 2;
+  }
+}
+
+message CreateDonorResponseBody {
+  optional DonorDto donor = 1;
+}
+
+message GetDonorResponseBody {
+  repeated DonorDto donors = 1;
+}
+
+message DonorDtoResponse {
+  optional ResponseStatus status = 1;
+  oneof body {
+    CreateDonorResponseBody createBody = 2;
+    GetDonorResponseBody getBody = 3;
+  }
+}

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using teledon_management_ui.Messages;
@@ -12,7 +14,7 @@ namespace teledon_management_ui.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase
 {
-    public ObservableCollection<CharityDtoViewModel> CharityDtos { get; }
+    [ObservableProperty] private ObservableCollection<CharityDtoViewModel> _charityDtos = new();
     private readonly IAuthService _authService;
     private readonly ICharityService _charityService;
 
@@ -21,10 +23,9 @@ public partial class DashboardViewModel : ViewModelBase
         _charityService = charityService;
         _authService = authService;
 
-        CharityDtos = new(_charityService.AllCharitiesWithRaisedSums()
-            .ConvertAll(c => new CharityDtoViewModel(c)));
+        _ = InitializeAsync();
 
-        WeakReferenceMessenger.Default.Register<CloseDonationWindowMessage>(this, (recipient, message) =>
+        WeakReferenceMessenger.Default.Register<CreateDonationMessage>(this, (recipient, message) =>
         {
             Dispatcher.UIThread.Post(() =>
             {
@@ -35,7 +36,22 @@ public partial class DashboardViewModel : ViewModelBase
             });
         });
 
-        WeakReferenceMessenger.Default.Register<CloseCharityWindowMessage>(this,
+        WeakReferenceMessenger.Default.Register<BroadcastedCreateDonationMessage>(this, (recipient, message) =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                var targetCharity = CharityDtos.FirstOrDefault(c => c.Id == message.Donation.Charity.Id);
+                targetCharity?.RaisedSum += message.Donation.Amount;
+            });
+        });
+
+        WeakReferenceMessenger.Default.Register<CreateCharityMessage>(this,
+            (recipient, message) =>
+            {
+                CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
+            });
+
+        WeakReferenceMessenger.Default.Register<BroadcastedCreateCharityMessage>(this,
             (recipient, message) =>
             {
                 CharityDtos.Add(new CharityDtoViewModel(new CharityDto(message.Charity.Id, message.Charity.Name, 0)));
@@ -56,6 +72,14 @@ public partial class DashboardViewModel : ViewModelBase
     [RelayCommand]
     private void CreateCharity()
     {
-        WeakReferenceMessenger.Default.Send(new CreateCharityMessage());
+        WeakReferenceMessenger.Default.Send(new OpenCharityCreationWindowMessage());
+    }
+
+    private async Task InitializeAsync()
+    {
+        var charities = await _charityService.AllCharitiesWithRaisedSums();
+
+        CharityDtos = new ObservableCollection<CharityDtoViewModel>(
+            charities.ConvertAll(c => new CharityDtoViewModel(c)));
     }
 }

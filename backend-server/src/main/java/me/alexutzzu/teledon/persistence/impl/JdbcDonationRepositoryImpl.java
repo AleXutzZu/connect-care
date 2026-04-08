@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class JdbcDonationRepositoryImpl implements DonationRepository {
@@ -96,6 +98,50 @@ public class JdbcDonationRepositoryImpl implements DonationRepository {
             stmt.setLong(1, id);
 
             stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public List<Donation> findAllByCharityId(long charityId) throws SQLException {
+        try (Connection connection = databaseManager.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT d.*, c.name AS charity_name, " +
+                    "dn.firstName, dn.lastName, dn.address, dn.phoneNumber " +
+                    "FROM donation d " +
+                    "JOIN charity c ON c.id = d.charityid " +
+                    "JOIN donor dn ON dn.id = d.donorid " +
+                    "WHERE d.id = ?");
+            stmt.setLong(1, charityId);
+
+            List<Donation> donations = new ArrayList<>();
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Charity charity = new Charity(rs.getLong("charityid"), rs.getString("charity_name"));
+                    Donor donor = new Donor(
+                            rs.getLong("donorid"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("address"),
+                            rs.getString("phoneNumber")
+                    );
+                    donations.add(new Donation(rs.getLong("id"), charity, donor, rs.getDouble("amount")));
+                }
+                return donations;
+            }
+        }
+    }
+
+    @Override
+    public double findRaisedSum(long charityId) throws SQLException {
+        try (Connection connection = databaseManager.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT sum(amount) FROM donation WHERE charityid = ? GROUP BY charityid");
+            stmt.setLong(1, charityId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble(1);
+                }
+                return 0;
+            }
         }
     }
 }
