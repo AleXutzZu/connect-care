@@ -23,4 +23,8 @@ public class Charity {
 
     @OneToMany(mappedBy = "charity")
     private List<Donation> donations;
+
+    public static Charity ofName(String name) {
+        return Charity.builder().name(name).build();
+    }
 }

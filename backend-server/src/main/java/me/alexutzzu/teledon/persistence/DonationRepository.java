@@ -1,13 +1,11 @@
 package me.alexutzzu.teledon.persistence;
 
 import me.alexutzzu.teledon.model.Donation;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import java.sql.SQLException;
-import java.util.List;
+public interface DonationRepository extends JpaRepository<Donation, Long> {
 
-public interface DonationRepository extends BasicRepository<Donation> {
-
-    List<Donation> findAllByCharityId(long charityId) throws SQLException;
-
-    double findRaisedSum(long charityId) throws SQLException;
+    @Query("SELECT COALESCE(SUM(d.amount),0) FROM Donation d WHERE d.charity.id = :charityId")
+    double findRaisedSum(long charityId);
 }

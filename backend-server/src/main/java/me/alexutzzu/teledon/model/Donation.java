@@ -29,4 +29,8 @@ public class Donation {
     @Column(nullable = false)
     private Double amount;
 
+
+    public static Donation ofCharity(Charity charity, Donor donor, double amount) {
+        return Donation.builder().charity(charity).donor(donor).amount(amount).build();
+    }
 }

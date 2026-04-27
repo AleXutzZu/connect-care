@@ -33,4 +33,13 @@ public class Donor {
 
     @OneToMany(mappedBy = "donor")
     private List<Donation> donations;
+
+    public static Donor ofDetails(String firstName, String lastName, String address, String phoneNumber) {
+        return Donor.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .address(address)
+                .phoneNumber(phoneNumber)
+                .build();
+    }
 }

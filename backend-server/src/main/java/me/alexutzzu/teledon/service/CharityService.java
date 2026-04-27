@@ -1,17 +1,18 @@
 package me.alexutzzu.teledon.service;
 
-import me.alexutzzu.teledon.exception.DatabaseException;
+import jakarta.transaction.Transactional;
 import me.alexutzzu.teledon.model.Charity;
 import me.alexutzzu.teledon.model.dto.CharityDto;
 import me.alexutzzu.teledon.persistence.CharityRepository;
 import me.alexutzzu.teledon.persistence.DonationRepository;
 import me.alexutzzu.teledon.protos.CharityProtos;
 import me.alexutzzu.teledon.service.mapper.CharityDtoEntityMapper;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CharityService {
 
     private final CharityRepository charityRepository;
@@ -24,46 +25,25 @@ public class CharityService {
         this.charityDtoEntityMapper = charityDtoEntityMapper;
     }
 
-    public List<CharityProtos.CharityDto> getAllCharities() throws DatabaseException {
-        try {
-            var charities = charityRepository.findAll();
-
-            return charities.stream().map(c -> {
-                double sum = 0;
-                try {
-                    sum = donationRepository.findRaisedSum(c.id());
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                return new CharityDto(c.id(), c.name(), sum);
-            }).map(charityDtoEntityMapper::toEntity).toList();
-
-        } catch (SQLException | RuntimeException e) {
-            throw new DatabaseException("Database error occurred.");
-        }
+    public List<CharityProtos.CharityDto> getAllCharities() {
+        var charities = charityRepository.findAll();
+        return charities.stream().map(c -> new CharityDto(c.getId(), c.getName(), donationRepository.findRaisedSum(c.getId()))).map(charityDtoEntityMapper::toDomain).toList();
     }
 
-    public Optional<CharityProtos.CharityDto> getCharity(long id) throws DatabaseException {
-        try {
-            var charity = charityRepository.findById(id);
+    public Optional<CharityProtos.CharityDto> getCharity(long id) {
+        var charity = charityRepository.findById(id);
 
-            if (charity.isEmpty()) return Optional.empty();
+        if (charity.isEmpty()) return Optional.empty();
 
-            var raisedSum = donationRepository.findRaisedSum(id);
+        var raisedSum = donationRepository.findRaisedSum(id);
 
-            return Optional.of(charityDtoEntityMapper.toEntity(new CharityDto(charity.get().id(), charity.get().name(), raisedSum)));
+        return Optional.of(charityDtoEntityMapper.toDomain(new CharityDto(charity.get().getId(), charity.get().getName(), raisedSum)));
 
-        } catch (SQLException e) {
-            throw new DatabaseException("Database error occurred.");
-        }
     }
 
-    public CharityProtos.CharityDto createCharity(String name) throws DatabaseException {
-        try {
-            var charity = charityRepository.create(new Charity(0L, name));
-            return charityDtoEntityMapper.toEntity(new CharityDto(charity.id(), charity.name(), 0));
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to create charity with name " + name);
-        }
+    @Transactional
+    public CharityProtos.CharityDto createCharity(String name) {
+        var charity = charityRepository.save(Charity.ofName(name));
+        return charityDtoEntityMapper.toDomain(new CharityDto(charity.getId(), charity.getName(), 0));
     }
 }

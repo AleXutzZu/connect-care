@@ -1,15 +1,15 @@
 package me.alexutzzu.teledon.service;
 
-import me.alexutzzu.teledon.exception.DatabaseException;
+import jakarta.transaction.Transactional;
 import me.alexutzzu.teledon.model.Donation;
 import me.alexutzzu.teledon.persistence.CharityRepository;
 import me.alexutzzu.teledon.persistence.DonationRepository;
 import me.alexutzzu.teledon.persistence.DonorRepository;
 import me.alexutzzu.teledon.protos.DonationProtos;
 import me.alexutzzu.teledon.service.mapper.DonationEntityMapper;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-
+@Service
 public class DonationService {
     private final DonationRepository donationRepository;
     private final DonorRepository donorRepository;
@@ -24,25 +24,12 @@ public class DonationService {
         this.donationDtoEntityMapper = donationDtoEntityMapper;
     }
 
-    public DonationProtos.Donation createDonation(Long charityId, Long donorId, double amount) throws DatabaseException {
-        try {
-            var charity = charityRepository.findById(charityId);
+    @Transactional
+    public DonationProtos.Donation createDonation(Long charityId, Long donorId, double amount) {
+        var charity = charityRepository.getReferenceById(charityId);
+        var donor = donorRepository.getReferenceById(donorId);
 
-            if (charity.isEmpty()) {
-                throw new DatabaseException("Charity with id " + charityId + " does not exist.");
-            }
-
-            var donor = donorRepository.findById(donorId);
-
-            if (donor.isEmpty()) {
-                throw new DatabaseException("Donor with id " + donorId + " does not exist.");
-            }
-
-            var donation = donationRepository.create(new Donation(0L, charity.get(), donor.get(), amount));
-            return donationDtoEntityMapper.toEntity(donation);
-
-        } catch (SQLException e) {
-            throw new DatabaseException("Database error occurred.");
-        }
+        var donation = donationRepository.save(Donation.ofCharity(charity, donor, amount));
+        return donationDtoEntityMapper.toDomain(donation);
     }
 }

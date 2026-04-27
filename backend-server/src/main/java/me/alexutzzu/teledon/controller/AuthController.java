@@ -1,12 +1,13 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.exception.AuthenticationException;
+import me.alexutzzu.teledon.lib.ClientConnection;
 import me.alexutzzu.teledon.protos.AuthUserProtos;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
-import me.alexutzzu.teledon.lib.ClientConnection;
 import me.alexutzzu.teledon.protos.ResponseStatusProtos;
 import me.alexutzzu.teledon.service.AuthService;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class AuthController implements RequestHandler {
     private final AuthService authService;
 
@@ -15,25 +16,18 @@ public class AuthController implements RequestHandler {
     }
 
     private AuthUserProtos.AuthUserResponse handleAuth(AuthUserProtos.AuthUserRequest request) {
-        try {
-            boolean result = authService.checkCredentials(request.getUsername(), request.getPassword());
+        boolean result = authService.checkCredentials(request.getUsername(), request.getPassword());
 
-            if (result) {
-                return AuthUserProtos.AuthUserResponse.newBuilder()
-                        .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                        .build();
-            }
-
+        if (result) {
             return AuthUserProtos.AuthUserResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                    .setMessage("Credentials are invalid").build();
-
-        } catch (AuthenticationException e) {
-            return AuthUserProtos.AuthUserResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                    .setMessage("An error occurred: " + e.getMessage())
+                    .setStatus(ResponseStatusProtos.ResponseStatus.OK)
                     .build();
         }
+
+        return AuthUserProtos.AuthUserResponse.newBuilder()
+                .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
+                .setMessage("Credentials are invalid").build();
+
     }
 
     @Override
