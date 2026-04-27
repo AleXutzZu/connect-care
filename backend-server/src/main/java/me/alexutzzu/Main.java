@@ -21,6 +21,8 @@ import me.alexutzzu.teledon.service.DonorService;
 import me.alexutzzu.teledon.service.mapper.CharityDtoEntityMapper;
 import me.alexutzzu.teledon.service.mapper.DonationEntityMapper;
 import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -28,8 +30,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
         try {
             //Entity Mappers
             CharityDtoEntityMapper charityDtoEntityMapper = new CharityDtoEntityMapper();
