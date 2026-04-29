@@ -5,6 +5,7 @@ import me.alexutzzu.teledon.protos.CharityProtos;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
 import me.alexutzzu.teledon.protos.ResponseStatusProtos;
 import me.alexutzzu.teledon.service.CharityService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -36,12 +37,19 @@ public class CharityController implements RequestHandler {
     }
 
     private CharityProtos.CharityDtoResponse handleCreateCharity(CharityProtos.CreateCharityRequestBody requestBody) {
-        var charity = charityService.createCharity(requestBody.getName());
+        try {
 
-        return CharityProtos.CharityDtoResponse.newBuilder()
-                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                .setCreateBody(CharityProtos.CreateCharityResponseBody.newBuilder().setCharity(charity).build())
-                .build();
+            var charity = charityService.createCharity(requestBody.getName());
+            return CharityProtos.CharityDtoResponse.newBuilder()
+                    .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                    .setCreateBody(CharityProtos.CreateCharityResponseBody.newBuilder().setCharity(charity).build())
+                    .build();
+        } catch (DataIntegrityViolationException ignored) {
+            return CharityProtos.CharityDtoResponse.newBuilder()
+                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
+                    .build();
+        }
+
     }
 
     @Override
