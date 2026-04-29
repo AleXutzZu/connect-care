@@ -62,7 +62,7 @@ public class CharityService : ICharityService
 
         if (response.CharityRes.Status == ResponseStatus.Failed)
         {
-            throw new ServiceException("Failed to create charity");
+            throw new ServiceException("Charity already exists");
         }
 
         var dto = response.CharityRes.CreateBody.Charity;
