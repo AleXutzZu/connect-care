@@ -1,12 +1,13 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.exception.DatabaseException;
 import me.alexutzzu.teledon.lib.ClientConnection;
 import me.alexutzzu.teledon.protos.DonationProtos;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
 import me.alexutzzu.teledon.protos.ResponseStatusProtos;
 import me.alexutzzu.teledon.service.DonationService;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class DonationController implements RequestHandler {
     private final DonationService donationService;
 
@@ -20,22 +21,15 @@ public class DonationController implements RequestHandler {
     }
 
     private DonationProtos.DonationResponse createDonation(DonationProtos.CreateDonationRequestBody requestBody) {
-        try {
-            var donation = donationService.createDonation(requestBody.getCharityId(), requestBody.getDonorId(), requestBody.getAmount());
+        var donation = donationService.createDonation(requestBody.getCharityId(), requestBody.getDonorId(), requestBody.getAmount());
 
-            return DonationProtos.DonationResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                    .setCreateBody(
-                            DonationProtos.CreateDonationResponseBody.newBuilder()
-                                    .setDonation(donation)
-                                    .build()
-                    ).build();
-
-        } catch (DatabaseException e) {
-            return DonationProtos.DonationResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                    .build();
-        }
+        return DonationProtos.DonationResponse.newBuilder()
+                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                .setCreateBody(
+                        DonationProtos.CreateDonationResponseBody.newBuilder()
+                                .setDonation(donation)
+                                .build()
+                ).build();
     }
 
     @Override

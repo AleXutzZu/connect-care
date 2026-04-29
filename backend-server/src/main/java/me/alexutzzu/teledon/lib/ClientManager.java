@@ -1,10 +1,8 @@
 package me.alexutzzu.teledon.lib;
 
-import me.alexutzzu.teledon.controller.AuthController;
-import me.alexutzzu.teledon.controller.CharityController;
 import me.alexutzzu.teledon.controller.RequestHandler;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
-import me.alexutzzu.teledon.service.AuthService;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
+@Component
 public class ClientManager {
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
     private static final Logger logger = Logger.getLogger("me.alexutzzu.teledon.lib.ClientManager");
@@ -26,7 +25,7 @@ public class ClientManager {
     private final List<RequestHandler> controllers;
 
     public ClientManager(List<RequestHandler> controllers) {
-        this.controllers = Collections.unmodifiableList(controllers);
+        this.controllers = controllers;
     }
 
     private class Client implements Runnable, ClientConnection {
@@ -68,6 +67,7 @@ public class ClientManager {
                         this.out = out;
                     }
                     while (true) {
+                        if (Thread.currentThread().isInterrupted()) break;
                         MainMessageProtos.MainMessage incoming = MainMessageProtos.MainMessage.parseDelimitedFrom(in);
                         if (incoming == null) break;
 

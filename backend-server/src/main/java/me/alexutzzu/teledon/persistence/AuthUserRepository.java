@@ -1,11 +1,10 @@
 package me.alexutzzu.teledon.persistence;
 
 import me.alexutzzu.teledon.model.AuthUser;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
-public interface AuthUserRepository extends BasicRepository<AuthUser> {
-
-    Optional<AuthUser> findByUsername(String username) throws SQLException;
+public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
+    Optional<AuthUser> findAuthUserByUsername(String username);
 }

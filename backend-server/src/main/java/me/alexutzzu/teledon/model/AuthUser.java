@@ -1,4 +1,20 @@
 package me.alexutzzu.teledon.model;
 
-public record AuthUser(Long id, String username, String password) {
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(schema = "public", name = "authuser")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthUser {
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
 }

@@ -1,12 +1,13 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.exception.DatabaseException;
 import me.alexutzzu.teledon.lib.ClientConnection;
 import me.alexutzzu.teledon.protos.DonorProtos;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
 import me.alexutzzu.teledon.protos.ResponseStatusProtos;
 import me.alexutzzu.teledon.service.DonorService;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class DonorController implements RequestHandler {
 
     private final DonorService donorService;
@@ -19,47 +20,29 @@ public class DonorController implements RequestHandler {
         if (requestBody.hasId()) {
             long id = requestBody.getId();
 
-            try {
-                var donor = donorService.getDonor(id);
-                DonorProtos.DonorDtoResponse.newBuilder()
-                        .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                        .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donor.stream().toList()).build())
-                        .build();
-            } catch (DatabaseException e) {
-                return DonorProtos.DonorDtoResponse.newBuilder()
-                        .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                        .build();
-            }
-        }
-        try {
-            var donors = donorService.getAllDonors();
-
-            return DonorProtos.DonorDtoResponse.newBuilder()
+            var donor = donorService.getDonor(id);
+            DonorProtos.DonorDtoResponse.newBuilder()
                     .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                    .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donors).build())
-                    .build();
-
-        } catch (DatabaseException e) {
-            return DonorProtos.DonorDtoResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
+                    .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donor.stream().toList()).build())
                     .build();
         }
+        var donors = donorService.getAllDonors();
+
+        return DonorProtos.DonorDtoResponse.newBuilder()
+                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donors).build())
+                .build();
+
     }
 
     private DonorProtos.DonorDtoResponse handleCreate(DonorProtos.CreateDonorRequestBody requestBody) {
-        try {
-            var donor = donorService.createDonor(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getAddress(), requestBody.getPhoneNumber());
+        var donor = donorService.createDonor(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getAddress(), requestBody.getPhoneNumber());
 
-            return DonorProtos.DonorDtoResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                    .setCreateBody(DonorProtos.CreateDonorResponseBody.newBuilder().setDonor(donor).build())
-                    .build();
+        return DonorProtos.DonorDtoResponse.newBuilder()
+                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                .setCreateBody(DonorProtos.CreateDonorResponseBody.newBuilder().setDonor(donor).build())
+                .build();
 
-        } catch (DatabaseException e) {
-            return DonorProtos.DonorDtoResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                    .build();
-        }
     }
 
     @Override

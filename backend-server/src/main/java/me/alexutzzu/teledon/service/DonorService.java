@@ -1,15 +1,16 @@
 package me.alexutzzu.teledon.service;
 
-import me.alexutzzu.teledon.exception.DatabaseException;
+import jakarta.transaction.Transactional;
 import me.alexutzzu.teledon.model.Donor;
 import me.alexutzzu.teledon.persistence.DonorRepository;
 import me.alexutzzu.teledon.protos.DonorProtos;
 import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class DonorService {
     private final DonorRepository donorRepository;
     private final DonorDtoEntityMapper donorDtoEntityMapper;
@@ -20,32 +21,20 @@ public class DonorService {
         this.donorDtoEntityMapper = donorDtoEntityMapper;
     }
 
-    public List<DonorProtos.DonorDto> getAllDonors() throws DatabaseException {
-        try {
-            var donors = donorRepository.findAll();
-
-            return donors.stream().map(donorDtoEntityMapper::toEntity).toList();
-        } catch (SQLException e) {
-            throw new DatabaseException("Database error occurred.");
-        }
+    public List<DonorProtos.DonorDto> getAllDonors() {
+        var donors = donorRepository.findAll();
+        return donors.stream().map(donorDtoEntityMapper::toDomain).toList();
     }
 
-    public Optional<DonorProtos.DonorDto> getDonor(long id) throws DatabaseException {
-        try {
-            var donor = donorRepository.findById(id);
+    public Optional<DonorProtos.DonorDto> getDonor(long id) {
+        var donor = donorRepository.findById(id);
 
-            return donor.map(donorDtoEntityMapper::toEntity);
-        } catch (SQLException e) {
-            throw new DatabaseException("Database error occurred.");
-        }
+        return donor.map(donorDtoEntityMapper::toDomain);
     }
 
-    public DonorProtos.DonorDto createDonor(String firstName, String lastName, String address, String phoneNumber) throws DatabaseException {
-        try {
-            var donor = donorRepository.create(new Donor(0L, firstName, lastName, address, phoneNumber));
-            return donorDtoEntityMapper.toEntity(donor);
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to create donor with name " + firstName + " " + lastName);
-        }
+    @Transactional
+    public DonorProtos.DonorDto createDonor(String firstName, String lastName, String address, String phoneNumber) {
+        var donor = donorRepository.save(Donor.ofDetails(firstName, lastName, address, phoneNumber));
+        return donorDtoEntityMapper.toDomain(donor);
     }
 }

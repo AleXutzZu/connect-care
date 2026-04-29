@@ -1,75 +1,11 @@
 package me.alexutzzu;
 
-import me.alexutzzu.teledon.controller.AuthController;
-import me.alexutzzu.teledon.controller.CharityController;
-import me.alexutzzu.teledon.controller.DonationController;
-import me.alexutzzu.teledon.controller.DonorController;
-import me.alexutzzu.teledon.lib.ClientManager;
-import me.alexutzzu.teledon.persistence.AuthUserRepository;
-import me.alexutzzu.teledon.persistence.CharityRepository;
-import me.alexutzzu.teledon.persistence.DonationRepository;
-import me.alexutzzu.teledon.persistence.DonorRepository;
-import me.alexutzzu.teledon.persistence.database.DatabaseManager;
-import me.alexutzzu.teledon.persistence.impl.JdbcAuthUserRepositoryImpl;
-import me.alexutzzu.teledon.persistence.impl.JdbcCharityRepositoryImpl;
-import me.alexutzzu.teledon.persistence.impl.JdbcDonationRepositoryImpl;
-import me.alexutzzu.teledon.persistence.impl.JdbcDonorRepositoryImpl;
-import me.alexutzzu.teledon.service.AuthService;
-import me.alexutzzu.teledon.service.CharityService;
-import me.alexutzzu.teledon.service.DonationService;
-import me.alexutzzu.teledon.service.DonorService;
-import me.alexutzzu.teledon.service.mapper.CharityDtoEntityMapper;
-import me.alexutzzu.teledon.service.mapper.DonationEntityMapper;
-import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.List;
-
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        try {
-            //Entity Mappers
-            CharityDtoEntityMapper charityDtoEntityMapper = new CharityDtoEntityMapper();
-            DonorDtoEntityMapper donorDtoEntityMapper = new DonorDtoEntityMapper();
-            DonationEntityMapper donationEntityMapper = new DonationEntityMapper();
-
-            //DI setup
-            CharityRepository charityRepository = DatabaseManager.getRepositoryInstance(CharityRepository.class, JdbcCharityRepositoryImpl.class);
-            DonationRepository donationRepository = DatabaseManager.getRepositoryInstance(DonationRepository.class, JdbcDonationRepositoryImpl.class);
-            DonorRepository donorRepository = DatabaseManager.getRepositoryInstance(DonorRepository.class, JdbcDonorRepositoryImpl.class);
-            AuthUserRepository authUserRepository = DatabaseManager.getRepositoryInstance(AuthUserRepository.class, JdbcAuthUserRepositoryImpl.class);
-
-            AuthService authService = new AuthService(authUserRepository);
-            CharityService charityService = new CharityService(charityRepository, donationRepository, charityDtoEntityMapper);
-            DonorService donorService = new DonorService(donorRepository, donorDtoEntityMapper);
-            DonationService donationService = new DonationService(donationRepository, donorRepository, charityRepository, donationEntityMapper);
-
-
-            AuthController authController = new AuthController(authService);
-            CharityController charityController = new CharityController(charityService);
-            DonorController donorController = new DonorController(donorService);
-            DonationController donationController = new DonationController(donationService);
-
-            ClientManager clientManager = new ClientManager(List.of(authController, charityController, donorController, donationController));
-            //Server setup
-            int port = 8080;
-            try (ServerSocket serverSocket = new ServerSocket()) {
-                serverSocket.bind(new InetSocketAddress("localhost", port));
-
-                while (!Thread.currentThread().isInterrupted()) {
-                    Socket clientSocket = serverSocket.accept();
-                    clientManager.registerClient(clientSocket);
-                }
-            } catch (IOException e) {
-                System.err.println("Exception occurred: " + e.getMessage());
-            } finally {
-                clientManager.shutdown();
-            }
-        } catch (Exception e) {
-            System.err.println("Exception occurred during run of the application");
-        }
+        SpringApplication.run(Main.class, args);
     }
 }

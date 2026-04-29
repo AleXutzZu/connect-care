@@ -1,12 +1,14 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.exception.DatabaseException;
+import me.alexutzzu.teledon.lib.ClientConnection;
 import me.alexutzzu.teledon.protos.CharityProtos;
 import me.alexutzzu.teledon.protos.MainMessageProtos;
-import me.alexutzzu.teledon.lib.ClientConnection;
 import me.alexutzzu.teledon.protos.ResponseStatusProtos;
 import me.alexutzzu.teledon.service.CharityService;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class CharityController implements RequestHandler {
     private final CharityService charityService;
 
@@ -17,48 +19,37 @@ public class CharityController implements RequestHandler {
     private CharityProtos.CharityDtoResponse handleGetCharity(CharityProtos.GetCharityRequestBody requestBody) {
         if (requestBody.hasId()) {
             long id = requestBody.getId();
-            try {
-                var charity = charityService.getCharity(id);
-                
-                return CharityProtos.CharityDtoResponse.newBuilder()
-                        .setGetBody(CharityProtos.GetCharityResponseBody.newBuilder().addAllCharities(charity.stream().toList()).build())
-                        .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                        .build();
-            } catch (DatabaseException e) {
-                return CharityProtos.CharityDtoResponse.newBuilder()
-                        .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                        .build();
-            }
-
-        }
-
-        try {
-            var charities = charityService.getAllCharities();
+            var charity = charityService.getCharity(id);
 
             return CharityProtos.CharityDtoResponse.newBuilder()
-                    .setGetBody(CharityProtos.GetCharityResponseBody.newBuilder().addAllCharities(charities).build())
+                    .setGetBody(CharityProtos.GetCharityResponseBody.newBuilder().addAllCharities(charity.stream().toList()).build())
                     .setStatus(ResponseStatusProtos.ResponseStatus.OK)
                     .build();
-        } catch (DatabaseException e) {
-            return CharityProtos.CharityDtoResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                    .build();
+
         }
+
+        var charities = charityService.getAllCharities();
+
+        return CharityProtos.CharityDtoResponse.newBuilder()
+                .setGetBody(CharityProtos.GetCharityResponseBody.newBuilder().addAllCharities(charities).build())
+                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
+                .build();
     }
 
     private CharityProtos.CharityDtoResponse handleCreateCharity(CharityProtos.CreateCharityRequestBody requestBody) {
         try {
-            var charity = charityService.createCharity(requestBody.getName());
 
+            var charity = charityService.createCharity(requestBody.getName());
             return CharityProtos.CharityDtoResponse.newBuilder()
                     .setStatus(ResponseStatusProtos.ResponseStatus.OK)
                     .setCreateBody(CharityProtos.CreateCharityResponseBody.newBuilder().setCharity(charity).build())
                     .build();
-        } catch (DatabaseException e) {
+        } catch (DataIntegrityViolationException ignored) {
             return CharityProtos.CharityDtoResponse.newBuilder()
                     .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
                     .build();
         }
+
     }
 
     @Override

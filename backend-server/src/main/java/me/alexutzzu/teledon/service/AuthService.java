@@ -1,13 +1,9 @@
 package me.alexutzzu.teledon.service;
 
-import me.alexutzzu.teledon.exception.AuthenticationException;
-import me.alexutzzu.teledon.model.AuthUser;
 import me.alexutzzu.teledon.persistence.AuthUserRepository;
-import me.alexutzzu.teledon.protos.AuthUserProtos;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.Optional;
-
+@Service
 public class AuthService {
     private final AuthUserRepository authUserRepository;
 
@@ -15,19 +11,10 @@ public class AuthService {
         this.authUserRepository = authUserRepository;
     }
 
-    public boolean checkCredentials(String username, String password) throws AuthenticationException {
+    public boolean checkCredentials(String username, String password) {
 
-        try {
-            var user = authUserRepository.findByUsername(username);
+        var user = authUserRepository.findAuthUserByUsername(username);
 
-            if (user.isEmpty()) return false;
-
-            if (user.get().password().equals(password)) return true;
-
-            return false;
-
-        } catch (SQLException e) {
-            throw new AuthenticationException("Error occurred during authentication: " + e.getMessage());
-        }
+        return user.map(authUser -> authUser.getPassword().equals(password)).orElse(false);
     }
 }
