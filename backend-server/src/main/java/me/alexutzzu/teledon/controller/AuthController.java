@@ -1,8 +1,8 @@
 package me.alexutzzu.teledon.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller("/api/auth")
+@RestController("/api/auth")
 public class AuthController {
 
 }

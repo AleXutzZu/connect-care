@@ -1,9 +1,9 @@
 package me.alexutzzu.teledon.controller;
 
 import me.alexutzzu.teledon.service.DonorService;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller("/api/donors")
+@RestController("/api/donors")
 public class DonorController {
 
     private final DonorService donorService;

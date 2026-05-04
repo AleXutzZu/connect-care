@@ -1,9 +1,9 @@
 package me.alexutzzu.teledon.controller;
 
 import me.alexutzzu.teledon.service.CharityService;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller("/api/charities")
+@RestController("/api/charities")
 public class CharityController {
     private final CharityService charityService;
 
