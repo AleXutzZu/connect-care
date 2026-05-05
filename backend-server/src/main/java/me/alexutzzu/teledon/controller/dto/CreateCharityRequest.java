@@ -1,4 +1,6 @@
 package me.alexutzzu.teledon.controller.dto;
 
-public record CreateCharityRequest(String name) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateCharityRequest(@NotBlank(message = "name cannot be empty") String name) {
 }

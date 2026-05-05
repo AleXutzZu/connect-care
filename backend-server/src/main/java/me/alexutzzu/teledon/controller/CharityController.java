@@ -1,7 +1,7 @@
 package me.alexutzzu.teledon.controller;
 
+import jakarta.validation.Valid;
 import me.alexutzzu.teledon.controller.dto.CreateCharityRequest;
-import me.alexutzzu.teledon.controller.dto.UpdateCharityRequest;
 import me.alexutzzu.teledon.model.dto.CharityDto;
 import me.alexutzzu.teledon.model.dto.CharityWithRaisedSum;
 import me.alexutzzu.teledon.service.CharityService;
@@ -31,14 +31,14 @@ public class CharityController {
     }
 
     @PostMapping
-    public ResponseEntity<CharityDto> createCharity(@RequestBody CreateCharityRequest createCharityRequest) {
-        var entity = charityService.createCharity(createCharityRequest.name());
+    public ResponseEntity<CharityDto> createCharity(@RequestBody @Valid CreateCharityRequest body) {
+        var entity = charityService.createCharity(body.name());
         return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 
     @PutMapping("/{charityId}")
-    public ResponseEntity<CharityDto> updateCharity(@PathVariable Long charityId, @RequestBody UpdateCharityRequest updateCharityRequest) {
-        var entity = charityService.updateCharity(charityId, updateCharityRequest.name());
+    public ResponseEntity<CharityDto> updateCharity(@PathVariable Long charityId, @RequestBody @Valid CreateCharityRequest body) {
+        var entity = charityService.updateCharity(charityId, body.name());
         return ResponseEntity.status(HttpStatus.OK).body(entity);
     }
 
