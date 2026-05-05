@@ -5,7 +5,7 @@ import me.alexutzzu.teledon.model.dto.DonationDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DonationEntityMapper implements EntityMapper<Donation, DonationDto> {
+public class DonationDtoEntityMapper implements EntityMapper<Donation, DonationDto> {
     @Override
     public DonationDto toDomain(Donation entity) {
         return new DonationDto(entity.getId(), entity.getCharity().getId(), entity.getDonor().getId(), entity.getAmount());

@@ -10,15 +10,15 @@ import java.util.List;
 @Component
 public class CharityDtoEntityMapper implements EntityMapper<Charity, CharityDto> {
 
-    private final DonationEntityMapper donationEntityMapper;
+    private final DonationDtoEntityMapper donationDtoEntityMapper;
 
-    public CharityDtoEntityMapper(DonationEntityMapper donationEntityMapper) {
-        this.donationEntityMapper = donationEntityMapper;
+    public CharityDtoEntityMapper(DonationDtoEntityMapper donationDtoEntityMapper) {
+        this.donationDtoEntityMapper = donationDtoEntityMapper;
     }
 
     @Override
     public CharityDto toDomain(Charity entity) {
-        List<DonationDto> donationDtos = entity.getDonations().stream().map(donationEntityMapper::toDomain).toList();
+        List<DonationDto> donationDtos = entity.getDonations().stream().map(donationDtoEntityMapper::toDomain).toList();
         return new CharityDto(entity.getId(), entity.getName(), donationDtos);
     }
 }
