@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -26,6 +28,6 @@ public class Charity {
     private List<Donation> donations = new ArrayList<>();
 
     public static Charity ofName(String name) {
-        return Charity.builder().name(name).build();
+        return Charity.builder().name(name).donations(Collections.emptyList()).build();
     }
 }
