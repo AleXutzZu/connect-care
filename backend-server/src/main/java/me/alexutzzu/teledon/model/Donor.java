@@ -1,11 +1,10 @@
 package me.alexutzzu.teledon.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -28,11 +27,13 @@ public class Donor {
     @Column(nullable = false)
     private String address;
 
-    @Column(name = "phonenumber", nullable = false)
+    @Column(name = "phonenumber", nullable = false, unique = true)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "donor")
-    private List<Donation> donations;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Donation> donations = new ArrayList<>();
 
     public static Donor ofDetails(String firstName, String lastName, String address, String phoneNumber) {
         return Donor.builder()
@@ -40,6 +41,7 @@ public class Donor {
                 .lastName(lastName)
                 .address(address)
                 .phoneNumber(phoneNumber)
+                .donations(Collections.emptyList())
                 .build();
     }
 }

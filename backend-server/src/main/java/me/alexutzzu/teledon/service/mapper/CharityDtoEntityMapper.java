@@ -1,19 +1,24 @@
 package me.alexutzzu.teledon.service.mapper;
 
+import me.alexutzzu.teledon.model.Charity;
 import me.alexutzzu.teledon.model.dto.CharityDto;
-import me.alexutzzu.teledon.protos.CharityProtos;
+import me.alexutzzu.teledon.model.dto.DonationDto;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CharityDtoEntityMapper implements EntityMapper<CharityDto, CharityProtos.CharityDto> {
+import java.util.List;
 
+@Component
+public class CharityDtoEntityMapper implements EntityMapper<Charity, CharityDto> {
+
+    private final DonationDtoEntityMapper donationDtoEntityMapper;
+
+    public CharityDtoEntityMapper(DonationDtoEntityMapper donationDtoEntityMapper) {
+        this.donationDtoEntityMapper = donationDtoEntityMapper;
+    }
 
     @Override
-    public CharityProtos.CharityDto toDomain(CharityDto entity) {
-        return CharityProtos.CharityDto.newBuilder()
-                .setRaisedSum(entity.raisedSum())
-                .setName(entity.name())
-                .setId(entity.id())
-                .build();
+    public CharityDto toDomain(Charity entity) {
+        List<DonationDto> donationDtos = entity.getDonations().stream().map(donationDtoEntityMapper::toDomain).toList();
+        return new CharityDto(entity.getId(), entity.getName(), donationDtos);
     }
 }

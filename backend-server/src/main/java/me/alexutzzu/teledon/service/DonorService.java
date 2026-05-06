@@ -1,40 +1,53 @@
 package me.alexutzzu.teledon.service;
 
-import jakarta.transaction.Transactional;
+import me.alexutzzu.teledon.exception.NotFoundException;
 import me.alexutzzu.teledon.model.Donor;
+import me.alexutzzu.teledon.model.dto.DonorDto;
+import me.alexutzzu.teledon.model.dto.DonorWithoutDonations;
 import me.alexutzzu.teledon.persistence.DonorRepository;
-import me.alexutzzu.teledon.protos.DonorProtos;
 import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
+import me.alexutzzu.teledon.service.mapper.DonorWithoutDonationsEntityMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DonorService {
     private final DonorRepository donorRepository;
     private final DonorDtoEntityMapper donorDtoEntityMapper;
+    private final DonorWithoutDonationsEntityMapper donorWithoutDonationsEntityMapper;
 
-
-    public DonorService(DonorRepository donorRepository, DonorDtoEntityMapper donorDtoEntityMapper) {
+    public DonorService(DonorRepository donorRepository, DonorDtoEntityMapper donorDtoEntityMapper, DonorWithoutDonationsEntityMapper donorWithoutDonationsEntityMapper) {
         this.donorRepository = donorRepository;
         this.donorDtoEntityMapper = donorDtoEntityMapper;
+        this.donorWithoutDonationsEntityMapper = donorWithoutDonationsEntityMapper;
     }
 
-    public List<DonorProtos.DonorDto> getAllDonors() {
-        var donors = donorRepository.findAll();
-        return donors.stream().map(donorDtoEntityMapper::toDomain).toList();
+    public List<DonorWithoutDonations> getAllDonors() {
+        return donorRepository.findAll().stream().map(donorWithoutDonationsEntityMapper::toDomain).toList();
     }
 
-    public Optional<DonorProtos.DonorDto> getDonor(long id) {
-        var donor = donorRepository.findById(id);
-
-        return donor.map(donorDtoEntityMapper::toDomain);
+    public DonorDto getDonor(Long id) {
+        return donorRepository.findById(id).map(donorDtoEntityMapper::toDomain).orElseThrow(NotFoundException::new);
     }
 
-    @Transactional
-    public DonorProtos.DonorDto createDonor(String firstName, String lastName, String address, String phoneNumber) {
-        var donor = donorRepository.save(Donor.ofDetails(firstName, lastName, address, phoneNumber));
-        return donorDtoEntityMapper.toDomain(donor);
+    public DonorDto createDonor(String firstName, String lastName, String address, String phoneNumber) {
+        Donor entity = donorRepository.save(Donor.ofDetails(firstName, lastName, address, phoneNumber));
+        return donorDtoEntityMapper.toDomain(entity);
+    }
+
+    public DonorDto updateDonor(Long id, String firstName, String lastName, String address, String phoneNumber) {
+        return donorRepository.findById(id).map(donor -> {
+            donor.setFirstName(firstName);
+            donor.setLastName(lastName);
+            donor.setAddress(address);
+            donor.setPhoneNumber(phoneNumber);
+            return donorRepository.save(donor);
+        }).map(donorDtoEntityMapper::toDomain).orElseThrow(NotFoundException::new);
+    }
+
+    public void deleteDonor(Long id) {
+        if (donorRepository.findById(id).isEmpty()) throw new NotFoundException();
+        donorRepository.deleteById(id);
     }
 }

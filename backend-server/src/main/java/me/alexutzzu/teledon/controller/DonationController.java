@@ -1,53 +1,49 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.lib.ClientConnection;
-import me.alexutzzu.teledon.protos.DonationProtos;
-import me.alexutzzu.teledon.protos.MainMessageProtos;
-import me.alexutzzu.teledon.protos.ResponseStatusProtos;
+import jakarta.validation.Valid;
+import me.alexutzzu.teledon.controller.dto.CreateDonationRequest;
+import me.alexutzzu.teledon.model.dto.DonationDto;
 import me.alexutzzu.teledon.service.DonationService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-public class DonationController implements RequestHandler {
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/donations")
+public class DonationController {
     private final DonationService donationService;
 
     public DonationController(DonationService donationService) {
         this.donationService = donationService;
     }
 
-    @Override
-    public MainMessageProtos.MainMessage.PayloadCase getHandlerType() {
-        return MainMessageProtos.MainMessage.PayloadCase.DONATIONREQ;
+    @GetMapping
+    public List<DonationDto> getAllDonations() {
+        return donationService.getAllDonations();
     }
 
-    private DonationProtos.DonationResponse createDonation(DonationProtos.CreateDonationRequestBody requestBody) {
-        var donation = donationService.createDonation(requestBody.getCharityId(), requestBody.getDonorId(), requestBody.getAmount());
-
-        return DonationProtos.DonationResponse.newBuilder()
-                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                .setCreateBody(
-                        DonationProtos.CreateDonationResponseBody.newBuilder()
-                                .setDonation(donation)
-                                .build()
-                ).build();
+    @GetMapping("/{donationId}")
+    public DonationDto getDonation(@PathVariable Long donationId) {
+        return donationService.getDonation(donationId);
     }
 
-    @Override
-    public void handleRequest(MainMessageProtos.MainMessage request, ClientConnection connection) {
-        if (request.getPayloadCase() != getHandlerType()) {
-            throw new RuntimeException("Handler called on incompatible request");
-        }
+    @PostMapping
+    public ResponseEntity<DonationDto> createDonation(@RequestBody @Valid CreateDonationRequest body) {
+        var entity = donationService.createDonation(body.charityId(), body.donorId(), body.amount());
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+    }
 
-        var response = createDonation(request.getDonationReq().getCreateBody());
+    @PutMapping("/{donationId}")
+    public ResponseEntity<DonationDto> updateDonation(@PathVariable Long donationId, @RequestBody @Valid CreateDonationRequest body) {
+        var entity = donationService.updateDonation(donationId, body.charityId(), body.charityId(), body.amount());
+        return ResponseEntity.ok(entity);
+    }
 
-        var message = MainMessageProtos.MainMessage.newBuilder()
-                .setDonationRes(response)
-                .build();
-
-        connection.send(message);
-
-        if (message.getDonationRes().getStatus() == ResponseStatusProtos.ResponseStatus.OK) {
-            connection.broadcast(message.toBuilder().setIsUpdatePayload(true).build());
-        }
+    @DeleteMapping("/{donationId}")
+    public ResponseEntity<?> deleteDonation(@PathVariable Long donationId) {
+        donationService.deleteDonation(donationId);
+        return ResponseEntity.noContent().build();
     }
 }

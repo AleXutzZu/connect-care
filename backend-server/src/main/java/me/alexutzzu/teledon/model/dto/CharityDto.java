@@ -1,4 +1,6 @@
 package me.alexutzzu.teledon.model.dto;
 
-public record CharityDto(Long id, String name, double raisedSum) {
+import java.util.List;
+
+public record CharityDto(Long id, String name, List<DonationDto> donations) {
 }

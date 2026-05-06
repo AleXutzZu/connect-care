@@ -1,44 +1,30 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.lib.ClientConnection;
-import me.alexutzzu.teledon.protos.AuthUserProtos;
-import me.alexutzzu.teledon.protos.MainMessageProtos;
-import me.alexutzzu.teledon.protos.ResponseStatusProtos;
-import me.alexutzzu.teledon.service.AuthService;
-import org.springframework.stereotype.Controller;
+import me.alexutzzu.teledon.controller.dto.LoginRequest;
+import me.alexutzzu.teledon.service.TokenService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-public class AuthController implements RequestHandler {
-    private final AuthService authService;
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    private final TokenService tokenService;
+    private final AuthenticationManager authManager;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    public AuthController(TokenService tokenService, AuthenticationManager authManager) {
+        this.tokenService = tokenService;
+        this.authManager = authManager;
     }
 
-    private AuthUserProtos.AuthUserResponse handleAuth(AuthUserProtos.AuthUserRequest request) {
-        boolean result = authService.checkCredentials(request.getUsername(), request.getPassword());
 
-        if (result) {
-            return AuthUserProtos.AuthUserResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                    .build();
-        }
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        var auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 
-        return AuthUserProtos.AuthUserResponse.newBuilder()
-                .setStatus(ResponseStatusProtos.ResponseStatus.FAILED)
-                .setMessage("Credentials are invalid").build();
-
-    }
-
-    @Override
-    public MainMessageProtos.MainMessage.PayloadCase getHandlerType() {
-        return MainMessageProtos.MainMessage.PayloadCase.AUTHREQ;
-    }
-
-    @Override
-    public void handleRequest(MainMessageProtos.MainMessage request, ClientConnection connection) {
-        var response = handleAuth(request.getAuthReq());
-
-        connection.send(MainMessageProtos.MainMessage.newBuilder().setAuthRes(response).build());
+        return tokenService.generateToken(auth);
     }
 }

@@ -1,14 +1,19 @@
 package me.alexutzzu.teledon.controller;
 
-import me.alexutzzu.teledon.lib.ClientConnection;
-import me.alexutzzu.teledon.protos.DonorProtos;
-import me.alexutzzu.teledon.protos.MainMessageProtos;
-import me.alexutzzu.teledon.protos.ResponseStatusProtos;
+import jakarta.validation.Valid;
+import me.alexutzzu.teledon.controller.dto.CreateDonorRequest;
+import me.alexutzzu.teledon.model.dto.DonorDto;
+import me.alexutzzu.teledon.model.dto.DonorWithoutDonations;
 import me.alexutzzu.teledon.service.DonorService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-public class DonorController implements RequestHandler {
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/donors")
+public class DonorController {
 
     private final DonorService donorService;
 
@@ -16,64 +21,31 @@ public class DonorController implements RequestHandler {
         this.donorService = donorService;
     }
 
-    private DonorProtos.DonorDtoResponse handleGet(DonorProtos.GetDonorRequestBody requestBody) {
-        if (requestBody.hasId()) {
-            long id = requestBody.getId();
-
-            var donor = donorService.getDonor(id);
-            DonorProtos.DonorDtoResponse.newBuilder()
-                    .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                    .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donor.stream().toList()).build())
-                    .build();
-        }
-        var donors = donorService.getAllDonors();
-
-        return DonorProtos.DonorDtoResponse.newBuilder()
-                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                .setGetBody(DonorProtos.GetDonorResponseBody.newBuilder().addAllDonors(donors).build())
-                .build();
-
+    @GetMapping
+    public List<DonorWithoutDonations> getAllDonors() {
+        return donorService.getAllDonors();
     }
 
-    private DonorProtos.DonorDtoResponse handleCreate(DonorProtos.CreateDonorRequestBody requestBody) {
-        var donor = donorService.createDonor(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getAddress(), requestBody.getPhoneNumber());
-
-        return DonorProtos.DonorDtoResponse.newBuilder()
-                .setStatus(ResponseStatusProtos.ResponseStatus.OK)
-                .setCreateBody(DonorProtos.CreateDonorResponseBody.newBuilder().setDonor(donor).build())
-                .build();
-
+    @GetMapping("/{donorId}")
+    public DonorDto getDonor(@PathVariable Long donorId) {
+        return donorService.getDonor(donorId);
     }
 
-    @Override
-    public MainMessageProtos.MainMessage.PayloadCase getHandlerType() {
-        return MainMessageProtos.MainMessage.PayloadCase.DONORREQ;
+    @PostMapping
+    public ResponseEntity<DonorDto> createDonor(@RequestBody @Valid CreateDonorRequest body) {
+        var entity = donorService.createDonor(body.firstName(), body.lastName(), body.address(), body.phoneNumber());
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 
-    @Override
-    public void handleRequest(MainMessageProtos.MainMessage request, ClientConnection connection) {
-        if (request.getPayloadCase() != getHandlerType()) {
-            throw new RuntimeException("Handler called on incompatible request");
-        }
+    @PutMapping("/{donorId}")
+    public ResponseEntity<DonorDto> updateDonor(@PathVariable Long donorId, @RequestBody @Valid CreateDonorRequest body) {
+        var entity = donorService.updateDonor(donorId, body.firstName(), body.lastName(), body.address(), body.phoneNumber());
+        return ResponseEntity.ok(entity);
+    }
 
-        DonorProtos.DonorDtoResponse response;
-
-        if (request.getDonorReq().hasGetBody()) {
-            response = handleGet(request.getDonorReq().getGetBody());
-            connection.send(MainMessageProtos.MainMessage.newBuilder().setDonorRes(response).build());
-        } else {
-            response = handleCreate(request.getDonorReq().getCreateBody());
-
-            var message = MainMessageProtos.MainMessage.newBuilder()
-                    .setDonorRes(response)
-                    .build();
-
-            connection.send(message);
-
-            if (message.getDonorRes().getStatus() == ResponseStatusProtos.ResponseStatus.OK) {
-                connection.broadcast(message.toBuilder().setIsUpdatePayload(true).build());
-            }
-        }
-
+    @DeleteMapping("/{donorId}")
+    public ResponseEntity<?> deleteDonor(@PathVariable Long donorId) {
+        donorService.deleteDonor(donorId);
+        return ResponseEntity.noContent().build();
     }
 }
