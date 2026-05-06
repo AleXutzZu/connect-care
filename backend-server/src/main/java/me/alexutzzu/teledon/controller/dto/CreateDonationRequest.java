@@ -1,9 +1,8 @@
 package me.alexutzzu.teledon.controller.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
-public record CreateDonationRequest(@NotBlank Long charityId,
-                                    @NotBlank Long donorId,
+public record CreateDonationRequest(Long charityId,
+                                    Long donorId,
                                     @Positive Double amount) {
 }

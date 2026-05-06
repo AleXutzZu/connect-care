@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "public", name = "donation")
@@ -29,8 +32,15 @@ public class Donation {
     @Column(nullable = false)
     private Double amount;
 
+    @CreationTimestamp
+    @Column(nullable = false, name = "createdon")
+    private LocalDateTime createdOn;
 
     public static Donation ofDetails(Charity charity, Donor donor, double amount) {
-        return Donation.builder().charity(charity).donor(donor).amount(amount).build();
+        return Donation.builder()
+                .charity(charity)
+                .donor(donor)
+                .amount(amount)
+                .build();
     }
 }

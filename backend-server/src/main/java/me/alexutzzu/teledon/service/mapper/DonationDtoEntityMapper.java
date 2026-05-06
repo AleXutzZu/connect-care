@@ -15,7 +15,8 @@ public class DonationDtoEntityMapper implements EntityMapper<Donation, DonationD
                 donation.getDonor().getFirstName(),
                 donation.getDonor().getLastName(),
                 donation.getCharity().getId(),
-                donation.getCharity().getName()
+                donation.getCharity().getName(),
+                donation.getCreatedOn()
         );
     }
 }
