@@ -39,12 +39,12 @@ public class DonorController {
     @PutMapping("/{donorId}")
     public ResponseEntity<DonorDto> updateDonor(@PathVariable Long donorId, @RequestBody @Valid CreateDonorRequest body) {
         var entity = donorService.updateDonor(donorId, body.firstName(), body.lastName(), body.address(), body.phoneNumber());
-        return ResponseEntity.status(HttpStatus.OK).body(entity);
+        return ResponseEntity.ok(entity);
     }
 
     @DeleteMapping("/{donorId}")
     public ResponseEntity<?> deleteDonor(@PathVariable Long donorId) {
         donorService.deleteDonor(donorId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }

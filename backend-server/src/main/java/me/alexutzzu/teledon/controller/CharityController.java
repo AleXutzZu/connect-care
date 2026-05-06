@@ -39,12 +39,12 @@ public class CharityController {
     @PutMapping("/{charityId}")
     public ResponseEntity<CharityDto> updateCharity(@PathVariable Long charityId, @RequestBody @Valid CreateCharityRequest body) {
         var entity = charityService.updateCharity(charityId, body.name());
-        return ResponseEntity.status(HttpStatus.OK).body(entity);
+        return ResponseEntity.ok(entity);
     }
 
     @DeleteMapping("/{charityId}")
     public ResponseEntity<?> deleteCharity(@PathVariable Long charityId) {
         charityService.deleteCharity(charityId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }
