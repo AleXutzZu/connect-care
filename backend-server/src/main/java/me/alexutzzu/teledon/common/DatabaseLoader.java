@@ -1,7 +1,8 @@
-package me.alexutzzu.teledon.component;
+package me.alexutzzu.teledon.common;
 
 import me.alexutzzu.teledon.model.User;
 import me.alexutzzu.teledon.persistence.UserRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class DatabaseLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String @NonNull ... args) {
         if (userRepository.findByUsername("admin").isEmpty()) {
             User admin = new User();
             admin.setUsername("admin");
