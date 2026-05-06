@@ -30,7 +30,7 @@ public class Donation {
     private Double amount;
 
 
-    public static Donation ofCharity(Charity charity, Donor donor, double amount) {
+    public static Donation ofDetails(Charity charity, Donor donor, double amount) {
         return Donation.builder().charity(charity).donor(donor).amount(amount).build();
     }
 }

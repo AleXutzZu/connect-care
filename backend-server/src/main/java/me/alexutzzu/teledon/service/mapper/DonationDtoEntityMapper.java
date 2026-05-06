@@ -7,7 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class DonationDtoEntityMapper implements EntityMapper<Donation, DonationDto> {
     @Override
-    public DonationDto toDomain(Donation entity) {
-        return new DonationDto(entity.getId(), entity.getCharity().getId(), entity.getDonor().getId(), entity.getAmount());
+    public DonationDto toDomain(Donation donation) {
+        return new DonationDto(
+                donation.getId(),
+                donation.getAmount(),
+                donation.getDonor().getId(),
+                donation.getDonor().getFirstName(),
+                donation.getDonor().getLastName(),
+                donation.getCharity().getId(),
+                donation.getCharity().getName()
+        );
     }
 }
