@@ -1,10 +1,7 @@
 package me.alexutzzu.teledon.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +21,8 @@ public class Charity {
     private String name;
 
     @OneToMany(mappedBy = "charity")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Donation> donations = new ArrayList<>();
 
     public static Charity ofName(String name) {
