@@ -1,13 +1,17 @@
 import type {Route} from "./+types/home";
-import {Welcome} from "~/welcome/welcome";
+import {redirect} from "react-router";
 
 export function meta({}: Route.MetaArgs) {
     return [
-        {title: "New React Router App"},
-        {name: "description", content: "Welcome to React Router!"},
+        {title: "Teledon Management"},
+        {name: "description", content: "Seamlessly manage donations for charitable causes."},
     ];
 }
 
+export async function loader() {
+    return redirect("/dashboard");
+}
+
 export default function Home() {
-    return <Welcome/>;
+    return <></>
 }
