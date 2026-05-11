@@ -1,21 +1,28 @@
 import React from "react";
 import type {Route} from "./+types/layout";
 import {protectRouteMiddleware} from "~/lib/auth";
+import {SidebarInset, SidebarProvider} from "~/components/ui/sidebar";
+import {AppSidebar} from "~/components/app-sidebar";
+import {SiteHeader} from "~/components/site-header";
+import {Outlet} from "react-router";
 
 export const middleware: Route.MiddlewareFunction[] = [protectRouteMiddleware];
 
-export default function DashboardLayout({children}: { children: React.ReactNode }) {
+export default function DashboardLayout() {
     return (
-        <>
-            <nav>
-                navigation
-            </nav>
-            <main>
-                {children}
-            </main>
-            <footer>
-                header
-            </footer>
-        </>
+        <SidebarProvider
+            style={
+                {
+                    "--sidebar-width": "calc(var(--spacing) * 72)",
+                    "--header-height": "calc(var(--spacing) * 12)",
+                } as React.CSSProperties
+            }
+        >
+            <AppSidebar variant="inset"/>
+            <SidebarInset>
+                <SiteHeader/>
+                <Outlet/>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }
