@@ -47,8 +47,10 @@ export const protectRouteMiddleware: MiddlewareFunction<Response> = async ({requ
     const user = context.get(userContext);
 
     if (!user) {
+        const redirectUrl = `/login?redirect=${encodeURIComponent(new URL(request.url).pathname)}`
+
         const emptyCookie = await userToken.serialize('', {maxAge: 0});
-        throw redirect("/login", {
+        throw redirect(redirectUrl, {
             headers: {
                 "Set-Cookie": emptyCookie
             }

@@ -30,7 +30,10 @@ export async function action({request}: Route.ActionArgs) {
     const token = await response.text();
     const cookie = await userToken.serialize(token);
 
-    return redirect("/dashboard", {
+    const searchParams = new URL(request.url).searchParams;
+    const redirectTo = searchParams.get("redirect") ?? "/dashboard";
+
+    return redirect(redirectTo, {
         headers: {
             "Set-Cookie": cookie
         }
