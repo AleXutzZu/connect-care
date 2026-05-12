@@ -7,7 +7,7 @@ import * as z from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import React, {useCallback, useEffect, useState} from "react";
-import {useFetcher} from "react-router";
+import {useFetcher, useFormAction} from "react-router";
 import {Alert, AlertDescription, AlertTitle} from "~/components/ui/alert";
 import {AlertCircleIcon} from "lucide-react";
 
@@ -19,6 +19,7 @@ const formSchema = z.object({
 type LoginForm = z.infer<typeof formSchema>;
 
 export function LoginForm({className, ...props}: React.ComponentProps<"div">) {
+    const action = useFormAction();
     const form = useForm<LoginForm>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -36,8 +37,8 @@ export function LoginForm({className, ...props}: React.ComponentProps<"div">) {
         fetcher.submit({
             username: values.username,
             password: values.password
-        }, {action: "/login", method: "POST"});
-    }, [fetcher]);
+        }, {action: action, method: "POST"});
+    }, [fetcher, action]);
 
     useEffect(() => {
         if (fetcher.data) {
