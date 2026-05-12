@@ -7,12 +7,4 @@ export default defineConfig({
     resolve: {
         tsconfigPaths: true,
     },
-    server: {
-        proxy: {
-            "/api": {
-                target: "http://localhost:8080",
-                changeOrigin: true,
-            }
-        }
-    }
 });
