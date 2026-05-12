@@ -5,71 +5,157 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e862810b-64cb-48bc-b766-dcd4bb80b153" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/protoeditor.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/teledon-management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/teledon-management.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c8c93f9d-0533-4b44-94b4-4b3dbd500842.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c8c93f9d-0533-4b44-94b4-4b3dbd500842.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c8c93f9d-0533-4b44-94b4-4b3dbd500842/storage_v2/_src_/database/teledon.WanNqg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c8c93f9d-0533-4b44-94b4-4b3dbd500842/storage_v2/_src_/database/teledon.WanNqg/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/controller/CharityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/controller/CharityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/controller/dto/CreateCharityRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/controller/dto/CreateCharityRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/Charity.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/Charity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/dto/CharityDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/dto/CharityDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/dto/CharityWithRaisedSum.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/dto/CharityWithRaisedSum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/CharityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/CharityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/mapper/CharityDtoEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/mapper/CharityDtoEntityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/mapper/CharityWithRaisedSumEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/mapper/CharityWithRaisedSumEntityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/test/java/me/alexutzzu/teledon/controller/CharityControllerIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/test/java/me/alexutzzu/teledon/controller/CharityControllerIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/test/java/me/alexutzzu/teledon/controller/CharityControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/test/java/me/alexutzzu/teledon/controller/CharityControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-server/src/test/java/me/alexutzzu/teledon/controller/DonationControllerIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/test/java/me/alexutzzu/teledon/controller/DonationControllerIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/app-sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/chart-area-interactive.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/chart-area-interactive.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/data-table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/data-table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/nav-documents.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/nav-main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/nav-main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/nav-secondary.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/section-cards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/section-cards.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-client/app/components/site-header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/site-header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/dashboard/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/dashboard/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/root.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/routes/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/routes/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/routes/dashboard/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/routes/dashboard/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "AleXutzZu"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AleXutzZu&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/mpp-cs-ubbcluj/home-assignment-AleXutzZu.git",
-    "accountId": "e1a1d40e-89fd-4e2a-bfbe-12b0eb1de133"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mpp-cs-ubbcluj/home-assignment-AleXutzZu.git&quot;,
+    &quot;accountId&quot;: &quot;ff241211-cfab-439e-95a1-acfba4a35403&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="3Dc8VS28kK1uQ2EAlCTRX5I8mWE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "assignment-6",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/alexutzzu/IdeaProjects/teledon-management",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.26067615",
-    "project.structure.side.proportion": "0.1744186",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.CharityControllerIT.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CharityControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DonationControllerIT.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;assignment-6&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alexutzzu/IdeaProjects/teledon-management&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.26067615&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.1744186&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/alexutzzu/IdeaProjects/teledon-management/web-client/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="CharityControllerIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="teledon-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.alexutzzu.teledon.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="me.alexutzzu.teledon.controller" />
+      <option name="MAIN_CLASS_NAME" value="me.alexutzzu.teledon.controller.CharityControllerIT" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CharityControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="teledon-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.alexutzzu.teledon.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="me.alexutzzu.teledon.controller" />
+      <option name="MAIN_CLASS_NAME" value="me.alexutzzu.teledon.controller.CharityControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DonationControllerIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="teledon-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.alexutzzu.teledon.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="me.alexutzzu.teledon.controller" />
+      <option name="MAIN_CLASS_NAME" value="me.alexutzzu.teledon.controller.DonationControllerIT" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="teledon-management" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="me.alexutzzu.teledon.Main" />
@@ -77,6 +163,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/web-client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.31033.133" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -86,10 +194,26 @@
       <option name="presentableId" value="Default" />
       <updated>1778570021522</updated>
       <workItem from="1778570023164" duration="512000" />
+      <workItem from="1778570562157" duration="3487000" />
     </task>
+    <task id="LOCAL-00001" summary="Fix redirection issue after logging in">
+      <option name="closed" value="true" />
+      <created>1778598736585</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1778598736585</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update .idea folder to fix phantom build folder for Spring module" />
+    <MESSAGE value="Move Main to package root" />
+    <MESSAGE value="Fix redirection issue after logging in" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix redirection issue after logging in" />
   </component>
 </project>

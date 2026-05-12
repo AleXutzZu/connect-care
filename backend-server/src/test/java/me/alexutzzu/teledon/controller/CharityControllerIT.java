@@ -3,12 +3,16 @@ package me.alexutzzu.teledon.controller;
 import me.alexutzzu.teledon.IntegrationTest;
 import me.alexutzzu.teledon.controller.dto.CreateCharityRequest;
 import me.alexutzzu.teledon.model.Charity;
+import me.alexutzzu.teledon.model.User;
 import me.alexutzzu.teledon.model.dto.CharityDto;
 import me.alexutzzu.teledon.persistence.CharityRepository;
+import me.alexutzzu.teledon.persistence.UserRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
@@ -26,11 +30,25 @@ class CharityControllerIT extends IntegrationTest {
     private CharityRepository charityRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private ObjectMapper objectMapper;
+
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        user = userRepository.save(User.builder().username("user").password(passwordEncoder.encode("password")).build());
+    }
 
     @AfterEach
     void cleanUpRepository() {
         charityRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -40,14 +58,14 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void getCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
         mockMvc.perform(get("/api/charities/" + entity.getId())).andExpect(status().isUnauthorized());
     }
 
     @Test
     void createCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity", 1000.0, "cause");
         mockMvc.perform(post("/api/charities/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest)))
@@ -58,9 +76,9 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
 
         mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +93,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void deleteCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
         mockMvc.perform(delete("/api/charities/" + entity.getId()))
                 .andExpect(status().isUnauthorized());
@@ -86,18 +104,18 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void getAllCharities_shouldReturnOk() throws Exception {
-        charityRepository.save(Charity.ofName("Test Charity"));
+        charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
-        mockMvc.perform(get("/api/charities").with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+        mockMvc.perform(get("/api/charities").with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isOk());
     }
 
     @Test
     void getCharity_shouldReturnOk() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
         String response = mockMvc.perform(get("/api/charities/" + entity.getId())
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -110,12 +128,12 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void createCharity_shouldReturnCreated() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity", 1000.0, "cause");
 
         String response = mockMvc.perform(post("/api/charities")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -130,18 +148,18 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void createCharity_DuplicateName_shouldReturnConflict() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity", 1000.0, "cause");
 
         mockMvc.perform(post("/api/charities")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isCreated());
 
         mockMvc.perform(post("/api/charities")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isConflict());
 
         assertThat(charityRepository.count()).isEqualTo(1);
@@ -149,14 +167,14 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_shouldReturnOk() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
 
         String result = mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -172,14 +190,14 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_idempotencyTest() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
 
         String result = mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -189,7 +207,7 @@ class CharityControllerIT extends IntegrationTest {
         result = mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -208,15 +226,15 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_invalidName_ShouldReturnConflict() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
-        charityRepository.save(Charity.ofName("New Charity Name"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        charityRepository.save(Charity.of("New Charity Name", user, 1000.0, "cause"));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
 
         mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isConflict());
 
         var actualEntity = charityRepository.findById(entity.getId());
@@ -229,10 +247,10 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void deleteCharity_shouldReturnNoContent() throws Exception {
-        var entity = charityRepository.save(Charity.ofName("Test Charity"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
 
         mockMvc.perform(delete("/api/charities/" + entity.getId())
-                        .with(jwt().jwt(builder -> builder.claim("scope", "USER"))))
+                        .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isNoContent());
 
         assertThat(charityRepository.count()).isEqualTo(0);

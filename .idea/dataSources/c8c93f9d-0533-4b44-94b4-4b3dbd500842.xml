@@ -19,9 +19,9 @@
 24577||-9223372036854775808|T|G
 24577||10|T|G
 24577||24578|T|G</Grants>
-      <IntrospectionStateNumber>731</IntrospectionStateNumber>
+      <IntrospectionStateNumber>735</IntrospectionStateNumber>
       <ServerVersion>13.4</ServerVersion>
-      <StartupTime>1778272559</StartupTime>
+      <StartupTime>1778574328</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -1420,7 +1420,7 @@ true posixrules
 13161||10|C|G
 13161||-9223372036854775808|U|G
 13161||10|U|G</Grants>
-      <IntrospectionStateNumber>731</IntrospectionStateNumber>
+      <IntrospectionStateNumber>735</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>user</OwnerName>
     </database>
@@ -4752,11 +4752,11 @@ true posixrules
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>731</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>731</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>731</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>735</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>735</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>735</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-05-12.07:14:13</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-05-12.14:21:32</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>287</StateNumber>
       <OwnerName>user</OwnerName>
@@ -4807,7 +4807,7 @@ true posixrules
     <table id="261" parent="255" name="charity">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16387</ObjectId>
-      <StateNumber>489</StateNumber>
+      <StateNumber>761</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>user</OwnerName>
     </table>
@@ -4893,7 +4893,34 @@ true posixrules
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="273" parent="261" name="charity_pkey">
+    <column id="273" parent="261" name="cause">
+      <Position>3</Position>
+      <StateNumber>732</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="274" parent="261" name="target">
+      <Position>4</Position>
+      <StateNumber>733</StateNumber>
+      <StoredType>double precision|0s</StoredType>
+      <TypeId>701</TypeId>
+    </column>
+    <column id="275" parent="261" name="user_id">
+      <DefaultExpression>14</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>761</StateNumber>
+      <StoredType>bigint|0s</StoredType>
+      <TypeId>20</TypeId>
+    </column>
+    <foreign-key id="276" parent="261" name="charity_authuser_id_fk">
+      <ColNames>user_id</ColNames>
+      <ObjectId>32794</ObjectId>
+      <StateNumber>761</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16416</RefTableId>
+    </foreign-key>
+    <index id="277" parent="261" name="charity_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16391</ObjectId>
@@ -4902,7 +4929,7 @@ true posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="274" parent="261" name="charity_pk">
+    <index id="278" parent="261" name="charity_pk">
       <ColNames>name</ColNames>
       <ObjectId>32777</ObjectId>
       <StateNumber>714</StateNumber>
@@ -4912,19 +4939,19 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="275" parent="261" name="charity_pkey">
+    <key id="279" parent="261" name="charity_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16392</ObjectId>
       <Primary>1</Primary>
       <StateNumber>488</StateNumber>
       <UnderlyingIndexId>16391</UnderlyingIndexId>
     </key>
-    <key id="276" parent="261" name="charity_pk">
+    <key id="280" parent="261" name="charity_pk">
       <ObjectId>32778</ObjectId>
       <StateNumber>714</StateNumber>
       <UnderlyingIndexId>32777</UnderlyingIndexId>
     </key>
-    <column id="277" parent="262" name="id">
+    <column id="281" parent="262" name="id">
       <DefaultExpression>nextval(&apos;donation_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -4933,28 +4960,28 @@ true posixrules
       <SequenceId>16424</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="278" parent="262" name="charityid">
+    <column id="282" parent="262" name="charityid">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>499</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="279" parent="262" name="donorid">
+    <column id="283" parent="262" name="donorid">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>499</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="280" parent="262" name="amount">
+    <column id="284" parent="262" name="amount">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>499</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="281" parent="262" name="createdon">
+    <column id="285" parent="262" name="createdon">
       <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
@@ -4962,7 +4989,7 @@ true posixrules
       <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <foreign-key id="282" parent="262" name="donation_charityid_fkey">
+    <foreign-key id="286" parent="262" name="donation_charityid_fkey">
       <ColNames>charityid</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16432</ObjectId>
@@ -4970,7 +4997,7 @@ true posixrules
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16387</RefTableId>
     </foreign-key>
-    <foreign-key id="283" parent="262" name="donation_donorid_fkey">
+    <foreign-key id="287" parent="262" name="donation_donorid_fkey">
       <ColNames>donorid</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16437</ObjectId>
@@ -4978,7 +5005,7 @@ true posixrules
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16408</RefTableId>
     </foreign-key>
-    <index id="284" parent="262" name="donation_pkey">
+    <index id="288" parent="262" name="donation_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16430</ObjectId>
@@ -4987,14 +5014,14 @@ true posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="285" parent="262" name="donation_pkey">
+    <key id="289" parent="262" name="donation_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16431</ObjectId>
       <Primary>1</Primary>
       <StateNumber>499</StateNumber>
       <UnderlyingIndexId>16430</UnderlyingIndexId>
     </key>
-    <column id="286" parent="263" name="id">
+    <column id="290" parent="263" name="id">
       <DefaultExpression>nextval(&apos;donor_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -5003,35 +5030,35 @@ true posixrules
       <SequenceId>16406</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="287" parent="263" name="firstname">
+    <column id="291" parent="263" name="firstname">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>716</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="288" parent="263" name="lastname">
+    <column id="292" parent="263" name="lastname">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>717</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="289" parent="263" name="address">
+    <column id="293" parent="263" name="address">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>715</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="290" parent="263" name="phonenumber">
+    <column id="294" parent="263" name="phonenumber">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>718</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="291" parent="263" name="donor_pkey">
+    <index id="295" parent="263" name="donor_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16412</ObjectId>
@@ -5040,7 +5067,7 @@ true posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="292" parent="263" name="donor_pk">
+    <index id="296" parent="263" name="donor_pk">
       <ColNames>phonenumber</ColNames>
       <ObjectId>32782</ObjectId>
       <StateNumber>728</StateNumber>
@@ -5050,14 +5077,14 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="293" parent="263" name="donor_pkey">
+    <key id="297" parent="263" name="donor_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16413</ObjectId>
       <Primary>1</Primary>
       <StateNumber>490</StateNumber>
       <UnderlyingIndexId>16412</UnderlyingIndexId>
     </key>
-    <key id="294" parent="263" name="donor_pk">
+    <key id="298" parent="263" name="donor_pk">
       <ObjectId>32783</ObjectId>
       <StateNumber>728</StateNumber>
       <UnderlyingIndexId>32782</UnderlyingIndexId>
