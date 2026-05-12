@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="teledon@localhost" uuid="e0c45d83-638d-4288-8612-345d1647c6ec">
+    <data-source source="LOCAL" name="teledon@localhost" uuid="c8c93f9d-0533-4b44-94b4-4b3dbd500842">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/backend-server/src/main/resources/application.properties</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/teledon</jdbc-url>
       <jdbc-additional-properties>
