@@ -12,6 +12,7 @@ import me.alexutzzu.teledon.service.mapper.CharityDtoEntityMapper;
 import me.alexutzzu.teledon.service.mapper.CharityWithRaisedSumEntityMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,13 @@ public class CharityService {
         this.charityDtoEntityMapper = charityDtoEntityMapper;
     }
 
-    public Page<CharityWithRaisedSum> getAllCharities(int page, int size) {
-        return charityRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()))
+    public Page<CharityWithRaisedSum> getAllCharities(int page, int size, String search) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        if (search == null || search.isBlank()) {
+            return charityRepository.findAll(pageable)
+                    .map(charityWithRaisedSumEntityMapper::toDomain);
+        }
+        return charityRepository.findByNameContainingIgnoreCase(search, pageable)
                 .map(charityWithRaisedSumEntityMapper::toDomain);
     }
 

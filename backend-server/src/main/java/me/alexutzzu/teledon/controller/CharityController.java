@@ -22,8 +22,8 @@ public class CharityController {
     }
 
     @GetMapping
-    public Page<CharityWithRaisedSum> getAllCharities(@Valid PaginationParams paginationParams) {
-        return charityService.getAllCharities(paginationParams.page(), paginationParams.size());
+    public Page<CharityWithRaisedSum> getAllCharities(@Valid PaginationParams paginationParams, @RequestParam(required = false) String search) {
+        return charityService.getAllCharities(paginationParams.page(), paginationParams.size(), search);
     }
 
     @GetMapping("/{charityId}")

@@ -47,12 +47,12 @@ class CharityControllerTest {
     void getAllCharities_shouldReturnOk() throws Exception {
         List<CharityWithRaisedSum> charities = Collections.singletonList(new CharityWithRaisedSum(1L, "Test Charity", "user", 1000.0, "cause", 100.0));
         Page<CharityWithRaisedSum> charityPage = new PageImpl<>(charities);
-        when(charityService.getAllCharities(anyInt(), anyInt())).thenReturn(charityPage);
+        when(charityService.getAllCharities(anyInt(), anyInt(), any())).thenReturn(charityPage);
 
         mockMvc.perform(get("/api/charities").with(jwt()))
                 .andExpect(status().isOk());
 
-        verify(charityService).getAllCharities(anyInt(), anyInt());
+        verify(charityService).getAllCharities(anyInt(), anyInt(), any());
     }
 
     @Test
