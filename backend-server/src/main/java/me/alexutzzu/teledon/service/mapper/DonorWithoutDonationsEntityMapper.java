@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class DonorWithoutDonationsEntityMapper implements EntityMapper<Donor, DonorWithoutDonations> {
     @Override
     public DonorWithoutDonations toDomain(Donor entity) {
-        return new DonorWithoutDonations(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhoneNumber());
+        return new DonorWithoutDonations(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhoneNumber(), entity.getCreatedOn());
     }
 }

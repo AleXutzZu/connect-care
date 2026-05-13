@@ -15,6 +15,6 @@ public class DonorDtoEntityMapper implements EntityMapper<Donor, DonorDto> {
     @Override
     public DonorDto toDomain(Donor entity) {
         var donations = entity.getDonations().stream().map(donationDtoEntityMapper::toDomain).toList();
-        return new DonorDto(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhoneNumber(), donations);
+        return new DonorDto(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhoneNumber(), donations, entity.getCreatedOn());
     }
 }

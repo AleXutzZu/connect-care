@@ -2,7 +2,9 @@ package me.alexutzzu.teledon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +36,10 @@ public class Donor {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Donation> donations = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(nullable = false, name = "createdon")
+    private LocalDateTime createdOn;
 
     public static Donor ofDetails(String firstName, String lastName, String address, String phoneNumber) {
         return Donor.builder()

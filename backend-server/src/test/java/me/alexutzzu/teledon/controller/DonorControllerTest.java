@@ -14,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +42,7 @@ class DonorControllerTest {
 
     @Test
     void getAllDonors_shouldReturnOk() throws Exception {
-        List<DonorWithoutDonations> donors = Collections.singletonList(new DonorWithoutDonations(1L, "John", "Doe", "123 Main St", "1234567890"));
+        List<DonorWithoutDonations> donors = Collections.singletonList(new DonorWithoutDonations(1L, "John", "Doe", "123 Main St", "1234567890", LocalDateTime.now()));
         when(donorService.getAllDonors()).thenReturn(donors);
 
         mockMvc.perform(get("/api/donors"))
@@ -52,7 +53,7 @@ class DonorControllerTest {
 
     @Test
     void getDonor_shouldReturnOk() throws Exception {
-        DonorDto donor = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList());
+        DonorDto donor = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList(), LocalDateTime.now());
         when(donorService.getDonor(1L)).thenReturn(donor);
 
         String response = mockMvc.perform(get("/api/donors/1"))
@@ -78,7 +79,7 @@ class DonorControllerTest {
 
     @Test
     void createDonor_shouldReturnCreated() throws Exception {
-        DonorDto expected = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList());
+        DonorDto expected = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList(), LocalDateTime.now());
         when(donorService.createDonor(expected.firstName(), expected.lastName(), expected.address(), expected.phoneNumber())).thenReturn(expected);
 
         CreateDonorRequest createDonorRequest = new CreateDonorRequest("John", "Doe", "123 Main St", "1234567890");
@@ -108,8 +109,8 @@ class DonorControllerTest {
 
     @Test
     void updateDonor_shouldReturnOk() throws Exception {
-        DonorDto original = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList());
-        DonorDto newDonor = new DonorDto(1L, "Jane", "Doe", "456 Main St", "0987654321", Collections.emptyList());
+        DonorDto original = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList(), LocalDateTime.now());
+        DonorDto newDonor = new DonorDto(1L, "Jane", "Doe", "456 Main St", "0987654321", Collections.emptyList(), original.createdOn());
 
         when(donorService.updateDonor(original.id(), newDonor.firstName(), newDonor.lastName(), newDonor.address(), newDonor.phoneNumber())).thenReturn(newDonor);
 
