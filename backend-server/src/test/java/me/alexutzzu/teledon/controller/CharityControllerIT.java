@@ -58,14 +58,14 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void getCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
         mockMvc.perform(get("/api/charities/" + entity.getId())).andExpect(status().isUnauthorized());
     }
 
     @Test
     void createCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity", 1000.0, "cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity", 1000.);
         mockMvc.perform(post("/api/charities/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest)))
@@ -76,9 +76,9 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0);
 
         mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +93,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void deleteCharity_noAuthorization_shouldReturnUnauthorized() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
         mockMvc.perform(delete("/api/charities/" + entity.getId()))
                 .andExpect(status().isUnauthorized());
@@ -104,7 +104,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void getAllCharities_shouldReturnOk() throws Exception {
-        charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
         mockMvc.perform(get("/api/charities").with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
                 .andExpect(status().isOk());
@@ -112,7 +112,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void getCharity_shouldReturnOk() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
         String response = mockMvc.perform(get("/api/charities/" + entity.getId())
                         .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
@@ -128,7 +128,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void createCharity_shouldReturnCreated() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity", 1000.0, "cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity", 1000.0);
 
         String response = mockMvc.perform(post("/api/charities")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -148,7 +148,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void createCharity_DuplicateName_shouldReturnConflict() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity", 1000.0, "cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test Charity", 1000.0);
 
         mockMvc.perform(post("/api/charities")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -167,9 +167,9 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_shouldReturnOk() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0);
 
         String result = mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -190,9 +190,9 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_idempotencyTest() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0);
 
         String result = mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -226,10 +226,10 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void updateCharity_invalidName_ShouldReturnConflict() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
-        charityRepository.save(Charity.of("New Charity Name", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
+        charityRepository.save(Charity.of("New Charity Name", user, 1000.0));
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0, "new cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("New Charity Name", 2000.0);
 
         mockMvc.perform(put("/api/charities/" + entity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -247,7 +247,7 @@ class CharityControllerIT extends IntegrationTest {
 
     @Test
     void deleteCharity_shouldReturnNoContent() throws Exception {
-        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var entity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
 
         mockMvc.perform(delete("/api/charities/" + entity.getId())
                         .with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))

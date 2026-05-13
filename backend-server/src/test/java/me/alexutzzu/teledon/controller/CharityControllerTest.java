@@ -45,7 +45,7 @@ class CharityControllerTest {
 
     @Test
     void getAllCharities_shouldReturnOk() throws Exception {
-        List<CharityWithRaisedSum> charities = Collections.singletonList(new CharityWithRaisedSum(1L, "Test Charity", "user", 1000.0, "cause", 100.0));
+        List<CharityWithRaisedSum> charities = Collections.singletonList(new CharityWithRaisedSum(1L, "Test Charity", "user", 1000.0,  100.0));
         Page<CharityWithRaisedSum> charityPage = new PageImpl<>(charities);
         when(charityService.getAllCharities(anyInt(), anyInt(), any())).thenReturn(charityPage);
 
@@ -57,7 +57,7 @@ class CharityControllerTest {
 
     @Test
     void getCharity_shouldReturnOk() throws Exception {
-        CharityDto charity = new CharityDto(1L, "Test Charity", "user", 1000.0, "cause", Collections.emptyList());
+        CharityDto charity = new CharityDto(1L, "Test Charity", "user", 1000.0, Collections.emptyList());
         when(charityService.getCharity(1L)).thenReturn(charity);
 
         String response = mockMvc.perform(get("/api/charities/1"))
@@ -83,10 +83,10 @@ class CharityControllerTest {
 
     @Test
     void createCharity_shouldReturnCreated() throws Exception {
-        CharityDto expected = new CharityDto(1L, "Test Charity", "user", 1000.0, "cause", Collections.emptyList());
+        CharityDto expected = new CharityDto(1L, "Test Charity", "user", 1000.0, Collections.emptyList());
         when(charityService.createCharity(any(CreateCharityRequest.class), anyString())).thenReturn(expected);
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest(expected.name(), expected.target(), expected.cause());
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest(expected.name(), expected.target());
 
         Authentication mockAuth = new TestingAuthenticationToken("user", "password");
 
@@ -106,7 +106,7 @@ class CharityControllerTest {
 
     @Test
     void createCharity_invalidBody_shouldReturnBadRequest() throws Exception {
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("", -1.0, "");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("", -1.0);
         mockMvc.perform(post("/api/charities")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCharityRequest))
@@ -116,12 +116,12 @@ class CharityControllerTest {
 
     @Test
     void updateCharity_shouldReturnOk() throws Exception {
-        CharityDto original = new CharityDto(1L, "Test Charity", "user", 1000.0, "cause", Collections.emptyList());
-        CharityDto newCharity = new CharityDto(1L, "New Name", "user", 2000.0, "new cause", Collections.emptyList());
+        CharityDto original = new CharityDto(1L, "Test Charity", "user", 1000.0, Collections.emptyList());
+        CharityDto newCharity = new CharityDto(1L, "New Name", "user", 2000.0, Collections.emptyList());
 
         when(charityService.updateCharity(anyLong(), any(CreateCharityRequest.class))).thenReturn(newCharity);
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest(newCharity.name(), newCharity.target(), newCharity.cause());
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest(newCharity.name(), newCharity.target());
 
         String response = mockMvc.perform(put("/api/charities/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -140,7 +140,7 @@ class CharityControllerTest {
     void updateCharity_invalidId_ShouldReturnNotFound() throws Exception {
         when(charityService.updateCharity(anyLong(), any(CreateCharityRequest.class))).thenThrow(NotFoundException.class);
 
-        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test", 1.0, "cause");
+        CreateCharityRequest createCharityRequest = new CreateCharityRequest("Test", 1.0);
 
         mockMvc.perform(put("/api/charities/1")
                         .contentType(MediaType.APPLICATION_JSON)

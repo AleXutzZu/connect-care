@@ -19,6 +19,6 @@ public class CharityDtoEntityMapper implements EntityMapper<Charity, CharityDto>
     @Override
     public CharityDto toDomain(Charity entity) {
         List<DonationDto> donationDtos = entity.getDonations().stream().map(donationDtoEntityMapper::toDomain).toList();
-        return new CharityDto(entity.getId(), entity.getName(), entity.getUser().getUsername(), entity.getTarget(), entity.getCause(), donationDtos);
+        return new CharityDto(entity.getId(), entity.getName(), entity.getUser().getUsername(), entity.getTarget(), donationDtos);
     }
 }

@@ -47,7 +47,7 @@ public class CharityService {
 
     public CharityDto createCharity(CreateCharityRequest createCharityRequest, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(NotFoundException::new);
-        var entity = charityRepository.save(Charity.of(createCharityRequest.name(), user, createCharityRequest.target(), createCharityRequest.cause()));
+        var entity = charityRepository.save(Charity.of(createCharityRequest.name(), user, createCharityRequest.target()));
         return charityDtoEntityMapper.toDomain(entity);
     }
 
@@ -56,7 +56,6 @@ public class CharityService {
                 .map(charity -> {
                     charity.setName(createCharityRequest.name());
                     charity.setTarget(createCharityRequest.target());
-                    charity.setCause(createCharityRequest.cause());
                     return charityRepository.save(charity);
                 }).map(charityDtoEntityMapper::toDomain)
                 .orElseThrow(NotFoundException::new);

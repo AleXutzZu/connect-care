@@ -71,7 +71,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void getDonation_noAuthorization_shouldReturnUnauthorized() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         var entity = donationRepository.save(Donation.ofDetails(charity, donor, 100.0));
 
         mockMvc.perform(get("/api/donations/" + entity.getId())).andExpect(status().isUnauthorized());
@@ -80,7 +80,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void createDonation_noAuthorization_shouldReturnUnauthorized() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         CreateDonationRequest createDonationRequest = new CreateDonationRequest(charity.getId(), donor.getId(), 100.0);
         mockMvc.perform(post("/api/donations/")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +93,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void deleteDonation_noAuthorization_shouldReturnUnauthorized() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         var entity = donationRepository.save(Donation.ofDetails(charity, donor, 100.0));
 
         mockMvc.perform(delete("/api/donations/" + entity.getId()))
@@ -106,7 +106,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void getAllDonations_shouldReturnOk() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         donationRepository.save(Donation.ofDetails(charity, donor, 100.0));
 
         mockMvc.perform(get("/api/donations").with(jwt().jwt(builder -> builder.subject("user").claim("scope", "USER"))))
@@ -116,7 +116,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void getDonation_shouldReturnOk() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         var entity = donationRepository.save(Donation.ofDetails(charity, donor, 100.0));
 
         String response = mockMvc.perform(get("/api/donations/" + entity.getId())
@@ -136,7 +136,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void createDonation_shouldReturnCreated() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         CreateDonationRequest createDonationRequest = new CreateDonationRequest(charity.getId(), donor.getId(), 100.0);
 
         String response = mockMvc.perform(post("/api/donations")
@@ -162,7 +162,7 @@ class DonationControllerIT extends IntegrationTest {
     @Test
     void deleteDonation_shouldReturnNoContent() throws Exception {
         var donor = donorRepository.save(Donor.ofDetails("John", "Doe", "123 Main St", "1234567890"));
-        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0, "cause"));
+        var charity = charityRepository.save(Charity.of("Test Charity", user, 1000.0));
         var entity = donationRepository.save(Donation.ofDetails(charity, donor, 100.0));
 
         mockMvc.perform(delete("/api/donations/" + entity.getId())

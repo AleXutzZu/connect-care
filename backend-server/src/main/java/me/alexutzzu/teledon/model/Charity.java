@@ -26,19 +26,16 @@ public class Charity {
 
     private Double target;
 
-    private String cause;
-
-    @OneToMany(mappedBy = "charity")
+    @OneToMany(mappedBy = "charity", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Donation> donations = new ArrayList<>();
 
-    public static Charity of(String name, User user, Double target, String cause) {
+    public static Charity of(String name, User user, Double target) {
         return Charity.builder()
                 .name(name)
                 .user(user)
                 .target(target)
-                .cause(cause)
                 .donations(Collections.emptyList())
                 .build();
     }
