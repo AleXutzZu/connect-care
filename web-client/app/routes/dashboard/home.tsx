@@ -2,8 +2,9 @@ import type {Route} from "./+types/home";
 import {getToken} from "~/lib/auth";
 import {SectionCards} from "~/components/section-cards";
 import {ChartAreaInteractive} from "~/components/chart-area-interactive";
-import {DataTable} from "~/components/data-table";
-import data from "~/dashboard/data.json";
+import {CharityDataTable} from "~/components/dashboard/table/charity-data-table";
+
+//TODO: change to statistics service (in the making)
 
 export async function loader({request}: Route.LoaderArgs) {
     const token = await getToken(request.headers.get("Cookie"));
@@ -32,7 +33,7 @@ export default function DashboardIndex() {
                     <div className="px-4 lg:px-6">
                         <ChartAreaInteractive/>
                     </div>
-                    <DataTable data={data}/>
+                    <CharityDataTable/>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import {LoginForm} from "~/components/login-form"
+import {LoginForm} from "~/components/login/login-form"
 import type {Route} from "./+types/login";
 import {authMiddleware, userContext, userToken} from "~/lib/auth";
 import {redirect} from "react-router";

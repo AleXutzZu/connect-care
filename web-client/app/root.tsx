@@ -3,7 +3,7 @@ import {isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration,} 
 import type {Route} from "./+types/root";
 import "./app.css";
 import {authMiddleware} from "~/lib/auth";
-import {TooltipProvider} from "~/components/ui/tooltip";
+import React from "react";
 
 export const links: Route.LinksFunction = () => [
     {rel: "preconnect", href: "https://fonts.googleapis.com"},
@@ -28,9 +28,7 @@ export function Layout({children}: { children: React.ReactNode }) {
             <Links/>
         </head>
         <body>
-        <TooltipProvider>
-            {children}
-        </TooltipProvider>
+        {children}
         <ScrollRestoration/>
         <Scripts/>
         </body>
