@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public interface CharityDonationsStatisticsDto {
     LocalDateTime getMonth();
 
-    Long getDonationCount();
+    Long getDonorCount();
 
     Double getTotalAmount();
 }
