@@ -15,14 +15,20 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "~/components/ui/alert-dialog";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "~/components/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "~/components/ui/dropdown-menu";
 import {Button} from "~/components/ui/button";
 import {EllipsisVerticalIcon, Trash2Icon} from "lucide-react";
 import {columnSchema} from "~/components/dashboard/table/charity-data-table";
 import * as z from "zod";
 
 
-export function ActionsCell({row}: CellContext<z.infer<typeof columnSchema>, any>) {
+export function ActionsCell({row, table}: CellContext<z.infer<typeof columnSchema>, any>) {
     const fetcher = useFetcher({key: `delete-action-${row.original.id}`});
     const toastId = useRef<string | number | null>(null);
 
@@ -57,6 +63,8 @@ export function ActionsCell({row}: CellContext<z.infer<typeof columnSchema>, any
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-32">
+                        <DropdownMenuItem onClick={() => table.options.meta?.setSelectedItem(row.original)}>Edit</DropdownMenuItem>
+                        <DropdownMenuSeparator/>
                         <AlertDialogTrigger asChild>
                             <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
                         </AlertDialogTrigger>
