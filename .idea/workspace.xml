@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e862810b-64cb-48bc-b766-dcd4bb80b153" name="Changes" comment="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="e862810b-64cb-48bc-b766-dcd4bb80b153" name="Changes" comment="Update column schema name to prevent future name conflicts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-client/app/components/dashboard/table/charity-data-table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/dashboard/table/charity-data-table.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-client/app/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -298,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778789735821</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Update column schema name to prevent future name conflicts">
+      <option name="closed" value="true" />
+      <created>1778792087905</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1778792087905</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,6 +337,7 @@
     <MESSAGE value="Fetch statistics data from the backend into the index page of the dashboard" />
     <MESSAGE value=".idea folder" />
     <MESSAGE value="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells" />
+    <MESSAGE value="Update column schema name to prevent future name conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update column schema name to prevent future name conflicts" />
   </component>
 </project>
