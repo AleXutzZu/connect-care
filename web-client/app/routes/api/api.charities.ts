@@ -1,5 +1,5 @@
 import {type Route} from "./+types/api.charities";
-import {getToken, protectRouteMiddleware} from "~/lib/auth";
+import {getToken, protectResourceMiddleware} from "~/lib/auth";
 
 export interface Charity {
     id: number;
@@ -15,7 +15,7 @@ export interface Page<T> {
     totalElements: number,
 }
 
-export const middleware: Route.MiddlewareFunction[] = [protectRouteMiddleware];
+export const middleware: Route.MiddlewareFunction[] = [protectResourceMiddleware];
 
 export async function loader({request}: Route.LoaderArgs) {
     const searchParams = new URL(request.url).searchParams;

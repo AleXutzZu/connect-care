@@ -43,6 +43,20 @@ export function getToken(cookieHeader: string | null) {
     return userToken.parse(cookieHeader);
 }
 
+export const protectResourceMiddleware: MiddlewareFunction<Response> = async ({request, context}, next) => {
+    const user = context.get(userContext);
+
+    if (!user) {
+        const emptyCookie = await userToken.serialize('', {maxAge: 0});
+        throw redirect(`/login?redirect=${encodeURIComponent("/dashboard")}`, {
+            headers: {
+                "Set-Cookie": emptyCookie
+            }
+        });
+    }
+    return next();
+}
+
 export const protectRouteMiddleware: MiddlewareFunction<Response> = async ({request, context}, next) => {
     const user = context.get(userContext);
 

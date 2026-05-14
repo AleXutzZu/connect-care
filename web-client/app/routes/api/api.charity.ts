@@ -1,8 +1,8 @@
 import type {Route} from "./+types/api.charity";
-import {getToken, protectRouteMiddleware} from "~/lib/auth";
-import {format, formatISO, subMonths} from "date-fns";
+import {getToken, protectResourceMiddleware} from "~/lib/auth";
+import {formatISO, subMonths} from "date-fns";
 
-export const middleware: Route.MiddlewareFunction[] = [protectRouteMiddleware];
+export const middleware: Route.MiddlewareFunction[] = [protectResourceMiddleware];
 
 export async function action({request, params: {charityId}}: Route.ActionArgs) {
     const formData = await request.formData();
