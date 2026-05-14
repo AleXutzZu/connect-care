@@ -2,10 +2,10 @@ package me.alexutzzu.teledon.model.dto.statistics;
 
 import java.time.LocalDateTime;
 
-public interface CharityStatisticsDto {
-    LocalDateTime getMonth();
-
-    Long getDonorCount();
+public interface DonationStatisticsDto {
+    LocalDateTime getDate();
 
     Double getTotalAmount();
+
+    Long getDonationCount();
 }
