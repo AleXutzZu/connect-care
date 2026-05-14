@@ -7,10 +7,10 @@ import {useCallback, useEffect, useRef} from "react";
 import {toast} from "sonner";
 import {Field, FieldLabel} from "~/components/ui/field";
 import {Input} from "~/components/ui/input";
-import {columnSchema} from "~/components/dashboard/table/charity-data-table";
+import {charityColumnSchema} from "~/components/dashboard/table/charity-data-table";
 import * as z from "zod";
 
-export function TargetUpdateCell({row}: CellContext<z.infer<typeof columnSchema>, any>) {
+export function TargetUpdateCell({row}: CellContext<z.infer<typeof charityColumnSchema>, any>) {
     const formSchema = z.object({
         target: z.number().positive()
     });

@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e862810b-64cb-48bc-b766-dcd4bb80b153" name="Changes" comment="Add separate middleware handler for redirection on resource routes so that redirects are pointed to the dashboard">
+    <list default="true" id="e862810b-64cb-48bc-b766-dcd4bb80b153" name="Changes" comment="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c8c93f9d-0533-4b44-94b4-4b3dbd500842.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c8c93f9d-0533-4b44-94b4-4b3dbd500842.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/controller/StatisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/controller/StatisticsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/dto/statistics/CharityStatisticsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/model/dto/statistics/CharityDonationsStatisticsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/persistence/CharityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/persistence/CharityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/persistence/DonationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/persistence/DonationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/persistence/DonorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/persistence/DonorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend-server/src/main/java/me/alexutzzu/teledon/service/StatisticsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-client/app/components/chart-area-interactive.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/chart-area-interactive.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-client/app/components/section-cards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/section-cards.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-client/app/routes/dashboard/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/routes/dashboard/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/components/dashboard/table/charity-data-table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/components/dashboard/table/charity-data-table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-client/app/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web-client/app/routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +22,7 @@
         <option value="Class" />
         <option value="Record" />
         <option value="Interface" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -117,13 +110,7 @@
       <recent name="$PROJECT_DIR$/web-client/app/components/dashboard/table/actions-cell.tsx" />
     </key>
   </component>
-  <component name="RunManager" selected="HTTP Request.generated-requests | #1">
-    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" executionIdentifier="#1" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="generated-requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" executionIdentifier="#2" index="2" runType="Run single request">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="npm.dev">
     <configuration name="All tests" type="JUnit" factoryName="JUnit">
       <module name="teledon-management" />
       <option name="PACKAGE_NAME" value="me.alexutzzu.teledon.controller" />
@@ -182,14 +169,10 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="HTTP Request.generated-requests | #1" />
-      <item itemvalue="HTTP Request.generated-requests | #2" />
       <item itemvalue="npm.dev" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.generated-requests | #2" />
-        <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
@@ -283,11 +266,54 @@
       <option name="project" value="LOCAL" />
       <updated>1778762168915</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add data from the backend into the statistics cards and chart on the dashboard">
+      <option name="closed" value="true" />
+      <created>1778762648089</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1778762648089</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fetch statistics data from the backend into the index page of the dashboard">
+      <option name="closed" value="true" />
+      <created>1778762667159</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1778762667159</updated>
+    </task>
+    <task id="LOCAL-00012" summary=".idea folder">
+      <option name="closed" value="true" />
+      <created>1778762694029</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1778762694029</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells">
+      <option name="closed" value="true" />
+      <created>1778789735821</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1778789735821</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update .idea folder to fix phantom build folder for Spring module" />
@@ -301,6 +327,10 @@
     <MESSAGE value="HTTP client specific" />
     <MESSAGE value="Add creation timestamp to Donor entity for statistics" />
     <MESSAGE value="Add separate middleware handler for redirection on resource routes so that redirects are pointed to the dashboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add separate middleware handler for redirection on resource routes so that redirects are pointed to the dashboard" />
+    <MESSAGE value="Add data from the backend into the statistics cards and chart on the dashboard" />
+    <MESSAGE value="Fetch statistics data from the backend into the index page of the dashboard" />
+    <MESSAGE value=".idea folder" />
+    <MESSAGE value="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add an edit button that opens the drawer on the left now that the function is passed as meta to the column cells" />
   </component>
 </project>

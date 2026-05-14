@@ -13,7 +13,7 @@ import {Button} from "~/components/ui/button";
 import {toast} from "sonner";
 import {Label} from "~/components/ui/label";
 import {Input} from "~/components/ui/input";
-import {columnSchema} from "~/components/dashboard/table/charity-data-table";
+import {charityColumnSchema} from "~/components/dashboard/table/charity-data-table";
 import * as z from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -119,7 +119,7 @@ function UpdateCharityForm(props: {
 }
 
 export function TableCellViewer({item, drawerHandler}: {
-                                    item: z.infer<typeof columnSchema>,
+                                    item: z.infer<typeof charityColumnSchema>,
                                     drawerHandler: () => void
                                 }
 ) {
@@ -134,7 +134,7 @@ export function CharityDrawerContent({
                                          item,
                                          setIsOpen
                                      }: {
-    item: z.infer<typeof columnSchema>,
+    item: z.infer<typeof charityColumnSchema>,
     setIsOpen: (open: boolean) => void
 }) {
     const isMobile = useIsMobile();

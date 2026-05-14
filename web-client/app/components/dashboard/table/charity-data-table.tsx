@@ -45,7 +45,7 @@ declare module '@tanstack/react-table' {
     }
 }
 
-export const columnSchema = z.object({
+export const charityColumnSchema = z.object({
     id: z.number(),
     name: z.string(),
     raisedAmount: z.number(),
@@ -53,7 +53,7 @@ export const columnSchema = z.object({
     registeredBy: z.string(),
 });
 
-const columns: ColumnDef<z.infer<typeof columnSchema>>[] = [
+const columns: ColumnDef<z.infer<typeof charityColumnSchema>>[] = [
     {
         accessorKey: "name",
         header: "Name",
@@ -153,7 +153,7 @@ export function CharityDataTable() {
         }
     }, [fetcher.state, fetcher.data]);
 
-    const [selectedItem, setSelectedItem] = useState<z.infer<typeof columnSchema> | null>(null);
+    const [selectedItem, setSelectedItem] = useState<z.infer<typeof charityColumnSchema> | null>(null);
     const isMobile = useIsMobile();
 
     const table = useReactTable({

@@ -24,11 +24,11 @@ import {
 } from "~/components/ui/dropdown-menu";
 import {Button} from "~/components/ui/button";
 import {EllipsisVerticalIcon, Trash2Icon} from "lucide-react";
-import {columnSchema} from "~/components/dashboard/table/charity-data-table";
+import {charityColumnSchema} from "~/components/dashboard/table/charity-data-table";
 import * as z from "zod";
 
 
-export function ActionsCell({row, table}: CellContext<z.infer<typeof columnSchema>, any>) {
+export function ActionsCell({row, table}: CellContext<z.infer<typeof charityColumnSchema>, any>) {
     const fetcher = useFetcher({key: `delete-action-${row.original.id}`});
     const toastId = useRef<string | number | null>(null);
 
