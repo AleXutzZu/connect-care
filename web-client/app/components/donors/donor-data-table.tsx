@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import {
     type ColumnDef,
@@ -11,20 +9,22 @@ import {
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
-import {ChevronDownIcon, Columns3Icon, PlusIcon} from "lucide-react"
+import {PlusIcon} from "lucide-react"
 
 import {Button} from "~/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
 import {Input} from "~/components/ui/input"
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "~/components/ui/table"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableColumnToggleButton,
+    TableHead,
+    TableHeader, TableNavigationBar,
+    TableRow,
+} from "~/components/ui/table"
 
 import * as z from "zod"
-import {Card, CardContent, CardHeader, CardTitle} from "~/components/ui/card";
+import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "~/components/ui/card";
 
 export const donorSchema = z.object({
     id: z.number(),
@@ -113,39 +113,7 @@ export function DonorDataTable() {
                         className="max-w-lg"
                     />
                     <div className="flex items-center gap-2">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" size="sm">
-                                    <Columns3Icon data-icon="inline-start"/>
-                                    Columns
-                                    <ChevronDownIcon data-icon="inline-end"/>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-32">
-                                {table
-                                    .getAllColumns()
-                                    .filter(
-                                        (column) =>
-                                            typeof column.accessorFn !== "undefined" &&
-                                            column.getCanHide()
-                                    )
-                                    .map((column) => {
-                                        const columnName = column.id.replace(/([A-Z])/g, " $1")
-                                        return (
-                                            <DropdownMenuCheckboxItem
-                                                key={column.id}
-                                                className="capitalize"
-                                                checked={column.getIsVisible()}
-                                                onCheckedChange={(value) =>
-                                                    column.toggleVisibility(!!value)
-                                                }
-                                            >
-                                                {columnName}
-                                            </DropdownMenuCheckboxItem>
-                                        )
-                                    })}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <TableColumnToggleButton table={table}/>
                         <Button variant="outline" size="sm">
                             <PlusIcon
                             />
@@ -204,6 +172,9 @@ export function DonorDataTable() {
                             </TableBody>
                         </Table>
                     </div>
+                    <div className="flex items-center justify-end px-4">
+                        <TableNavigationBar table={table}/>
+                    </div>
                 </div>
             </div>
 
@@ -211,7 +182,16 @@ export function DonorDataTable() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Donor Information</CardTitle>
+
+                        <CardDescription>
+                            View information about this donor
+                        </CardDescription>
+
+                        <CardAction>
+                            <Button variant="link">Edit</Button>
+                        </CardAction>
                     </CardHeader>
+
                     <CardContent>
                         <div className="space-y-4">
                             <div>
@@ -230,8 +210,6 @@ export function DonorDataTable() {
                     </CardContent>
                 </Card>
             </div>
-
-
         </div>
     )
 }

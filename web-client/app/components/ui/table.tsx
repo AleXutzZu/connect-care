@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import {cn} from "~/lib/utils"
-import {useReactTable} from "@tanstack/react-table";
+import {type Table as ReactTableType} from "@tanstack/react-table";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -9,7 +9,16 @@ import {
     DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu";
 import {Button} from "~/components/ui/button";
-import {ChevronDownIcon, Columns3Icon} from "lucide-react";
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ChevronsLeftIcon,
+    ChevronsRightIcon,
+    Columns3Icon
+} from "lucide-react";
+import {Label} from "~/components/ui/label";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "~/components/ui/select";
 
 function Table({className, ...props}: React.ComponentProps<"table">) {
     return (
@@ -123,7 +132,7 @@ export {
 }
 
 export function TableColumnToggleButton<TData>(props: {
-    table: ReturnType<typeof useReactTable<TData>>,
+    table: ReactTableType<TData>,
 }) {
     return <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -157,4 +166,86 @@ export function TableColumnToggleButton<TData>(props: {
             }
         </DropdownMenuContent>
     </DropdownMenu>;
+}
+
+export function TableNavigationBar<TData>(props: {
+    table: ReactTableType<TData>,
+}) {
+    return <div className="flex w-full items-center gap-8 lg:w-fit">
+        <div className="hidden items-center gap-2 lg:flex">
+            <Label htmlFor="rows-per-page" className="text-sm font-medium">
+                Rows per page
+            </Label>
+            <Select
+                value={`${props.table.getState().pagination.pageSize}`}
+                onValueChange={(value) => {
+                    props.table.setPageSize(Number(value))
+                }}
+            >
+                <SelectTrigger size="sm" className="w-20" id="rows-per-page">
+                    <SelectValue
+                        placeholder={props.table.getState().pagination.pageSize}
+                    />
+                </SelectTrigger>
+                <SelectContent side="top">
+                    <SelectGroup>
+                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <SelectItem key={pageSize} value={`${pageSize}`}>
+                                {pageSize}
+                            </SelectItem>
+                        ))}
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+        </div>
+        <div className="flex w-fit items-center justify-center text-sm font-medium">
+            Page {props.table.getState().pagination.pageIndex + 1} of{" "}
+            {props.table.getPageCount()}
+        </div>
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <Button
+                variant="outline"
+                className="hidden h-8 w-8 p-0 lg:flex"
+                onClick={() => props.table.setPageIndex(0)}
+                disabled={!props.table.getCanPreviousPage()}
+            >
+                <span className="sr-only">Go to first page</span>
+                <ChevronsLeftIcon
+                />
+            </Button>
+            <Button
+                variant="outline"
+                className="size-8"
+                size="icon"
+                onClick={() => props.table.previousPage()}
+                disabled={!props.table.getCanPreviousPage()}
+            >
+                <span className="sr-only">Go to previous page</span>
+                <ChevronLeftIcon
+                />
+            </Button>
+            <Button
+                variant="outline"
+                className="size-8"
+                size="icon"
+                onClick={() => props.table.nextPage()}
+                disabled={!props.table.getCanNextPage()}
+            >
+                <span className="sr-only">Go to next page</span>
+                <ChevronRightIcon
+                />
+            </Button>
+            <Button
+                variant="outline"
+                className="hidden size-8 lg:flex"
+                size="icon"
+                onClick={() => props.table.setPageIndex(props.table.getPageCount() - 1)}
+                disabled={!props.table.getCanNextPage()}
+            >
+                <span className="sr-only">Go to last page</span>
+                <ChevronsRightIcon
+                />
+            </Button>
+        </div>
+    </div>;
 }
