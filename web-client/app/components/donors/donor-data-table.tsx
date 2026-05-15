@@ -26,6 +26,7 @@ import type {Donor, Page} from "~/routes/api/api.donors";
 import {DonorCard, EmptyDonorCard} from "~/components/donors/donor-card";
 import {RegisterDonorButton} from "~/components/donors/register-donor-button";
 import {DonorDrawer} from "~/components/donors/donor-drawer";
+import {useIsMobile} from "~/hooks/use-mobile";
 
 export const donorSchema = z.object({
     id: z.number(),
@@ -121,7 +122,7 @@ export function DonorDataTable() {
         return data.find(s => s.id === selectedDonorId) ?? null;
     }, [selectedDonorId, data]);
 
-    const isMobile = /*useIsMobile()*/ true;
+    const isMobile = useIsMobile();
     const [openDrawer, setOpenDrawer] = useState(false);
 
     return (
