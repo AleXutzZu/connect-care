@@ -21,22 +21,24 @@ import {
 import {Trash2Icon} from "lucide-react";
 import {DonorStatsSection} from "~/components/donors/donor-stats-section";
 import {DonorEditInformationContent, DonorInformationContent} from "~/components/donors/donor-information-section";
+import {useIsMobile} from "~/hooks/use-mobile";
 
-export function DonorCard(props: { donor: Donor, setBlockSelection: (state: boolean) => void }) {
+export function DonorCard(props: { donor: Donor, setBlockBackground: (state: boolean) => void }) {
+    const isMobile = useIsMobile();
     const [editMode, setEditMode] = useState(false);
 
     const cancelEdit = useCallback(() => {
         setEditMode(false);
-        props.setBlockSelection(false);
+        props.setBlockBackground(false);
     }, [props]);
 
     const enableEdit = useCallback(() => {
         setEditMode(true);
-        props.setBlockSelection(true);
+        props.setBlockBackground(true);
     }, [props]);
 
     return (
-        <Card>
+        <Card className={`${isMobile ? "ring-0" : ""}`}>
             <CardHeader>
                 <CardTitle>Donor Information</CardTitle>
 
