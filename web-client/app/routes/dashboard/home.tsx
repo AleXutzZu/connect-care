@@ -1,7 +1,7 @@
 import type {Route} from "./+types/home";
 import {getToken} from "~/lib/auth";
-import {SectionCards} from "~/components/section-cards";
-import {ChartAreaInteractive} from "~/components/chart-area-interactive";
+import {SectionCards} from "~/components/dashboard/section-cards";
+import {ChartAreaInteractive} from "~/components/dashboard/chart-area-interactive";
 import {CharityDataTable} from "~/components/dashboard/table/charity-data-table";
 import {formatISO, subMonths} from "date-fns";
 
