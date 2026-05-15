@@ -18,7 +18,15 @@ import {
 import {Input} from "~/components/ui/input"
 import {Label} from "~/components/ui/label"
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue,} from "~/components/ui/select"
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "~/components/ui/table"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableColumnToggleButton,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "~/components/ui/table"
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
@@ -61,7 +69,8 @@ const columns: ColumnDef<z.infer<typeof charityColumnSchema>>[] = [
             const meta = table.options.meta;
 
             return <div className="sm:min-w-75">
-                <TableCellViewer item={row.original} drawerHandler={() => meta?.setSelectedItem && meta?.setSelectedItem(row.original)}/>
+                <TableCellViewer item={row.original}
+                                 drawerHandler={() => meta?.setSelectedItem && meta?.setSelectedItem(row.original)}/>
             </div>
         },
         enableHiding: false,
@@ -206,39 +215,7 @@ export function CharityDataTable() {
                     className="max-w-lg"
                 />
                 <div className="flex items-center gap-2">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <Columns3Icon data-icon="inline-start"/>
-                                Columns
-                                <ChevronDownIcon data-icon="inline-end"/>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-32">
-                            {table
-                                .getAllColumns()
-                                .filter(
-                                    (column) =>
-                                        typeof column.accessorFn !== "undefined" &&
-                                        column.getCanHide()
-                                )
-                                .map((column) => {
-                                    const columnName = column.id.replace(/([A-Z])/g, " $1")
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitalize"
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value) =>
-                                                column.toggleVisibility(!!value)
-                                            }
-                                        >
-                                            {columnName}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <TableColumnToggleButton table={table}/>
                     <RegisterCharityButton/>
                 </div>
             </div>
