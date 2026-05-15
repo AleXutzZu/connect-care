@@ -2,14 +2,14 @@ package me.alexutzzu.teledon.controller;
 
 import jakarta.validation.Valid;
 import me.alexutzzu.teledon.controller.dto.CreateDonorRequest;
+import me.alexutzzu.teledon.controller.dto.PaginationParams;
 import me.alexutzzu.teledon.model.dto.DonorDto;
 import me.alexutzzu.teledon.model.dto.DonorWithoutDonations;
 import me.alexutzzu.teledon.service.DonorService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/donors")
@@ -22,8 +22,8 @@ public class DonorController {
     }
 
     @GetMapping
-    public List<DonorWithoutDonations> getAllDonors() {
-        return donorService.getAllDonors();
+    public Page<DonorWithoutDonations> getAllDonors(@Valid PaginationParams paginationParams, @RequestParam(required = false) String search) {
+        return donorService.getAllDonors(paginationParams.page(), paginationParams.size(), search);
     }
 
     @GetMapping("/{donorId}")

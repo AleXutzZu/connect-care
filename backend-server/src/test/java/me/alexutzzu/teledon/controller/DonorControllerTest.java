@@ -9,6 +9,8 @@ import me.alexutzzu.teledon.service.DonorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,12 +45,13 @@ class DonorControllerTest {
     @Test
     void getAllDonors_shouldReturnOk() throws Exception {
         List<DonorWithoutDonations> donors = Collections.singletonList(new DonorWithoutDonations(1L, "John", "Doe", "123 Main St", "1234567890", LocalDateTime.now()));
-        when(donorService.getAllDonors()).thenReturn(donors);
+        Page<DonorWithoutDonations> donorsPage = new PageImpl<>(donors);
+        when(donorService.getAllDonors(anyInt(), anyInt(), any())).thenReturn(donorsPage);
 
         mockMvc.perform(get("/api/donors"))
                 .andExpect(status().isOk());
 
-        verify(donorService).getAllDonors();
+        verify(donorService).getAllDonors(anyInt(), anyInt(), any());
     }
 
     @Test

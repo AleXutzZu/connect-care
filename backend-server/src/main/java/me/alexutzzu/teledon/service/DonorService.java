@@ -7,9 +7,10 @@ import me.alexutzzu.teledon.model.dto.DonorWithoutDonations;
 import me.alexutzzu.teledon.persistence.DonorRepository;
 import me.alexutzzu.teledon.service.mapper.DonorDtoEntityMapper;
 import me.alexutzzu.teledon.service.mapper.DonorWithoutDonationsEntityMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class DonorService {
@@ -23,8 +24,12 @@ public class DonorService {
         this.donorWithoutDonationsEntityMapper = donorWithoutDonationsEntityMapper;
     }
 
-    public List<DonorWithoutDonations> getAllDonors() {
-        return donorRepository.findAll().stream().map(donorWithoutDonationsEntityMapper::toDomain).toList();
+    public Page<DonorWithoutDonations> getAllDonors(int page, int size, String search) {
+        Pageable pageable = PageRequest.of(page, size);
+        if (search != null && !search.isEmpty()) {
+            return donorRepository.search(search, pageable).map(donorWithoutDonationsEntityMapper::toDomain);
+        }
+        return donorRepository.findAll(pageable).map(donorWithoutDonationsEntityMapper::toDomain);
     }
 
     public DonorDto getDonor(Long id) {
