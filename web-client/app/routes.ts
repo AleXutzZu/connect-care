@@ -12,8 +12,9 @@ export default [
     ),
 
     ...prefix("api", [
-        route("charities", "routes/api/api.charities.ts"),
+        route("/charities", "routes/api/api.charities.ts"),
         route("/charities/:charityId", "routes/api/api.charity.ts"),
-        route("donors", "routes/api/api.donors.ts")
+        route("/donors", "routes/api/api.donors.ts"),
+        route("/donors/:donorId", "routes/api/api.donor.ts")
     ]),
 ] satisfies RouteConfig;

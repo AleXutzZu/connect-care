@@ -34,3 +34,26 @@ export async function loader({request}: Route.LoaderArgs) {
 
     return data as Page<Donor>;
 }
+
+export async function action({request}: Route.ActionArgs) {
+    const formData = await request.formData();
+
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const address = formData.get("address") as string;
+    const phoneNumber = formData.get("phoneNumber") as string;
+
+    const token = await getToken(request.headers.get("Cookie"));
+
+    const response = await fetch(`${process.env.BASE_URL}/api/donors`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({firstName, lastName, address, phoneNumber})
+    });
+
+    if (response.ok) return {ok: true};
+    return {ok: false, message: "could not create donor"};
+}
