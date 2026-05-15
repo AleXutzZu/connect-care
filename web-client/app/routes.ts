@@ -6,7 +6,8 @@ export default [
 
     route("dashboard", "routes/dashboard/layout.tsx", [
             index("routes/dashboard/home.tsx"),
-            route("donors", "routes/dashboard/donors/home.tsx")
+            route("donors", "routes/dashboard/donors/home.tsx"),
+            route("donations", "routes/dashboard/donations/home.tsx")
             // route("charities", "routes/charities.tsx"),
         ]
     ),
