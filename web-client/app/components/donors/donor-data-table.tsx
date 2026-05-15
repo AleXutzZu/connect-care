@@ -1,17 +1,13 @@
 import * as React from "react"
+import {useEffect, useMemo, useState} from "react"
 import {
     type ColumnDef,
     type ColumnFiltersState,
     flexRender,
     getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
-import {PlusIcon} from "lucide-react"
-
-import {Button} from "~/components/ui/button"
 import {Input} from "~/components/ui/input"
 import {
     Table,
@@ -19,12 +15,18 @@ import {
     TableCell,
     TableColumnToggleButton,
     TableHead,
-    TableHeader, TableNavigationBar,
+    TableHeader,
+    TableNavigationBar,
     TableRow,
 } from "~/components/ui/table"
 
 import * as z from "zod"
-import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "~/components/ui/card";
+import {useFetcher} from "react-router";
+import type {Donor, Page} from "~/routes/api/api.donors";
+import {DonorCard, EmptyDonorCard} from "~/components/donors/donor-card";
+import {RegisterDonorButton} from "~/components/donors/register-donor-button";
+import {DonorDrawer} from "~/components/donors/donor-drawer";
+import {useIsMobile} from "~/hooks/use-mobile";
 
 export const donorSchema = z.object({
     id: z.number(),
@@ -52,53 +54,76 @@ const columns: ColumnDef<z.infer<typeof donorSchema>>[] = [
     },
 ];
 
-const donors = [
-    {
-        id: 1,
-        firstName: "John",
-        lastName: "Doe",
-        address: "123 Main St, Anytown, USA",
-        phoneNumber: "555-1234",
-        createdOn: "2023-01-15",
-    },
-    {
-        id: 2,
-        firstName: "Jane",
-        lastName: "Smith",
-        address: "456 Oak Ave, Anytown, USA",
-        phoneNumber: "555-5678",
-        createdOn: "2023-02-20",
-    },
-    {
-        id: 3,
-        firstName: "Peter",
-        lastName: "Jones",
-        address: "789 Pine Ln, Anytown, USA",
-        phoneNumber: "555-9012",
-        createdOn: "2023-03-10",
-    },
-];
-
 export function DonorDataTable() {
+    const [data, setData] = useState<Donor[]>([]);
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     );
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 20,
+    });
+
+    const [pageCount, setPageCount] = useState(0);
+    const fetcher = useFetcher({key: "donors-table"});
+
+    useEffect(() => {
+        const nameFilter = columnFilters.find(f => f.id === 'fullName');
+        const nameValue: string = nameFilter ? (nameFilter.value as string) : '';
+
+        const params = new URLSearchParams({
+            page: String(pagination.pageIndex),
+            size: String(pagination.pageSize),
+            search: nameValue
+        });
+
+        const timeoutId = setTimeout(() => {
+            fetcher.load(`/api/donors?${params.toString()}`);
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+
+    }, [pagination, columnFilters]);
+
+    useEffect(() => {
+        if (fetcher.state === "idle" && fetcher.data) {
+            const fetchedData = fetcher.data as Page<Donor>;
+
+            setPageCount(fetchedData.totalPages);
+            setData(fetchedData.content);
+        }
+    }, [fetcher.state, fetcher.data]);
 
     const table = useReactTable({
-        data: donors,
+        data,
         columns,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
         state: {
-            columnFilters,
             columnVisibility,
+            columnFilters,
+            pagination,
         },
-    })
+        pageCount: pageCount,
+        getRowId: (row) => row.id.toString(),
+        manualPagination: true,
+        manualFiltering: true,
+        onColumnFiltersChange: setColumnFilters,
+        onColumnVisibilityChange: setColumnVisibility,
+        onPaginationChange: setPagination,
+        getCoreRowModel: getCoreRowModel(),
+    });
+
+    const [blockBackground, setBlockBackground] = useState(false);
+    const [selectedDonorId, setSelectedDonorId] = useState<number | null>(null);
+
+    const selectedDonor = useMemo(() => {
+        if (selectedDonorId === null) return null;
+        return data.find(s => s.id === selectedDonorId) ?? null;
+    }, [selectedDonorId, data]);
+
+    const isMobile = /*useIsMobile()*/ true;
+    const [openDrawer, setOpenDrawer] = useState(false);
 
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-[65%_35%]">
@@ -106,19 +131,15 @@ export function DonorDataTable() {
                 <div className="flex items-center justify-between px-4 lg:px-6 gap-2">
                     <Input
                         placeholder="Filter by name..."
-                        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("fullName")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("name")?.setFilterValue(event.target.value)
+                            table.getColumn("fullName")?.setFilterValue(event.target.value)
                         }
                         className="max-w-lg"
                     />
                     <div className="flex items-center gap-2">
                         <TableColumnToggleButton table={table}/>
-                        <Button variant="outline" size="sm">
-                            <PlusIcon
-                            />
-                            <span className="hidden lg:inline">Register Donor</span>
-                        </Button>
+                        <RegisterDonorButton/>
                     </div>
                 </div>
                 <div className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
@@ -143,11 +164,29 @@ export function DonorDataTable() {
                                 ))}
                             </TableHeader>
                             <TableBody>
-                                {table.getRowModel().rows?.length ? (
+                                {fetcher.state !== "idle" && data.length === 0 ? (
+                                    Array.from({length: 5}).map((_, rowIndex) => (
+                                        <TableRow key={`skeleton-row-${rowIndex}`}>
+                                            <TableCell key={`skeleton-cell-${rowIndex}`}
+                                                       colSpan={table.getVisibleLeafColumns().length}>
+                                                <div
+                                                    className="h-6 w-full animate-pulse rounded-md bg-gray-200 dark:bg-gray-800"/>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+
+                                ) : table.getRowModel().rows?.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow
                                             key={row.id}
-                                            data-state={row.getIsSelected() && "selected"}
+                                            role="button"
+                                            onClick={() => {
+                                                if (!blockBackground) {
+                                                    setSelectedDonorId(row.original.id);
+                                                    setOpenDrawer(true);
+                                                }
+                                            }}
+                                            className="cursor-default"
                                         >
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell key={cell.id}>
@@ -173,42 +212,16 @@ export function DonorDataTable() {
                         </Table>
                     </div>
                     <div className="flex items-center justify-end px-4">
-                        <TableNavigationBar table={table}/>
+                        <TableNavigationBar table={table} pageSizes={[20, 30, 40, 50, 100]}/>
                     </div>
                 </div>
             </div>
 
-            <div className="hidden lg:block">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Donor Information</CardTitle>
-
-                        <CardDescription>
-                            View information about this donor
-                        </CardDescription>
-
-                        <CardAction>
-                            <Button variant="link">Edit</Button>
-                        </CardAction>
-                    </CardHeader>
-
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div>
-                                <h3 className="font-semibold">Full Name</h3>
-                                <p>John Doe</p>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold">Address</h3>
-                                <p>123 Main St, Anytown, USA</p>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold">Phone Number</h3>
-                                <p>555-1234</p>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+            <div className="hidden lg:block lg:pr-6">
+                {selectedDonor && <DonorCard donor={selectedDonor} setBlockBackground={setBlockBackground}/>}
+                {!selectedDonor && <EmptyDonorCard/>}
+                {isMobile && selectedDonor &&
+                    <DonorDrawer donor={selectedDonor} open={openDrawer} onOpenChange={setOpenDrawer}/>}
             </div>
         </div>
     )
