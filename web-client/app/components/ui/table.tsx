@@ -170,7 +170,11 @@ export function TableColumnToggleButton<TData>(props: {
 
 export function TableNavigationBar<TData>(props: {
     table: ReactTableType<TData>,
+    pageSizes?: number[]
 }) {
+
+    const pageSizes = props.pageSizes ?? [10, 20, 30, 40, 50];
+
     return <div className="flex w-full items-center gap-8 lg:w-fit">
         <div className="hidden items-center gap-2 lg:flex">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
@@ -189,7 +193,7 @@ export function TableNavigationBar<TData>(props: {
                 </SelectTrigger>
                 <SelectContent side="top">
                     <SelectGroup>
-                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                        {pageSizes.map((pageSize) => (
                             <SelectItem key={pageSize} value={`${pageSize}`}>
                                 {pageSize}
                             </SelectItem>
