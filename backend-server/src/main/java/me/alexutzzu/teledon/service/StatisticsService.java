@@ -54,4 +54,15 @@ public class StatisticsService {
 
         return new MonthlyActiveDonorStatisticsDto(currentActiveDonors, previousActiveDonors);
     }
+
+    public DonorStatisticsDto getDonorStatistics(Long donorId) {
+        if (donorRepository.findById(donorId).isEmpty()) throw new NotFoundException();
+
+        int totalDonations = donationRepository.countByDonorId(donorId);
+        var averageDonation = donationRepository.getAverageDonationByDonor(donorId);
+        var highestDonation = donationRepository.findHighestDonationByDonor(donorId);
+        var lastDonation = donationRepository.findLastDonationByDonor(donorId);
+
+        return new DonorStatisticsDto(totalDonations, averageDonation, highestDonation, lastDonation);
+    }
 }

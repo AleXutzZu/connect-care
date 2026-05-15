@@ -31,4 +31,9 @@ public class StatisticsController {
         List<DonationStatisticsDto> dailyDonations = statisticsService.getDailyDonationStats(since.atStartOfDay());
         return new GeneralStatisticsDto(monthToDateDonors, monthlyActiveDonors, dailyDonations);
     }
+
+    @GetMapping("/donors/{donorId}")
+    public DonorStatisticsDto getDonorStatistics(@PathVariable Long donorId) {
+        return statisticsService.getDonorStatistics(donorId);
+    }
 }
