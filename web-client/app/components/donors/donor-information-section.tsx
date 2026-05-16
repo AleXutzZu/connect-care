@@ -8,6 +8,7 @@ import {toast} from "sonner";
 import {Field, FieldError, FieldGroup, FieldLabel} from "~/components/ui/field";
 import {Input} from "~/components/ui/input";
 import {z} from "zod";
+import {donorFormSchema, type DonorFormSchema} from "~/lib/form-schemas";
 
 export function DonorInformationContent(props: { donor: DonorWithoutDonations }) {
     return (
@@ -40,24 +41,8 @@ export function DonorInformationContent(props: { donor: DonorWithoutDonations })
 }
 
 export function DonorEditInformationContent(props: { donor: DonorWithoutDonations, cancelEdit: () => void }) {
-    const formSchema = z.object({
-        firstName: z.string()
-            .min(1, "First name cannot be empty")
-            .max(50, "First name is too long"),
-        lastName: z.string()
-            .min(1, "Last name cannot be empty")
-            .max(50, "Last name is too long"),
-        address: z.string()
-            .min(1, "Address cannot be empty")
-            .max(100, "Address is too long"),
-        phoneNumber: z.string()
-            .regex(/\d{10}/, "Invalid phone number")
-    });
-
-    type DonorEditFormSchema = z.infer<typeof formSchema>;
-
-    const form = useForm<DonorEditFormSchema>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<DonorFormSchema>({
+        resolver: zodResolver(donorFormSchema),
         defaultValues: {...props.donor},
         mode: "onChange"
     });
@@ -66,7 +51,7 @@ export function DonorEditInformationContent(props: { donor: DonorWithoutDonation
 
     const fetcher = useFetcher({key: `donor-edit-${props.donor.id}`});
 
-    const formSubmit = useCallback((values: DonorEditFormSchema) => {
+    const formSubmit = useCallback((values: DonorFormSchema) => {
         toastId.current = toast.loading("Updating information...");
         fetcher.submit({...values, intent: "UPDATE"}, {
             action: `/api/donors/${props.donor.id}`, method: "post"

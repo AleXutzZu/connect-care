@@ -1,7 +1,7 @@
 import {Button} from "~/components/ui/button";
 import {PlusIcon} from "lucide-react";
 import * as React from "react";
-import {z} from "zod";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {
     Dialog,
     DialogClose,
@@ -16,29 +16,15 @@ import {Field, FieldError, FieldGroup, FieldLabel} from "~/components/ui/field";
 import {Controller, useForm} from "react-hook-form";
 import {Input} from "~/components/ui/input";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useCallback, useEffect, useRef, useState} from "react";
 import {useFetcher} from "react-router";
 import {toast} from "sonner";
+import {type DonorFormSchema, donorFormSchema} from "~/lib/form-schemas";
+
 
 export function RegisterDonorButton() {
-    const formSchema = z.object({
-        firstName: z.string()
-            .min(1, "First name cannot be empty")
-            .max(50, "First name is too long"),
-        lastName: z.string()
-            .min(1, "Last name cannot be empty")
-            .max(50, "Last name is too long"),
-        address: z.string()
-            .min(1, "Address cannot be empty")
-            .max(100, "Address is too long"),
-        phoneNumber: z.string()
-            .regex(/\d{10}/, "Invalid phone number")
-    });
 
-    type DonorRegisterFormSchema = z.infer<typeof formSchema>;
-
-    const form = useForm<DonorRegisterFormSchema>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<DonorFormSchema>({
+        resolver: zodResolver(donorFormSchema),
         values: {
             firstName: "",
             lastName: "",
@@ -58,7 +44,7 @@ export function RegisterDonorButton() {
         setDialogOpen(state);
     }, [form]);
 
-    const formSubmit = useCallback((values: DonorRegisterFormSchema) => {
+    const formSubmit = useCallback((values: DonorFormSchema) => {
         handleDialog(false);
         toastId.current = toast.loading("Creating charity...");
 
