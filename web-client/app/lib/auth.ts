@@ -54,6 +54,13 @@ export const protectResourceMiddleware: MiddlewareFunction<Response> = async ({r
             }
         });
     }
+
+    const acceptHeader = request.headers.get("Accept") || "";
+
+    if (acceptHeader.includes("text/html")) {
+        throw redirect("/dashboard");
+    }
+
     return next();
 }
 
