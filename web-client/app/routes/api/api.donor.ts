@@ -3,16 +3,6 @@ import {getToken, protectResourceMiddleware} from "~/lib/auth";
 
 export const middleware: Route.MiddlewareFunction[] = [protectResourceMiddleware];
 
-export interface DonorStatistics {
-    totalDonations: number,
-    averageDonation?: number,
-    highestDonation?: {
-        charityName: string,
-        amount: number
-    }
-    lastDonation?: Date
-}
-
 export async function action({request, params: {donorId}}: Route.ActionArgs) {
     const formData = await request.formData();
 
@@ -50,10 +40,31 @@ export async function action({request, params: {donorId}}: Route.ActionArgs) {
     }
 }
 
+export interface Donation {
+    id: number,
+    amount: number,
+    donorId: number,
+    donorFirstName: string,
+    donorLastName: string,
+    charityId: number,
+    charityName: string,
+    createdOn: Date,
+}
+
+export interface Donor {
+    id: number,
+    firstName: string,
+    lastName: string,
+    address: string,
+    phoneNumber: string,
+    createdOn: Date,
+    donations: Donation[]
+}
+
 export async function loader({request, params: {donorId}}: Route.LoaderArgs) {
     const token = await getToken(request.headers.get("Cookie"));
 
-    const response = await fetch(`${process.env.BASE_URL}/api/statistics/donors/${donorId}`, {
+    const response = await fetch(`${process.env.BASE_URL}/api/donors/${donorId}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -61,8 +72,8 @@ export async function loader({request, params: {donorId}}: Route.LoaderArgs) {
     });
 
     if (response.ok) {
-        let newVar = await response.json();
-        return newVar as DonorStatistics;
+        let data = await response.json();
+        return data as Donor;
     }
 
     return {message: "Could not retrieve data for this donor"};
