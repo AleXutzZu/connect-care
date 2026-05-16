@@ -3,6 +3,7 @@ import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} f
 import {Button} from "~/components/ui/button";
 import * as React from "react";
 import {DonationDataTable} from "~/components/donors/donations/donation-data-table";
+import {CreateDonationForm} from "~/components/donors/donations/create-donation-form";
 
 
 export function DonationCard(props: { donor: DonorWithoutDonations }) {
@@ -16,7 +17,8 @@ export function DonationCard(props: { donor: DonorWithoutDonations }) {
                 </CardDescription>
 
                 <CardAction>
-                    <Button variant="link">Add donation</Button>
+                    <CreateDonationForm actionButton={<Button variant="link">Add donation</Button>}
+                                        donor={props.donor}/>
                 </CardAction>
             </CardHeader>
 
