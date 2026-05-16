@@ -203,7 +203,7 @@ export function TableNavigationBar<TData>(props: {
             </Select>
         </div>
         <div className="flex w-fit items-center justify-center text-sm font-medium">
-            Page {props.table.getState().pagination.pageIndex + 1} of{" "}
+            Page {Math.min(props.table.getState().pagination.pageIndex + 1, props.table.getPageCount())} of{" "}
             {props.table.getPageCount()}
         </div>
         <div className="ml-auto flex items-center gap-2 lg:ml-0">
