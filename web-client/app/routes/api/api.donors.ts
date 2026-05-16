@@ -7,7 +7,7 @@ export interface DonorWithoutDonations {
     lastName: string;
     address: string;
     phoneNumber: string;
-    createdOn: string;
+    createdOn: Date;
 }
 
 export interface Page<T> {
