@@ -2,15 +2,15 @@ import type {Donor} from "~/routes/api/api.donors";
 import {useFetcher} from "react-router";
 import * as React from "react";
 import {useEffect} from "react";
-import type {DonorStatistics} from "~/routes/api/api.donor";
 import {format} from "date-fns";
+import type {DonorStatistics} from "~/routes/api/api.statistics.donor";
 
 export function DonorStatsSection(props: { donor: Donor }) {
     const fetcher = useFetcher({key: `donor-stats-${props.donor.id}`});
     const isLoading = fetcher.state !== "idle" && !fetcher.data;
 
     useEffect(() => {
-        if (!fetcher.data && fetcher.state === "idle") fetcher.load(`/api/donors/${props.donor.id}`);
+        if (!fetcher.data && fetcher.state === "idle") fetcher.load(`/api/statistics/donors/${props.donor.id}`);
     }, [props.donor.id, fetcher]);
 
     const data = fetcher.data ? (fetcher.data as DonorStatistics) : null;
