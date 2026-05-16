@@ -37,14 +37,6 @@ const data = {
             ),
         },
         {
-            title: "Donations",
-            url: "/dashboard/donations",
-            icon: (
-                <ChartBarIcon
-                />
-            ),
-        },
-        {
             title: "Users",
             url: "/dashboard/users",
             icon: (
