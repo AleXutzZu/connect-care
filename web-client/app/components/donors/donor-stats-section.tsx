@@ -1,11 +1,11 @@
-import type {Donor} from "~/routes/api/api.donors";
+import type {DonorWithoutDonations} from "~/routes/api/api.donors";
 import {useFetcher} from "react-router";
 import * as React from "react";
 import {useEffect} from "react";
 import {format} from "date-fns";
 import type {DonorStatistics} from "~/routes/api/api.statistics.donor";
 
-export function DonorStatsSection(props: { donor: Donor }) {
+export function DonorStatsSection(props: { donor: DonorWithoutDonations }) {
     const fetcher = useFetcher({key: `donor-stats-${props.donor.id}`});
     const isLoading = fetcher.state !== "idle" && !fetcher.data;
 

@@ -22,7 +22,7 @@ import {
 
 import * as z from "zod"
 import {useFetcher} from "react-router";
-import type {Donor, Page} from "~/routes/api/api.donors";
+import type {DonorWithoutDonations, Page} from "~/routes/api/api.donors";
 import {DonorCard, EmptyDonorCard} from "~/components/donors/donor-card";
 import {RegisterDonorButton} from "~/components/donors/register-donor-button";
 import {DonorDrawer} from "~/components/donors/donor-drawer";
@@ -55,7 +55,7 @@ const columns: ColumnDef<z.infer<typeof donorSchema>>[] = [
 ];
 
 export function DonorDataTable() {
-    const [data, setData] = useState<Donor[]>([]);
+    const [data, setData] = useState<DonorWithoutDonations[]>([]);
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -89,7 +89,7 @@ export function DonorDataTable() {
 
     useEffect(() => {
         if (fetcher.state === "idle" && fetcher.data) {
-            const fetchedData = fetcher.data as Page<Donor>;
+            const fetchedData = fetcher.data as Page<DonorWithoutDonations>;
 
             setPageCount(fetchedData.totalPages);
             setData(fetchedData.content);

@@ -1,11 +1,11 @@
-import type {Donor} from "~/routes/api/api.donors";
+import type {DonorWithoutDonations} from "~/routes/api/api.donors";
 import {Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle} from "~/components/ui/drawer";
 import * as React from "react";
 import {useState} from "react";
 import {DonorCard} from "~/components/donors/donor-card";
 
 
-export function DonorDrawer(props: { donor: Donor, open: boolean, onOpenChange: (state: boolean) => void }) {
+export function DonorDrawer(props: { donor: DonorWithoutDonations, open: boolean, onOpenChange: (state: boolean) => void }) {
 
     const [blockInteraction, setBlockInteraction] = useState(false);
 

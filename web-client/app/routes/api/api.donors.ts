@@ -1,7 +1,7 @@
 import {type Route} from "./+types/api.donors";
 import {getToken, protectResourceMiddleware} from "~/lib/auth";
 
-export interface Donor {
+export interface DonorWithoutDonations {
     id: number;
     firstName: string;
     lastName: string;
@@ -32,7 +32,7 @@ export async function loader({request}: Route.LoaderArgs) {
 
     const data = await response.json();
 
-    return data as Page<Donor>;
+    return data as Page<DonorWithoutDonations>;
 }
 
 export async function action({request}: Route.ActionArgs) {

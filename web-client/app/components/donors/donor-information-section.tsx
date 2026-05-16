@@ -1,4 +1,4 @@
-import type {Donor} from "~/routes/api/api.donors";
+import type {DonorWithoutDonations} from "~/routes/api/api.donors";
 import * as React from "react";
 import {useCallback, useEffect, useRef} from "react";
 import {Controller, useForm} from "react-hook-form";
@@ -9,7 +9,7 @@ import {Field, FieldError, FieldGroup, FieldLabel} from "~/components/ui/field";
 import {Input} from "~/components/ui/input";
 import {z} from "zod";
 
-export function DonorInformationContent(props: { donor: Donor }) {
+export function DonorInformationContent(props: { donor: DonorWithoutDonations }) {
     return (
         <>
             <div className="grid grid-cols-2 gap-4">
@@ -39,7 +39,7 @@ export function DonorInformationContent(props: { donor: Donor }) {
     );
 }
 
-export function DonorEditInformationContent(props: { donor: Donor, cancelEdit: () => void }) {
+export function DonorEditInformationContent(props: { donor: DonorWithoutDonations, cancelEdit: () => void }) {
     const formSchema = z.object({
         firstName: z.string()
             .min(1, "First name cannot be empty")

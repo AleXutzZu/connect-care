@@ -2,7 +2,7 @@ import {Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, 
 import {Button} from "~/components/ui/button";
 import * as React from "react";
 import {useCallback, useEffect, useRef, useState} from "react";
-import type {Donor} from "~/routes/api/api.donors";
+import type {DonorWithoutDonations} from "~/routes/api/api.donors";
 import {Separator} from "~/components/ui/separator";
 import {useFetcher} from "react-router";
 import {toast} from "sonner";
@@ -23,7 +23,7 @@ import {DonorStatsSection} from "~/components/donors/donor-stats-section";
 import {DonorEditInformationContent, DonorInformationContent} from "~/components/donors/donor-information-section";
 import {useIsMobile} from "~/hooks/use-mobile";
 
-export function DonorCard(props: { donor: Donor, setBlockBackground: (state: boolean) => void }) {
+export function DonorCard(props: { donor: DonorWithoutDonations, setBlockBackground: (state: boolean) => void }) {
     const isMobile = useIsMobile();
     const [editMode, setEditMode] = useState(false);
 
