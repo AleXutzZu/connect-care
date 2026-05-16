@@ -1,10 +1,10 @@
 import * as React from "react"
-import {useEffect, useMemo, useState} from "react"
+import {useCallback, useEffect, useMemo, useState} from "react"
 import {
     type ColumnDef,
     type ColumnFiltersState,
     flexRender,
-    getCoreRowModel,
+    getCoreRowModel, type Row, type RowSelectionState, type Updater,
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
@@ -27,6 +27,7 @@ import {DonorCard, EmptyDonorCard} from "~/components/donors/donor-card";
 import {RegisterDonorButton} from "~/components/donors/register-donor-button";
 import {DonorDrawer} from "~/components/donors/donor-drawer";
 import {useIsMobile} from "~/hooks/use-mobile";
+import {DonationCard} from "~/components/donors/donation-card";
 
 export const donorSchema = z.object({
     id: z.number(),
@@ -54,6 +55,18 @@ const columns: ColumnDef<z.infer<typeof donorSchema>>[] = [
     },
 ];
 
+function InformationSection(props: {
+    donor: DonorWithoutDonations,
+    blockBackground: (value: (((prevState: boolean) => boolean) | boolean)) => void
+}) {
+    return (
+        <div className="flex flex-col gap-4">
+            <DonorCard donor={props.donor} setBlockBackground={props.blockBackground}/>
+            <DonationCard donor={props.donor}/>
+        </div>
+    );
+}
+
 export function DonorDataTable() {
     const [data, setData] = useState<DonorWithoutDonations[]>([]);
     const [columnVisibility, setColumnVisibility] =
@@ -68,6 +81,8 @@ export function DonorDataTable() {
 
     const [pageCount, setPageCount] = useState(0);
     const fetcher = useFetcher({key: "donors-table"});
+
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     useEffect(() => {
         const nameFilter = columnFilters.find(f => f.id === 'fullName');
@@ -96,6 +111,13 @@ export function DonorDataTable() {
         }
     }, [fetcher.state, fetcher.data]);
 
+    const [blockBackground, setBlockBackground] = useState(false);
+
+    const handleRowClick = useCallback((row: Row<DonorWithoutDonations>) => {
+        if (blockBackground) return;
+        row.toggleSelected(!row.getIsSelected())
+    }, [blockBackground]);
+
     const table = useReactTable({
         data,
         columns,
@@ -103,27 +125,24 @@ export function DonorDataTable() {
             columnVisibility,
             columnFilters,
             pagination,
+            rowSelection
         },
         pageCount: pageCount,
         getRowId: (row) => row.id.toString(),
         manualPagination: true,
         manualFiltering: true,
+        enableMultiRowSelection: false,
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
         onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
+        onRowSelectionChange: setRowSelection
     });
-
-    const [blockBackground, setBlockBackground] = useState(false);
-    const [selectedDonorId, setSelectedDonorId] = useState<number | null>(null);
-
-    const selectedDonor = useMemo(() => {
-        if (selectedDonorId === null) return null;
-        return data.find(s => s.id === selectedDonorId) ?? null;
-    }, [selectedDonorId, data]);
 
     const isMobile = useIsMobile();
     const [openDrawer, setOpenDrawer] = useState(false);
+
+    const selectedDonor = table.getSelectedRowModel().rows[0]?.original ?? null;
 
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-[65%_35%]">
@@ -177,17 +196,7 @@ export function DonorDataTable() {
 
                                 ) : table.getRowModel().rows?.length ? (
                                     table.getRowModel().rows.map((row) => (
-                                        <TableRow
-                                            key={row.id}
-                                            role="button"
-                                            onClick={() => {
-                                                if (!blockBackground) {
-                                                    setSelectedDonorId(row.original.id);
-                                                    setOpenDrawer(true);
-                                                }
-                                            }}
-                                            className="cursor-default"
-                                        >
+                                        <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} onClick={() => handleRowClick(row)}>
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell key={cell.id}>
                                                     {flexRender(
@@ -218,7 +227,7 @@ export function DonorDataTable() {
             </div>
 
             <div className="hidden lg:block lg:pr-6">
-                {selectedDonor && <DonorCard donor={selectedDonor} setBlockBackground={setBlockBackground}/>}
+                {selectedDonor && <InformationSection donor={selectedDonor} blockBackground={setBlockBackground}/>}
                 {!selectedDonor && <EmptyDonorCard/>}
                 {isMobile && selectedDonor &&
                     <DonorDrawer donor={selectedDonor} open={openDrawer} onOpenChange={setOpenDrawer}/>}
