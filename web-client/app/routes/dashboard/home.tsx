@@ -40,9 +40,14 @@ export async function loader({request}: Route.LoaderArgs) {
     return await response.json() as Statistics;
 }
 
+export const handle = {
+    pageName: "Charities Overview",
+};
+
 export default function DashboardIndex({loaderData}: Route.ComponentProps) {
     return (
         <div className="flex flex-1 flex-col">
+            <title>Teledon | Charities</title>
             <div className="@container/main flex flex-1 flex-col gap-2">
                 <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                     <SectionCards {...loaderData}/>
