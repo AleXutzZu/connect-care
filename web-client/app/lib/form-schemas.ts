@@ -1,16 +1,16 @@
 import {z} from "zod";
 
 export const donorFormSchema = z.object({
-    firstName: z.string()
+    firstName: z.string("You must provide a first name")
         .min(1, "First name cannot be empty")
         .max(50, "First name is too long"),
-    lastName: z.string()
+    lastName: z.string("You must provide a last name")
         .min(1, "Last name cannot be empty")
         .max(50, "Last name is too long"),
-    address: z.string()
+    address: z.string("You must provide an address")
         .min(1, "Address cannot be empty")
         .max(100, "Address is too long"),
-    phoneNumber: z.string()
+    phoneNumber: z.string("You must provide a phone number")
         .regex(/\d{10}/, "Invalid phone number")
 });
 
