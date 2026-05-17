@@ -1,10 +1,12 @@
 import * as React from "react"
-import {useCallback, useEffect, useMemo, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
 import {
     type ColumnDef,
     type ColumnFiltersState,
     flexRender,
-    getCoreRowModel, type Row, type RowSelectionState, type Updater,
+    getCoreRowModel,
+    type Row,
+    type RowSelectionState,
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
@@ -35,7 +37,7 @@ export const donorSchema = z.object({
     lastName: z.string(),
     address: z.string(),
     phoneNumber: z.string(),
-    createdOn: z.string(),
+    createdOn: z.date(),
 })
 
 const columns: ColumnDef<z.infer<typeof donorSchema>>[] = [
@@ -140,9 +142,23 @@ export function DonorDataTable() {
     });
 
     const isMobile = useIsMobile();
+
+    const [selectedDonor, setSelectedDonor] = useState<DonorWithoutDonations | null>(null);
+
     const [openDrawer, setOpenDrawer] = useState(false);
 
-    const selectedDonor = table.getSelectedRowModel().rows[0]?.original ?? null;
+    useEffect(() => {
+        const tableRow = table.getSelectedRowModel().rows[0];
+
+        if (tableRow) {
+            setSelectedDonor(tableRow.original);
+            setOpenDrawer(true);
+        } else {
+            setSelectedDonor(null);
+            setOpenDrawer(false);
+        }
+
+    }, [table.getSelectedRowModel().rows]);
 
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-[65%_35%]">
@@ -196,7 +212,8 @@ export function DonorDataTable() {
 
                                 ) : table.getRowModel().rows?.length ? (
                                     table.getRowModel().rows.map((row) => (
-                                        <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} onClick={() => handleRowClick(row)}>
+                                        <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}
+                                                  onClick={() => handleRowClick(row)}>
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell key={cell.id}>
                                                     {flexRender(
@@ -229,8 +246,7 @@ export function DonorDataTable() {
             <div className="hidden lg:block lg:pr-6">
                 {selectedDonor && <InformationSection donor={selectedDonor} blockBackground={setBlockBackground}/>}
                 {!selectedDonor && <EmptyDonorCard/>}
-                {isMobile && selectedDonor &&
-                    <DonorDrawer donor={selectedDonor} open={openDrawer} onOpenChange={setOpenDrawer}/>}
+                {isMobile && selectedDonor && <DonorDrawer donor={selectedDonor} open={openDrawer} onOpenChange={setOpenDrawer}/>}
             </div>
         </div>
     )

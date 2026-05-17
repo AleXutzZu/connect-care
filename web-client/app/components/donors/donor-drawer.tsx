@@ -3,6 +3,7 @@ import {Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle} fro
 import * as React from "react";
 import {useState} from "react";
 import {DonorCard} from "~/components/donors/donor-card";
+import {DonationCard} from "~/components/donors/donation-card";
 
 
 export function DonorDrawer(props: { donor: DonorWithoutDonations, open: boolean, onOpenChange: (state: boolean) => void }) {
@@ -24,6 +25,7 @@ export function DonorDrawer(props: { donor: DonorWithoutDonations, open: boolean
                         <DrawerDescription>View information about this donor</DrawerDescription>
                     </DrawerHeader>
                     <DonorCard donor={props.donor} setBlockBackground={setBlockInteraction}/>
+                    <DonationCard donor={props.donor}/>
                 </div>
             </DrawerContent>
         </Drawer>
