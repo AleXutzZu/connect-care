@@ -1,6 +1,6 @@
 import React from "react";
 import type {Route} from "./+types/layout";
-import {protectRouteMiddleware} from "~/lib/auth";
+import {protectRouteMiddleware, userContext} from "~/lib/auth";
 import {SidebarInset, SidebarProvider} from "~/components/ui/sidebar";
 import {AppSidebar} from "~/components/dashboard/app-sidebar";
 import {SiteHeader} from "~/components/dashboard/site-header";
@@ -10,7 +10,13 @@ import {Toaster} from "~/components/ui/sonner";
 
 export const middleware: Route.MiddlewareFunction[] = [protectRouteMiddleware];
 
-export default function DashboardLayout() {
+export async function loader({context}: Route.LoaderArgs) {
+    const user = context.get(userContext);
+
+    return user!!;
+}
+
+export default function DashboardLayout({loaderData}: Route.ComponentProps) {
     return (
         <TooltipProvider>
             <Toaster/>
@@ -22,7 +28,7 @@ export default function DashboardLayout() {
                     } as React.CSSProperties
                 }
             >
-                <AppSidebar variant="inset"/>
+                <AppSidebar variant="inset" user={{username: loaderData.sub}}/>
                 <SidebarInset>
                     <SiteHeader/>
                     <Outlet/>

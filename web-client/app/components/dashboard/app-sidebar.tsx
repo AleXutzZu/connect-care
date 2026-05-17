@@ -10,15 +10,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "~/components/ui/sidebar"
-import {ChartBarIcon, CommandIcon, LayoutDashboardIcon, ListIcon, UsersIcon} from "lucide-react"
+import {CommandIcon, LayoutDashboardIcon, ListIcon} from "lucide-react"
 import {Link} from "react-router";
 
-const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
+const links = {
     navMain: [
         {
             title: "Dashboard",
@@ -36,18 +31,18 @@ const data = {
                 />
             ),
         },
-        {
+        /*{
             title: "Users",
             url: "/dashboard/users",
             icon: (
                 <UsersIcon
                 />
             ),
-        },
+        },*/
     ],
 }
 
-export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({user, ...props}: React.ComponentProps<typeof Sidebar> & {user : {username: string}}) {
     return (
         <Sidebar collapsible="offcanvas" {...props}>
             <SidebarHeader>
@@ -66,10 +61,10 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={data.navMain}/>
+                <NavMain items={links.navMain}/>
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user}/>
+                <NavUser user={user}/>
             </SidebarFooter>
         </Sidebar>
     )
