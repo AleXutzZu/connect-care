@@ -15,3 +15,11 @@ export const donorFormSchema = z.object({
 });
 
 export type DonorFormSchema = z.infer<typeof donorFormSchema>;
+
+export const donationFormSchema = z.object({
+    donorId: z.number("You must select a donor"),
+    charityId: z.number("You must select a charity"),
+    amount: z.number("Amount must be a number").positive("Amount must be positive")
+})
+
+export type DonationFormSchema = z.infer<typeof donationFormSchema>;
