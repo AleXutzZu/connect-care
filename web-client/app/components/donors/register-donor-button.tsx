@@ -27,7 +27,10 @@ export function CreateDonorForm(props: {
 }) {
     return (
         <FieldGroup>
-            <form onSubmit={props.form.handleSubmit(props.formSubmit)} id="create-donor-form">
+            <form onSubmit={(e) => {
+                e.stopPropagation();
+                props.form.handleSubmit(props.formSubmit)(e);
+            }} id="create-donor-form">
                 <div className="grid grid-cols-2 gap-4">
                     <Controller control={props.form.control} name="firstName" render={({field, fieldState}) => (
                         <Field data-invalid={fieldState.invalid}>
@@ -100,7 +103,7 @@ export function RegisterDonorButton() {
 
     const formSubmit = useCallback((values: DonorFormSchema) => {
         handleDialog(false);
-        toastId.current = toast.loading("Creating charity...");
+        toastId.current = toast.loading("Creating donor...");
 
         fetcher.submit({...values}, {
             action: "/api/donors", method: "post"
@@ -139,7 +142,7 @@ export function RegisterDonorButton() {
                 <CreateDonorForm form={form} formSubmit={formSubmit}/>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="outline" onClick={() => form.reset()}>Cancel</Button>
+                        <Button variant="outline">Cancel</Button>
                     </DialogClose>
                     <Button type="submit" form="create-donor-form">Create</Button>
                 </DialogFooter>
