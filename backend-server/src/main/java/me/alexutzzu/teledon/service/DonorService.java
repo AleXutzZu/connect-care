@@ -12,6 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class DonorService {
     private final DonorRepository donorRepository;
@@ -30,6 +33,13 @@ public class DonorService {
             return donorRepository.search(search, pageable).map(donorWithoutDonationsEntityMapper::toDomain);
         }
         return donorRepository.findAll(pageable).map(donorWithoutDonationsEntityMapper::toDomain);
+    }
+
+    public List<DonorWithoutDonations> getAllDonors(String search) {
+        if (search != null && !search.isEmpty()) {
+            return donorRepository.search(search).stream().map(donorWithoutDonationsEntityMapper::toDomain).collect(Collectors.toList());
+        }
+        return donorRepository.findAll().stream().map(donorWithoutDonationsEntityMapper::toDomain).collect(Collectors.toList());
     }
 
     public DonorDto getDonor(Long id) {

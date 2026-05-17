@@ -16,6 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CharityService {
 
@@ -39,6 +42,17 @@ public class CharityService {
         }
         return charityRepository.findByNameContainingIgnoreCase(search, pageable)
                 .map(charityWithRaisedSumEntityMapper::toDomain);
+    }
+
+    public List<CharityWithRaisedSum> getAllCharities(String search) {
+        if (search == null || search.isBlank()) {
+            return charityRepository.findAll().stream()
+                    .map(charityWithRaisedSumEntityMapper::toDomain)
+                    .collect(Collectors.toList());
+        }
+        return charityRepository.findByNameContainingIgnoreCase(search).stream()
+                .map(charityWithRaisedSumEntityMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     public CharityDto getCharity(Long id) {

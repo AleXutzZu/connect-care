@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/charities")
 public class CharityController {
@@ -22,8 +24,17 @@ public class CharityController {
     }
 
     @GetMapping
-    public Page<CharityWithRaisedSum> getAllCharities(@Valid PaginationParams paginationParams, @RequestParam(required = false) String search) {
-        return charityService.getAllCharities(paginationParams.page(), paginationParams.size(), search);
+    public ResponseEntity<?> getAllCharities(
+            @Valid PaginationParams paginationParams,
+            @RequestParam(required = false) String search
+    ) {
+        if (paginationParams.page() != null && paginationParams.size() != null) {
+            Page<CharityWithRaisedSum> charities = charityService.getAllCharities(paginationParams.page(), paginationParams.size(), search);
+            return ResponseEntity.ok(charities);
+        } else {
+            List<CharityWithRaisedSum> charities = charityService.getAllCharities(search);
+            return ResponseEntity.ok(charities);
+        }
     }
 
     @GetMapping("/{charityId}")

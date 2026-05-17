@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/donors")
 public class DonorController {
@@ -22,8 +24,17 @@ public class DonorController {
     }
 
     @GetMapping
-    public Page<DonorWithoutDonations> getAllDonors(@Valid PaginationParams paginationParams, @RequestParam(required = false) String search) {
-        return donorService.getAllDonors(paginationParams.page(), paginationParams.size(), search);
+    public ResponseEntity<?> getAllDonors(
+            @Valid PaginationParams paginationParams,
+            @RequestParam(required = false) String search
+    ) {
+        if (paginationParams.page() != null && paginationParams.size() != null) {
+            Page<DonorWithoutDonations> donors = donorService.getAllDonors(paginationParams.page(), paginationParams.size(), search);
+            return ResponseEntity.ok(donors);
+        } else {
+            List<DonorWithoutDonations> donors = donorService.getAllDonors(search);
+            return ResponseEntity.ok(donors);
+        }
     }
 
     @GetMapping("/{donorId}")

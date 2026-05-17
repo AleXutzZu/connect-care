@@ -16,6 +16,8 @@ import java.util.List;
 public interface CharityRepository extends JpaRepository<Charity, Long> {
     Page<Charity> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
+    List<Charity> findByNameContainingIgnoreCase(String name);
+
     @Query("SELECT " +
             "  FUNCTION('date_trunc', 'month', d.createdOn) AS month, " +
             "  COUNT(DISTINCT d.donor.id) AS donorCount, " +
