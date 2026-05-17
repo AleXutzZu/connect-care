@@ -4,11 +4,13 @@ import {Button} from "~/components/ui/button";
 import * as React from "react";
 import {DonationDataTable} from "~/components/donors/donations/donation-data-table";
 import {CreateDonationForm} from "~/components/donors/donations/create-donation-form";
+import {useIsMobile} from "~/hooks/use-mobile";
 
 
 export function DonationCard(props: { donor: DonorWithoutDonations }) {
+    const isMobile = useIsMobile();
     return (
-        <Card>
+        <Card className={`${isMobile ? "ring-0" : ""}`}>
             <CardHeader>
                 <CardTitle>Donation History</CardTitle>
 
