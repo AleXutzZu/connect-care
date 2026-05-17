@@ -54,6 +54,9 @@ export async function action({request}: Route.ActionArgs) {
         body: JSON.stringify({firstName, lastName, address, phoneNumber})
     });
 
-    if (response.ok) return {ok: true};
+    if (response.ok) {
+        const donor = await response.json();
+        return {ok: true, data: donor as DonorWithoutDonations};
+    }
     return {ok: false, message: "could not create donor"};
 }
