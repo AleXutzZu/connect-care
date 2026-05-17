@@ -1,5 +1,5 @@
 import type {DonorWithoutDonations} from "~/routes/api/api.donors";
-import React, {type ReactElement, useCallback, useEffect, useMemo, useState} from "react";
+import React, {type ReactElement, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
     Dialog,
     DialogClose,
@@ -11,12 +11,10 @@ import {
     DialogTrigger
 } from "~/components/ui/dialog";
 import {Field, FieldDescription, FieldError, FieldGroup, FieldLabel} from "~/components/ui/field";
-import {Label} from "~/components/ui/label";
 import {Input} from "~/components/ui/input";
 import {Button} from "~/components/ui/button";
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "~/components/ui/sheet";
 import {CreateDonorForm} from "~/components/donors/register-donor-button";
-import {Controller, useForm} from "react-hook-form";
+import {Controller, type ControllerRenderProps, useForm} from "react-hook-form";
 import {donationFormSchema, type DonationFormSchema, donorFormSchema, type DonorFormSchema} from "~/lib/form-schemas";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Check, ChevronsUpDown, Loader2} from "lucide-react";
@@ -24,33 +22,69 @@ import {useFetcher} from "react-router";
 import {Popover, PopoverContent, PopoverTrigger} from "~/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "~/components/ui/command";
 import {cn} from "~/lib/utils";
+import type {Charity} from "~/routes/api/api.charities";
+import {toast} from "sonner";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger
+} from "~/components/ui/drawer";
+import {useIsMobile} from "~/hooks/use-mobile";
 
-function SearchableCombobox(props: {
-    selectedDonorId: number | null,
-    setSelectedDonorId: ((value: (number | null) | ((val: number | null) => number | null)) => void)
-}) {
-    const [open, setOpen] = useState(false)
+type SearchableComboboxProps<T> = {
+    value: any;
+    onChange: (...event: any[]) => void;
+    getUrl: (searchQuery: string) => string;
+    renderResult: (item: T) => React.ReactElement;
+    renderValue: (selectedItem: T | null) => string;
+    itemKey: (item: T | null) => string | number | null;
+    searchPlaceholder?: string;
+    noResultsMessage?: string;
+    initialMessage?: string;
+    fetcherKey: string,
+};
+
+function SearchableCombobox<T>(props: SearchableComboboxProps<T>) {
+    const {
+        value,
+        onChange,
+        getUrl,
+        renderResult,
+        renderValue,
+        itemKey,
+        searchPlaceholder = "Type to search...",
+        noResultsMessage = "No results found.",
+        initialMessage = "Start typing to search",
+        fetcherKey
+    } = props;
+
+    const [open, setOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
-    const fetcher = useFetcher<DonorWithoutDonations[]>();
+    const fetcher = useFetcher<T[]>({key: fetcherKey});
+
+    const allItems = fetcher.data ?? [];
+    const isLoading = fetcher.state !== "idle";
+
+    const selectedItem = useMemo(() => {
+        return allItems.find(item => itemKey(item) === value) ?? null;
+    }, [value, itemKey]);
 
     useEffect(() => {
-        const currentName = selectedDonor ? `${selectedDonor.firstName} ${selectedDonor.lastName}` : "";
+        const currentName = selectedItem ? renderValue(selectedItem) : "";
         if (searchQuery.trim() === "" || searchQuery === currentName) return;
 
         const delayDebounce = setTimeout(() => {
-            fetcher.load(`/api/donors?search=${encodeURIComponent(searchQuery)}`);
+            fetcher.load(getUrl(encodeURIComponent(searchQuery)));
         }, 300);
 
         return () => clearTimeout(delayDebounce);
-    }, [searchQuery, props.selectedDonorId]);
-
-    const results = fetcher.data ?? [];
-    const isLoading = fetcher.state !== "idle";
-
-    const selectedDonor = useMemo(() => {
-        return results.find(donor => donor.id === props.selectedDonorId) ?? null;
-    }, [props.selectedDonorId]);
+    }, [searchQuery, itemKey(value)]);
 
     return (
         <Popover onOpenChange={setOpen} open={open} modal>
@@ -61,13 +95,13 @@ function SearchableCombobox(props: {
                     role="combobox"
                     variant="outline"
                 >
-                    {selectedDonor ? `${selectedDonor.firstName} ${selectedDonor.lastName}` : "Search for donors..."}
+                    {renderValue(selectedItem)}
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50"/>
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0 w-(--radix-popover-trigger-width)">
                 <Command shouldFilter={false}>
-                    <CommandInput onValueChange={setSearchQuery} placeholder="Type to search..." value={searchQuery}/>
+                    <CommandInput onValueChange={setSearchQuery} placeholder={searchPlaceholder} value={searchQuery}/>
                     <CommandList className="max-h-60 overflow-y-auto overflow-x-hidden">
                         {isLoading && (
                             <div className="flex items-center justify-center p-4">
@@ -76,25 +110,29 @@ function SearchableCombobox(props: {
                             </div>
                         )}
 
-                        {!searchQuery && !isLoading && (
+                        {!searchQuery && !isLoading && allItems.length === 0 && (
                             <div className="p-4 text-center text-muted-foreground text-sm">
-                                Start typing to search
+                                {initialMessage}
                             </div>
                         )}
 
-                        {searchQuery && results.length === 0 && !isLoading && (
-                            <CommandEmpty>No results found.</CommandEmpty>
+                        {searchQuery && allItems.length === 0 && !isLoading && (
+                            <CommandEmpty>{noResultsMessage}</CommandEmpty>
                         )}
 
-                        {!isLoading && results.length > 0 && (
+                        {!isLoading && allItems.length > 0 && (
                             <CommandGroup>
-                                {results.map((result) => (
+                                {allItems.map((result) => (
                                     <CommandItem
-                                        key={result.id}
-                                        value={result.id.toString()}
-
+                                        key={itemKey(result)}
+                                        value={String(itemKey(result))}
                                         onSelect={() => {
-                                            props.setSelectedDonorId(prev => prev === result.id ? null : result.id);
+                                            const val = itemKey(result);
+                                            if (value === val) {
+                                                onChange(null);
+                                            } else {
+                                                onChange(val);
+                                            }
                                             setOpen(false);
                                         }}
                                     >
@@ -102,16 +140,10 @@ function SearchableCombobox(props: {
                                             <Check
                                                 className={cn(
                                                     "mr-2 size-4 mt-1 shrink-0",
-                                                    props.selectedDonorId === result.id ? "opacity-100" : "opacity-0",
+                                                    value === itemKey(result) ? "opacity-100" : "opacity-0",
                                                 )}
                                             />
-                                            <div className="flex flex-col">
-                                                <p className="font-medium text-base">
-                                                    {result.firstName} {result.lastName}
-                                                </p>
-                                                <p className="text-sm text-muted-foreground">{result.address}</p>
-                                                <p className="text-sm text-muted-foreground">{result.phoneNumber}</p>
-                                            </div>
+                                            {renderResult(result)}
                                         </div>
                                     </CommandItem>
                                 ))}
@@ -126,6 +158,7 @@ function SearchableCombobox(props: {
 
 
 export function CreateDonationForm(props: { donor?: DonorWithoutDonations, actionButton: ReactElement }) {
+    const [openDialog, setOpenDialog] = useState(false);
 
     const form = useForm<DonationFormSchema>({
         resolver: zodResolver(donationFormSchema),
@@ -135,12 +168,46 @@ export function CreateDonationForm(props: { donor?: DonorWithoutDonations, actio
         },
     });
 
+    const toastId = useRef<string | number | null>(null);
+    const fetcher = useFetcher({key: "create-donation-form-fetcher"});
+
+    const [preselectedDonor, setPreselectedDonor] = useState<DonorWithoutDonations | undefined>(props.donor);
+
+    const handleDialog = useCallback((state: boolean) => {
+        setPreselectedDonor(props.donor);
+        setOpenDialog(state);
+        form.reset();
+    }, [form, props.donor]);
+
+    const handleUpdatePreselectedDonor = useCallback((state: DonorWithoutDonations) => {
+        setPreselectedDonor(state);
+        form.setValue("donorId", state.id);
+    }, [form]);
+
     const formSubmission = useCallback((values: DonationFormSchema) => {
-        console.log("Submitted values", values);
-    }, []);
+        handleDialog(false);
+        toastId.current = toast.loading("Creating donation...");
+
+        fetcher.submit({...values}, {
+            action: "/api/donations", method: "post"
+        });
+    }, [handleDialog, fetcher]);
+
+    useEffect(() => {
+        if (fetcher.state === "idle" && fetcher.data && toastId.current) {
+
+            if (!fetcher.data.ok) {
+                toast.error(`Could not create donation`, {id: toastId.current});
+            } else {
+                toast.success("Created successfully!", {id: toastId.current});
+            }
+            toastId.current = null;
+        }
+    }, [fetcher.state, fetcher.data]);
+
 
     return (
-        <Dialog>
+        <Dialog open={openDialog} onOpenChange={handleDialog}>
             <DialogTrigger asChild>
                 {props.actionButton}
             </DialogTrigger>
@@ -151,74 +218,56 @@ export function CreateDonationForm(props: { donor?: DonorWithoutDonations, actio
                         Register a new charity donation for a donor
                     </DialogDescription>
                 </DialogHeader>
-                <Sheet>
-                    <form id="create-donation-form" onSubmit={form.handleSubmit(formSubmission)}>
-                        <FieldGroup>
-                            <Controller render={({field, fieldState}) => (
-
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="donorId">Donor</FieldLabel>
-                                    {props.donor &&
-                                        <Input disabled readOnly
-                                               value={`${props.donor.firstName} ${props.donor.lastName}`} id="donorId"
-                                               aria-invalid={fieldState.invalid}/>}
-                                    {!props.donor && (
-                                        <>
-                                            <SearchableCombobox selectedDonorId={field.value}
-                                                                 setSelectedDonorId={value => {
-                                                                     if (value === null) form.resetField("donorId");
-                                                                     else if (typeof value === "number") form.setValue("donorId", value)
-                                                                     else {
-                                                                         const newVal = value(form.getValues("donorId"));
-                                                                         if (newVal === null) form.resetField("donorId");
-                                                                         else form.setValue("donorId", newVal);
-                                                                     }
-                                                                 }}/>
-                                            <FieldDescription>
-                                                Not found? Register a new donor by clicking <SheetTrigger asChild>
-                                                <Button variant="link" className="p-0">here</Button>
-                                            </SheetTrigger>
-                                            </FieldDescription>
-                                        </>
-                                    )}
-                                    {fieldState.invalid && (<FieldError errors={[fieldState.error]}/>)}
-                                </Field>
-
-                            )} name="donorId" control={form.control}/>
-                            <Field>
-                                <Label htmlFor="username-1">Charity</Label>
-                                <Input id="username-1" name="username" defaultValue="ABC"/>
+                <form id="create-donation-form" onSubmit={form.handleSubmit(formSubmission)}>
+                    <FieldGroup>
+                        <Controller render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="donorId">Donor</FieldLabel>
+                                {preselectedDonor &&
+                                    <Input disabled readOnly
+                                           value={`${preselectedDonor.firstName} ${preselectedDonor.lastName}`}
+                                           id="donorId"
+                                           aria-invalid={fieldState.invalid}/>}
+                                {!preselectedDonor && (
+                                    <DonorSelectField field={field} setPreselectedDonor={handleUpdatePreselectedDonor}/>
+                                )}
+                                {fieldState.invalid && (<FieldError errors={[fieldState.error]}/>)}
                             </Field>
+                        )} name="donorId" control={form.control}/>
+                        <Controller render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="charityId">Charity</FieldLabel>
 
-                            <Controller control={form.control} name="amount" render={({field, fieldState}) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="amount">Amount</FieldLabel>
-                                    <Input {...field}
-                                           onChange={(e) => {
-                                               const value = e.target.value;
-                                               if (value === "") field.onChange("");
-                                               else field.onChange(isNaN(Number(value)) ? value : Number(value));
-                                           }}
-                                           aria-invalid={fieldState.invalid}
-                                           id="amount"
-                                    />
-                                    {fieldState.invalid && (<FieldError errors={[fieldState.error]}/>)}
-                                </Field>)}/>
-                        </FieldGroup>
-                    </form>
+                                <SearchableCombobox<Charity>
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    getUrl={query => `/api/charities?search=${query}`}
+                                    itemKey={charity => charity?.id ?? null}
+                                    renderValue={charity => charity ? `${charity.name}` : "Search for charities..."}
+                                    renderResult={charity => (<p>{charity.name}</p>)}
+                                    fetcherKey="search-charities-fetcher"
+                                />
 
-                    <SheetContent>
-                        <SheetHeader>
-                            <SheetTitle>Register a new donor</SheetTitle>
-                            <SheetDescription>Fill out the information below to register a new donor.</SheetDescription>
-                        </SheetHeader>
-                        <div className="px-4">
-                            <CreateDonorSheetContent/>
-                        </div>
+                                {fieldState.invalid && (<FieldError errors={[fieldState.error]}/>)}
+                            </Field>
+                        )} name="charityId" control={form.control}/>
 
-                    </SheetContent>
-                </Sheet>
-
+                        <Controller control={form.control} name="amount" render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="amount">Amount</FieldLabel>
+                                <Input {...field}
+                                       onChange={(e) => {
+                                           const value = e.target.value;
+                                           if (value === "") field.onChange("");
+                                           else field.onChange(isNaN(Number(value)) ? value : Number(value));
+                                       }}
+                                       aria-invalid={fieldState.invalid}
+                                       id="amount"
+                                />
+                                {fieldState.invalid && (<FieldError errors={[fieldState.error]}/>)}
+                            </Field>)}/>
+                    </FieldGroup>
+                </form>
                 <DialogFooter>
                     <DialogClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -231,13 +280,88 @@ export function CreateDonationForm(props: { donor?: DonorWithoutDonations, actio
     );
 }
 
-function CreateDonorSheetContent() {
+function DonorSelectField(props: {
+    field: ControllerRenderProps<DonationFormSchema, "donorId">,
+    setPreselectedDonor: (donor: DonorWithoutDonations) => void
+}) {
     const form = useForm<DonorFormSchema>({
-        resolver: zodResolver(donorFormSchema)
-    })
+        resolver: zodResolver(donorFormSchema),
+    });
+
+    const fetcher = useFetcher({key: "register-donor"});
+    const toastId = useRef<string | number | null>(null);
+
+    const formSubmit = useCallback((values: DonorFormSchema) => {
+        toastId.current = toast.loading("Creating donor...");
+
+        fetcher.submit({...values}, {
+            action: "/api/donors", method: "post"
+        });
+    }, [fetcher]);
+
+    useEffect(() => {
+        if (fetcher.state === "idle" && fetcher.data && toastId.current) {
+
+            if (!fetcher.data.ok) {
+                toast.error(`Could not create donor`, {id: toastId.current});
+            } else {
+                toast.success("Created successfully!", {id: toastId.current});
+                props.setPreselectedDonor(fetcher.data.data as DonorWithoutDonations);
+            }
+            toastId.current = null;
+        }
+    }, [fetcher.state, fetcher.data]);
+
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleDrawer = useCallback((state: boolean) => {
+        form.reset();
+        setDrawerOpen(state);
+    }, [form]);
+
+    const isMobile = useIsMobile();
 
     return (
-        <CreateDonorForm form={form} formSubmit={() => {
-        }}/>
-    )
+        <Drawer open={drawerOpen} onOpenChange={handleDrawer} direction={isMobile ? "bottom" : "right"}>
+            <SearchableCombobox<DonorWithoutDonations>
+                value={props.field.value}
+                onChange={props.field.onChange}
+                getUrl={query => `/api/donors?search=${query}`}
+                itemKey={donor => donor?.id ?? null}
+                renderValue={donor => donor ? `${donor.firstName} ${donor.lastName}` : "Search for donors..."}
+                renderResult={donor => (
+                    <div className="flex flex-col">
+                        <p className="font-medium text-base">
+                            {donor.firstName} {donor.lastName}
+                        </p>
+                        <p className="text-sm text-muted-foreground">{donor.address}</p>
+                        <p className="text-sm text-muted-foreground">{donor.phoneNumber}</p>
+                    </div>
+                )}
+                fetcherKey="search-donors-fetcher"
+            />
+            <FieldDescription>
+                Not found? Register a new donor by clicking <DrawerTrigger asChild>
+                <Button variant="link" className="p-0">here</Button>
+            </DrawerTrigger>
+            </FieldDescription>
+
+            <DrawerContent>
+                <DrawerHeader>
+                    <DrawerTitle>Register a new donor</DrawerTitle>
+                    <DrawerDescription>Fill out the information below to register a new donor.</DrawerDescription>
+                </DrawerHeader>
+                <div className="px-4">
+                    <CreateDonorForm form={form} formSubmit={formSubmit}/>
+                </div>
+
+                <DrawerFooter>
+                    <Button type="submit" form="create-donor-form">Submit</Button>
+                    <DrawerClose asChild>
+                        <Button variant="outline">Done</Button>
+                    </DrawerClose>
+                </DrawerFooter>
+            </DrawerContent>
+        </Drawer>
+    );
 }
