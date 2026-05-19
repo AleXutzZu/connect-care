@@ -1,5 +1,5 @@
 import * as React from "react"
-import {useEffect, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import {
     type ColumnDef,
     type ColumnFiltersState,
@@ -148,6 +148,45 @@ export function CharityDataTable() {
 
     const [selectedItem, setSelectedItem] = useState<z.infer<typeof charityColumnSchema> | null>(null);
     const isMobile = useIsMobile();
+
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const tableStateRef = useRef({pagination, columnFilters});
+
+    useEffect(() => {
+        tableStateRef.current = {pagination, columnFilters};
+    });
+
+    useEffect(() => {
+        const sse = new EventSource("/api/event-stream");
+
+        sse.addEventListener("charityevent", (event) => {
+            console.log("Update received:", event.data);
+
+            const {pagination: p, columnFilters: filters} = tableStateRef.current;
+
+            const nameFilter = filters.find(f => f.id === 'name');
+            const search = nameFilter ? String(nameFilter.value) : '';
+
+            const params = new URLSearchParams({
+                page: String(p.pageIndex),
+                size: String(p.pageSize),
+                search: search
+            });
+
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+            timeoutRef.current = setTimeout(() => {
+                console.log("Firing fetcher.load!");
+                fetcher.load(`/api/charities?${params.toString()}`);
+            }, 500);
+        });
+
+        return () => {
+            sse.close();
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, [fetcher]);
 
     const table = useReactTable({
         data,
