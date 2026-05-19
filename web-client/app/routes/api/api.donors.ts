@@ -1,4 +1,4 @@
-import {type Route} from "./+types/api.donors";
+import type {Route} from "./+types/api.donors";
 import {getToken, protectResourceMiddleware} from "~/lib/auth";
 
 export interface DonorWithoutDonations {

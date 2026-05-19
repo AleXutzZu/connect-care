@@ -1,4 +1,4 @@
-import {type Route} from "./+types/api.logout";
+import type{Route} from "./+types/api.logout";
 import {protectResourceMiddleware, userContext, userToken} from "~/lib/auth";
 import {redirect} from "react-router";
 

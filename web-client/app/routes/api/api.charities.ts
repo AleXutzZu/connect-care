@@ -1,4 +1,4 @@
-import {type Route} from "./+types/api.charities";
+import type {Route} from "./+types/api.charities";
 import {getToken, protectResourceMiddleware} from "~/lib/auth";
 
 export interface Charity {
