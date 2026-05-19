@@ -21,6 +21,9 @@ export function TargetUpdateCell({row}: CellContext<z.infer<typeof charityColumn
         defaultValues: {
             target: row.original.target
         },
+        values: {
+            target: row.original.target
+        },
         mode: "onChange"
     });
 
