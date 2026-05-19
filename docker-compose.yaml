@@ -1,0 +1,63 @@
+services:
+  frontend:
+    container_name: "frontend-server"
+    build:
+      context: ./web-client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      BASE_URL: "http://backend-server:8080"
+    depends_on:
+      - backend
+
+  database:
+    container_name: "postgres-database"
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: spring_backend
+      POSTGRES_DB: spring_backend
+      POSTGRES_PASSWORD: spring_backend
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U spring_backend -d spring_backend" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    container_name: "backend-server"
+    build:
+      context: ./backend-server
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/spring_backend"
+      SPRING_DATASOURCE_USERNAME: spring_backend
+      SPRING_DATASOURCE_PASSWORD: spring_backend
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      RSA_PUBLIC_KEY: "file:/app/certs/public.pem"
+      RSA_PRIVATE_KEY: "file:/app/certs/private.pem"
+    volumes:
+      - certs-data:/app/certs
+  seeder:
+    build:
+      context: ./seeder
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=database
+      - DB_NAME=spring_backend
+      - DB_USER=spring_backend
+      - DB_PASS=spring_backend
+    depends_on:
+      database:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    profiles: [ "seed" ]
+
+volumes:
+  pg-data:
+  certs-data:
