@@ -6,9 +6,12 @@ import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
+import java.io.IOException;
 import java.time.Duration;
 
 @RestController
@@ -21,33 +24,38 @@ public class EventsController {
     }
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<Object>> streamGlobalEvents() {
+    public SseEmitter streamGlobalEvents() {
 
-        Flux<ServerSentEvent<Object>> events = globalEventSink.asFlux()
-                .map(event -> {
-                    String entityName = event.getClass().getSimpleName();
+        SseEmitter emitter = new SseEmitter(-1L);
 
-                    String dynamicEventName = entityName.toLowerCase();
+        try {
+            emitter.send(SseEmitter.event().name("ping").data("connected"));
+        } catch (IOException e) {
+            emitter.completeWithError(e);
+            return emitter;
+        }
 
-                    return ServerSentEvent.builder()
-                            .event(dynamicEventName)
-                            .data(event)
-                            .build();
-                });
+        Disposable subscription = globalEventSink.asFlux().subscribe(
+                event -> {
+                    try {
+                        String dynamicEventName = event.getClass().getSimpleName().toLowerCase();
 
-        Flux<ServerSentEvent<Object>> initialPing = Flux.just(
-                ServerSentEvent.builder()
-                        .event("ping")
-                        .data("connected")
-                        .build()
+                        emitter.send(SseEmitter.event()
+                                .name(dynamicEventName)
+                                .data(event));
+                    } catch (IOException e) {
+                        emitter.completeWithError(e);
+                    }
+                },
+                emitter::completeWithError,
+                emitter::complete
         );
 
-        Flux<ServerSentEvent<Object>> keepAlive = Flux.interval(Duration.ofSeconds(15))
-                .map(tick -> ServerSentEvent.builder()
-                        .comment("keep-alive")
-                        .build());
+        emitter.onCompletion(subscription::dispose);
+        emitter.onTimeout(subscription::dispose);
+        emitter.onError(e -> subscription.dispose());
 
-        return Flux.concat(initialPing, Flux.merge(events, keepAlive));
+        return emitter;
     }
 
 }
