@@ -1,5 +1,5 @@
 import * as React from "react"
-import {useCallback, useEffect, useState} from "react"
+import {useCallback, useEffect, useRef, useState} from "react"
 import {
     type ColumnDef,
     type ColumnFiltersState,
@@ -119,6 +119,46 @@ export function DonorDataTable() {
         if (blockBackground) return;
         row.toggleSelected(!row.getIsSelected())
     }, [blockBackground]);
+
+
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const tableStateRef = useRef({pagination, columnFilters});
+
+    useEffect(() => {
+        tableStateRef.current = {pagination, columnFilters};
+    });
+
+    useEffect(() => {
+        const sse = new EventSource("/api/event-stream");
+
+        sse.addEventListener("donorevent", (event) => {
+            console.log("Update received:", event.data);
+
+            const {pagination: p, columnFilters: filters} = tableStateRef.current;
+
+            const nameFilter = filters.find(f => f.id === 'fullName');
+            const search = nameFilter ? String(nameFilter.value) : '';
+
+            const params = new URLSearchParams({
+                page: String(p.pageIndex),
+                size: String(p.pageSize),
+                search: search
+            });
+
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+            timeoutRef.current = setTimeout(() => {
+                fetcher.load(`/api/donors?${params.toString()}`);
+            }, 500);
+        });
+
+        return () => {
+            sse.close();
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, [fetcher]);
+
 
     const table = useReactTable({
         data,

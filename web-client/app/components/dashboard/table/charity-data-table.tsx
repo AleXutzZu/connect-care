@@ -177,7 +177,6 @@ export function CharityDataTable() {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
             timeoutRef.current = setTimeout(() => {
-                console.log("Firing fetcher.load!");
                 fetcher.load(`/api/charities?${params.toString()}`);
             }, 500);
         });

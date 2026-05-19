@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
     type ColumnDef,
     type ColumnFiltersState,
@@ -123,6 +123,28 @@ export function DonationDataTable(props: { donorId: number }) {
         fetcher.load(`/api/donors/${props.donorId}`);
     }, [props.donorId]);
 
+
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+
+    useEffect(() => {
+        const sse = new EventSource("/api/event-stream");
+
+        sse.addEventListener("donationevent", (event) => {
+            console.log("Update received:", event.data);
+
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+            timeoutRef.current = setTimeout(() => {
+                fetcher.load(`/api/donors/${props.donorId}`);
+            }, 500);
+        });
+
+        return () => {
+            sse.close();
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, [fetcher]);
 
     return (
         <div className="w-full">
