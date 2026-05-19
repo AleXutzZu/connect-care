@@ -18,6 +18,7 @@ export default [
         route("/statistics/donors/:donorId", "routes/api/api.statistics.donor.ts"),
         route("/donations", "routes/api/api.donations.ts"),
         route("/donations/:donationId", "routes/api/api.donation.ts"),
+        route("/event-stream", "routes/api/api.event-stream.ts"),
         route("/logout", "routes/api/api.logout.ts"),
     ]),
 ] satisfies RouteConfig;
