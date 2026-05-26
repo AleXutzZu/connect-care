@@ -9,11 +9,14 @@ import me.alexutzzu.teledon.service.DonorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,18 +44,19 @@ class DonorControllerTest {
 
     @Test
     void getAllDonors_shouldReturnOk() throws Exception {
-        List<DonorWithoutDonations> donors = Collections.singletonList(new DonorWithoutDonations(1L, "John", "Doe", "123 Main St", "1234567890"));
-        when(donorService.getAllDonors()).thenReturn(donors);
+        List<DonorWithoutDonations> donors = Collections.singletonList(new DonorWithoutDonations(1L, "John", "Doe", "123 Main St", "1234567890", LocalDateTime.now()));
+        Page<DonorWithoutDonations> donorsPage = new PageImpl<>(donors);
+        when(donorService.getAllDonors(anyInt(), anyInt(), any())).thenReturn(donorsPage);
 
         mockMvc.perform(get("/api/donors"))
                 .andExpect(status().isOk());
 
-        verify(donorService).getAllDonors();
+        verify(donorService).getAllDonors(anyInt(), anyInt(), any());
     }
 
     @Test
     void getDonor_shouldReturnOk() throws Exception {
-        DonorDto donor = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList());
+        DonorDto donor = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList(), LocalDateTime.now());
         when(donorService.getDonor(1L)).thenReturn(donor);
 
         String response = mockMvc.perform(get("/api/donors/1"))
@@ -78,7 +82,7 @@ class DonorControllerTest {
 
     @Test
     void createDonor_shouldReturnCreated() throws Exception {
-        DonorDto expected = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList());
+        DonorDto expected = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList(), LocalDateTime.now());
         when(donorService.createDonor(expected.firstName(), expected.lastName(), expected.address(), expected.phoneNumber())).thenReturn(expected);
 
         CreateDonorRequest createDonorRequest = new CreateDonorRequest("John", "Doe", "123 Main St", "1234567890");
@@ -108,8 +112,8 @@ class DonorControllerTest {
 
     @Test
     void updateDonor_shouldReturnOk() throws Exception {
-        DonorDto original = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList());
-        DonorDto newDonor = new DonorDto(1L, "Jane", "Doe", "456 Main St", "0987654321", Collections.emptyList());
+        DonorDto original = new DonorDto(1L, "John", "Doe", "123 Main St", "1234567890", Collections.emptyList(), LocalDateTime.now());
+        DonorDto newDonor = new DonorDto(1L, "Jane", "Doe", "456 Main St", "0987654321", Collections.emptyList(), original.createdOn());
 
         when(donorService.updateDonor(original.id(), newDonor.firstName(), newDonor.lastName(), newDonor.address(), newDonor.phoneNumber())).thenReturn(newDonor);
 

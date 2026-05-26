@@ -1,4 +1,4 @@
-package me.alexutzzu;
+package me.alexutzzu.teledon;
 
 import me.alexutzzu.teledon.config.RsaKeyProperties;
 import org.springframework.boot.SpringApplication;

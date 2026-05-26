@@ -2,12 +2,18 @@ package me.alexutzzu.teledon.controller;
 
 import jakarta.validation.Valid;
 import me.alexutzzu.teledon.controller.dto.CreateCharityRequest;
+import me.alexutzzu.teledon.controller.dto.PaginationParams;
+import me.alexutzzu.teledon.controller.dto.events.CharityEvent;
+import me.alexutzzu.teledon.controller.dto.events.SseEvent;
 import me.alexutzzu.teledon.model.dto.CharityDto;
 import me.alexutzzu.teledon.model.dto.CharityWithRaisedSum;
 import me.alexutzzu.teledon.service.CharityService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Sinks;
 
 import java.util.List;
 
@@ -15,14 +21,25 @@ import java.util.List;
 @RequestMapping("/api/charities")
 public class CharityController {
     private final CharityService charityService;
+    private final Sinks.Many<SseEvent<?>> eventSink;
 
-    public CharityController(CharityService charityService) {
+    public CharityController(CharityService charityService, Sinks.Many<SseEvent<?>> eventSink) {
         this.charityService = charityService;
+        this.eventSink = eventSink;
     }
 
     @GetMapping
-    public List<CharityWithRaisedSum> getAllCharities() {
-        return charityService.getAllCharities();
+    public ResponseEntity<?> getAllCharities(
+            @Valid PaginationParams paginationParams,
+            @RequestParam(required = false) String search
+    ) {
+        if (paginationParams.page() != null && paginationParams.size() != null) {
+            Page<CharityWithRaisedSum> charities = charityService.getAllCharities(paginationParams.page(), paginationParams.size(), search);
+            return ResponseEntity.ok(charities);
+        } else {
+            List<CharityWithRaisedSum> charities = charityService.getAllCharities(search);
+            return ResponseEntity.ok(charities);
+        }
     }
 
     @GetMapping("/{charityId}")
@@ -31,20 +48,29 @@ public class CharityController {
     }
 
     @PostMapping
-    public ResponseEntity<CharityDto> createCharity(@RequestBody @Valid CreateCharityRequest body) {
-        var entity = charityService.createCharity(body.name());
+    public ResponseEntity<CharityDto> createCharity(@RequestBody @Valid CreateCharityRequest body, Authentication authentication) {
+        var entity = charityService.createCharity(body, authentication.getName());
+
+        eventSink.tryEmitNext(CharityEvent.created(entity));
+
         return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 
     @PutMapping("/{charityId}")
     public ResponseEntity<CharityDto> updateCharity(@PathVariable Long charityId, @RequestBody @Valid CreateCharityRequest body) {
-        var entity = charityService.updateCharity(charityId, body.name());
+        var entity = charityService.updateCharity(charityId, body);
+
+        eventSink.tryEmitNext(CharityEvent.updated(entity));
+
         return ResponseEntity.ok(entity);
     }
 
     @DeleteMapping("/{charityId}")
     public ResponseEntity<?> deleteCharity(@PathVariable Long charityId) {
         charityService.deleteCharity(charityId);
+
+        eventSink.tryEmitNext(CharityEvent.deleted(charityId));
+
         return ResponseEntity.noContent().build();
     }
 }

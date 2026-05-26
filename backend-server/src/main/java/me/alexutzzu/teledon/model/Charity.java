@@ -20,12 +20,23 @@ public class Charity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "charity")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    private Double target;
+
+    @OneToMany(mappedBy = "charity", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Donation> donations = new ArrayList<>();
 
-    public static Charity ofName(String name) {
-        return Charity.builder().name(name).donations(Collections.emptyList()).build();
+    public static Charity of(String name, User user, Double target) {
+        return Charity.builder()
+                .name(name)
+                .user(user)
+                .target(target)
+                .donations(Collections.emptyList())
+                .build();
     }
 }

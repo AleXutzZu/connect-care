@@ -10,6 +10,6 @@ public class CharityWithRaisedSumEntityMapper implements EntityMapper<Charity, C
     @Override
     public CharityWithRaisedSum toDomain(Charity entity) {
         double raisedSum = entity.getDonations().stream().mapToDouble(Donation::getAmount).sum();
-        return new CharityWithRaisedSum(entity.getId(), entity.getName(), raisedSum);
+        return new CharityWithRaisedSum(entity.getId(), entity.getName(), entity.getUser().getUsername(), entity.getTarget(), raisedSum);
     }
 }
